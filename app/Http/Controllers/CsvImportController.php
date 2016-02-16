@@ -156,9 +156,28 @@ public function createdatabase(Request $request)
   $sql = "CREATE DATABASE ".$database;
 
 
+  //set created to false
+  $created = false;
+
+  try {
+    // created database successfully
+    $db->getpdo()->exec(  $sql);
+    $created = true ;
+
+} catch (Exception $ex) {
+
+    // dd( $ex->getMessage());
+    // error creating database
+    $message =  $ex->getMessage();
+
+
+
+}
+
+
 
     // database created success
-  if ($db->getpdo()->exec(  $sql)) {
+if ($created == true) {
 
         // connect to the new database
     $otf = new \App\Database\OTF(['database' => $database]);
@@ -172,7 +191,7 @@ public function createdatabase(Request $request)
     Session::flash('flash_type', 'alert-success');
 
 } else {
-    $message = $database. ' '. mysqli_error($conn);
+
     Session::flash('flash_message',    $message);
     Session::flash('flash_type', 'alert-danger');
 }
