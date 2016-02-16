@@ -60,54 +60,67 @@ class CsvImportController extends BaseController
     public function store(Request $request)
     {
 
-       $database = $request->input('database');
+     $database = $request->input('database');
 
 
 //  dd('CsvImportController  hi hi',$request, $database);
         // Check if form submitted a file
-       if ($request->hasFile('csv_import')) {
-          $csv_file = $request->file('csv_import');
+     if ($request->hasFile('csv_import')) {
+      $csv_file = $request->file('csv_import');
 
             // You wish to do file validation at this point
-          if ($csv_file->isValid()) {
+      if ($csv_file->isValid()) {
 
                 // We can also create a CsvStructureValidator class
                 // So that we can validate the structure of our CSV file
 
                 // Lets construct our importer
-             $csv_importer = new CsvFileImporter();
+       $csv_importer = new CsvFileImporter();
 
                 // Import our csv file
-             if ($csv_importer->import($csv_file,$database) ){
-                    // add to farmbooks
-                $Farmbook = new Farmbook;
-                $Farmbook->name = $database;
-                $Farmbook->database = $database;
-                $Farmbook->type = 0;
-                $Farmbook->save();
-                    // Provide success message to the user
-                $message = 'Your file has been successfully imported! ';
-                Session::flash('flash_message', 'Your file has been successfully imported! ' );
-                Session::flash('flash_type', 'alert-success');
+       if ($csv_importer->import($csv_file,$database) ){
 
+        $Farmbook = Farmbook::where('database','=',$database);
 
-            } else {
-                $message = 'Your file did not import ';
-                Session::flash('flash_message', 'Your file did not import ');
-                Session::flash('flash_type', 'alert-danger');
-            }
-
+        if ($Farmbook->count() > 0 )
+        {
+            
+              $Farmbook = Farmbook::where('database','=',$database)->update(['database'=> $database]);
+      
         } else {
+                // add to farmbooks
+            $Farmbook = new Farmbook;
+            $Farmbook->name = $database;
+            $Farmbook->database = $database;
+            $Farmbook->type = 0;
+            $Farmbook->save();
+        }
+
+
+
+                // Provide success message to the user
+        $message = 'Your file has been successfully imported! ';
+        Session::flash('flash_message', 'Your file has been successfully imported! ' );
+        Session::flash('flash_type', 'alert-success');
+
+
+    } else {
+        $message = 'Your file did not import ';
+        Session::flash('flash_message', 'Your file did not import ');
+        Session::flash('flash_type', 'alert-danger');
+    }
+
+} else {
                 // Provide a meaningful error message to the user
                 // Perform any logging if necessary
-         $message = 'You must provide a CSV file for import.';
-         Session::flash('flash_message', 'You must provide a CSV file for import.' );
-         Session::flash('flash_type', 'alert-danger');
-     }
+   $message = 'You must provide a CSV file for import.';
+   Session::flash('flash_message', 'You must provide a CSV file for import.' );
+   Session::flash('flash_type', 'alert-danger');
+}
 
-     return Redirect::back()->with('flash_message',$message);
+return Redirect::back()->with('flash_message',$message);
 
- } else {
+} else {
     $message = 'You must provide a CSV file for import.';
     Session::flash('flash_message', 'You must provide a CSV file for import.' );
     Session::flash('flash_type', 'alert-danger');
@@ -121,27 +134,27 @@ return Redirect::back()->with('flash_message',$message);
 public function deletedatabase(Request $request)
 
 {
- $database = $request->input('database');
+   $database = $request->input('database');
 
 
-  $servername = config('database.connections.mysql.host');
-  $username = config('database.connections.mysql.username');
-  $password = config('database.connections.mysql.password');
+   $servername = config('database.connections.mysql.host');
+   $username = config('database.connections.mysql.username');
+   $password = config('database.connections.mysql.password');
        // dd('make database',$database);
 
-  $dbname = 'tmp';
+   $dbname = 'tmp';
 
          // connect to tmp database
-  $otf = new \App\Database\OTF(['database' => $dbname]);
-  $db = DB::connection($dbname);
+   $otf = new \App\Database\OTF(['database' => $dbname]);
+   $db = DB::connection($dbname);
 
-  $sql = "DROP DATABASE ".$database;
+   $sql = "DROP DATABASE ".$database;
 
 
   //set created to false
-  $created = false;
+   $created = false;
 
-  try {
+   try {
     // created database successfully
     $db->getpdo()->exec(  $sql);
     $created = true ;

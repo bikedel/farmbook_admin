@@ -36,7 +36,7 @@ input[ type=text ]{
 	width: 100%;
 
 }
-
+.btn{float:right;} 
 
 .records{
 	padding:0px;
@@ -99,10 +99,11 @@ input[ type=text ]{
 						{!! Form::select('database', $data,null, ['class'=> 'form-control col-md-6', 'id'=>'database']) !!}
 					</div>
 					<div class="form-group">	
-						{!! Form::submit('Go',  array('class'=>'btn btn-info ')) !!}
+						<br>
+						{!! Form::submit('Delete',  array('class'=>'btn btn-danger ')) !!}
 					</div>
                      {!! Form::close() !!}
-
+<br>
 					
 					{!! Form::open([ 'url' => 'createdatabase', 'method' => 'post', 'files' => 'true']) !!}
 
@@ -126,7 +127,7 @@ input[ type=text ]{
 						{!! Form::file('csv_import', ['class' => 'csv_import form-control input-sm']) !!}
 					</div>
 					<div class="form-group">
-						<br>
+						
 
 
 						{!! Form::submit('Go',  array('class'=>'btn btn-info ')) !!}
