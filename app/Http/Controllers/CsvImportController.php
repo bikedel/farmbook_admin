@@ -60,126 +60,125 @@ class CsvImportController extends BaseController
     public function store(Request $request)
     {
 
- $database = $request->input('database');
+       $database = $request->input('database');
 
 
 //  dd('CsvImportController  hi hi',$request, $database);
         // Check if form submitted a file
-    	if ($request->hasFile('csv_import')) {
-    		$csv_file = $request->file('csv_import');
+       if ($request->hasFile('csv_import')) {
+          $csv_file = $request->file('csv_import');
 
             // You wish to do file validation at this point
-    		if ($csv_file->isValid()) {
+          if ($csv_file->isValid()) {
 
                 // We can also create a CsvStructureValidator class
                 // So that we can validate the structure of our CSV file
 
                 // Lets construct our importer
-    			$csv_importer = new CsvFileImporter();
+             $csv_importer = new CsvFileImporter();
 
                 // Import our csv file
-    			if ($csv_importer->import($csv_file,$database) ){
+             if ($csv_importer->import($csv_file,$database) ){
                     // add to farmbooks
-                    $Farmbook = new Farmbook;
-                    $Farmbook->name = $database;
-                    $Farmbook->database = $database;
-                    $Farmbook->type = 0;
-                    $Farmbook->save();
+                $Farmbook = new Farmbook;
+                $Farmbook->name = $database;
+                $Farmbook->database = $database;
+                $Farmbook->type = 0;
+                $Farmbook->save();
                     // Provide success message to the user
-    				$message = 'Your file has been successfully imported! ';
-    				Session::flash('flash_message', 'Your file has been successfully imported! ' );
-    				Session::flash('flash_type', 'alert-success');
+                $message = 'Your file has been successfully imported! ';
+                Session::flash('flash_message', 'Your file has been successfully imported! ' );
+                Session::flash('flash_type', 'alert-success');
 
 
-    			} else {
-    				$message = 'Your file did not import ';
-    				Session::flash('flash_message', 'Your file did not import ');
-    				Session::flash('flash_type', 'alert-danger');
-    			}
+            } else {
+                $message = 'Your file did not import ';
+                Session::flash('flash_message', 'Your file did not import ');
+                Session::flash('flash_type', 'alert-danger');
+            }
 
-    		} else {
+        } else {
                 // Provide a meaningful error message to the user
                 // Perform any logging if necessary
-    			$message = 'You must provide a CSV file for import.';
-    			Session::flash('flash_message', 'You must provide a CSV file for import.' );
-    			Session::flash('flash_type', 'alert-danger');
-    		}
+         $message = 'You must provide a CSV file for import.';
+         Session::flash('flash_message', 'You must provide a CSV file for import.' );
+         Session::flash('flash_type', 'alert-danger');
+     }
 
-    		return Redirect::back()->with('flash_message',$message);
+     return Redirect::back()->with('flash_message',$message);
 
-    	} else {
-            $message = 'You must provide a CSV file for import.';
-            Session::flash('flash_message', 'You must provide a CSV file for import.' );
-            Session::flash('flash_type', 'alert-danger');
-        }
+ } else {
+    $message = 'You must provide a CSV file for import.';
+    Session::flash('flash_message', 'You must provide a CSV file for import.' );
+    Session::flash('flash_type', 'alert-danger');
+}
 
-        return Redirect::back()->with('flash_message',$message);
-    }
+return Redirect::back()->with('flash_message',$message);
+}
 
 
     // create database
-    public function createdatabase(Request $request)
-    {
+public function createdatabase(Request $request)
+{
 
-        $file = storage_path().'/databases/dummy_database.sql' ;
+    $file = storage_path().'/databases/dummy_database.sql' ;
 
-        $file2 = storage_path().'/databases/dummy_database.sql' ;
+    $file2 = storage_path().'/databases/dummy_database.sql' ;
 
       // check if the file exists
-      if (file_exists($file)) {
-          $sqldump =  file_get_contents($file );
-      } else {
-          $file = "not found";
-          $message = 'missing dummy_database';
-          Session::flash('flash_message',    $message);
-          Session::flash('flash_type', 'alert-danger');
-          return Redirect::back()->with('flash_message',$message);
-      }
+    if (file_exists($file)) {
+      $sqldump =  file_get_contents($file );
+  } else {
+      $file = "not found";
+      $message = 'missing dummy_database';
+      Session::flash('flash_message',    $message);
+      Session::flash('flash_type', 'alert-danger');
+      return Redirect::back()->with('flash_message',$message);
+  }
 
 
 
-      $database = $request->input('database');
-      $database =  $database . '_farmbook';
+  $database = $request->input('database');
+  $database =  $database . '_farmbook';
 
 
-      $servername = config('database.connections.mysql.host');
-      $username = config('database.connections.mysql.username');
-      $password = config('database.connections.mysql.password');
+  $servername = config('database.connections.mysql.host');
+  $username = config('database.connections.mysql.username');
+  $password = config('database.connections.mysql.password');
        // dd('make database',$database);
 
-      $conn = mysqli_connect($servername, $username, $password);
+  $dbname = 'tmp';
 
-        // Check connection
-      if (!$conn) {
-        die("Connection failed: " . mysqli_connect_error());
-    }
+         // connect to tmp database
+  $otf = new \App\Database\OTF(['database' => $dbname]);
+  $db = DB::connection($dbname);
 
-        // Create database
-    $sql = "CREATE DATABASE ".$database;
+  $sql = "CREATE DATABASE ".$database;
+
 
 
     // database created success
-    if (mysqli_query($conn, $sql)) {
+  if ($db->getpdo()->exec(  $sql)) {
 
         // connect to the new database
-        $otf = new \App\Database\OTF(['database' => $database]);
-        $db = DB::connection($database);  
+    $otf = new \App\Database\OTF(['database' => $database]);
+    $db = DB::connection($database);  
 
         // creates tables with dummy
-        $db->getpdo()->exec( $sqldump);
+    $db->getpdo()->exec( $sqldump);
 
-        $message = $database. ' created successfully.';
-        Session::flash('flash_message',    $message);
-        Session::flash('flash_type', 'alert-success');
+    $message = $database. ' created successfully.';
+    Session::flash('flash_message',    $message);
+    Session::flash('flash_type', 'alert-success');
 
-    } else {
-        $message = $database. ' '. mysqli_error($conn);
-        Session::flash('flash_message',    $message);
-        Session::flash('flash_type', 'alert-danger');
-    }
+} else {
+    $message = $database. ' '. mysqli_error($conn);
+    Session::flash('flash_message',    $message);
+    Session::flash('flash_type', 'alert-danger');
+}
 
-    mysqli_close($conn);
-    return Redirect::back()->with('flash_message',$message);
+mysqli_close($conn);
+return Redirect::back()->with('flash_message',$message);
 
 }
 }
