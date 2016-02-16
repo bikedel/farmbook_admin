@@ -177,7 +177,6 @@ public function createdatabase(Request $request)
     Session::flash('flash_type', 'alert-danger');
 }
 
-mysqli_close($conn);
 return Redirect::back()->with('flash_message',$message);
 
 }
