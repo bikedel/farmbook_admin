@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use DB;
 use Exception;
+use File;
 
 class CsvFileImporter
 {
@@ -50,6 +51,12 @@ class CsvFileImporter
 
         // Get file's original name
         $original_file_name = $csv_import->getClientOriginalName();
+
+ if (is_file( $destination_directory.'/'.$original_file_name) ){
+
+    File::delete( $destination_directory.'/'.$original_file_name);
+ }
+
 
         // Return moved file as File object
         return $csv_import->move($destination_directory, $original_file_name);
