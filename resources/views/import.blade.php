@@ -91,7 +91,17 @@ input[ type=text ]{
 
 					@endif
 
+					{!! Form::open([ 'url' => 'deletedatabase', 'method' => 'post', 'files' => 'true']) !!}
 
+
+					<div class="form-group">
+						{{ Form::label('text','Delete Database ',array('id'=>'','class'=>'')) }}
+						{!! Form::select('database', $data,null, ['class'=> 'form-control col-md-6', 'id'=>'database']) !!}
+					</div>
+					<div class="form-group">	
+						{!! Form::submit('Go',  array('class'=>'btn btn-info ')) !!}
+					</div>
+                     {!! Form::close() !!}
 
 					
 					{!! Form::open([ 'url' => 'createdatabase', 'method' => 'post', 'files' => 'true']) !!}

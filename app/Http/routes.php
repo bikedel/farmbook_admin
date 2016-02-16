@@ -80,8 +80,8 @@ Route::group(['middleware' => 'web'], function () {
 
     // create database
     Route::post('/createdatabase', 'CsvImportController@createdatabase');
-
-
+    // delete database
+    Route::post('/deletedatabase', 'CsvImportController@deletedatabase');
 
     // rubish
     Route::get('/farmbook', 'FarmbookController@index');    

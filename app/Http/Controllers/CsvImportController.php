@@ -40,7 +40,7 @@ class CsvImportController extends BaseController
       $otf = new \App\Database\OTF(['database' =>  $database]);
       $db = DB::connection( $database);
 
-      $data = $db->table('schemata')->select('schema_name')->where('schema_name','like','%farm%')->lists("schema_name","schema_name");
+      $data = $db->table('schemata')->select('schema_name')->where('schema_name','like','%farm%')->orderBy('schema_name')->lists("schema_name","schema_name");
 
 
 
@@ -114,6 +114,61 @@ class CsvImportController extends BaseController
 }
 
 return Redirect::back()->with('flash_message',$message);
+}
+
+
+    // create database
+public function deletedatabase(Request $request)
+
+{
+ $database = $request->input('database');
+
+
+  $servername = config('database.connections.mysql.host');
+  $username = config('database.connections.mysql.username');
+  $password = config('database.connections.mysql.password');
+       // dd('make database',$database);
+
+  $dbname = 'tmp';
+
+         // connect to tmp database
+  $otf = new \App\Database\OTF(['database' => $dbname]);
+  $db = DB::connection($dbname);
+
+  $sql = "DROP DATABASE ".$database;
+
+
+  //set created to false
+  $created = false;
+
+  try {
+    // created database successfully
+    $db->getpdo()->exec(  $sql);
+    $created = true ;
+
+} catch (Exception $ex) {
+
+    // dd( $ex->getMessage());
+    // error creating database
+    $message =  $ex->getMessage();
+}
+
+    // database created success
+if ($created == true) {
+
+    $message = $database. ' deleted successfully.';
+    Session::flash('flash_message',    $message);
+    Session::flash('flash_type', 'alert-success');
+
+} else {
+
+    Session::flash('flash_message',    $message);
+    Session::flash('flash_type', 'alert-danger');
+}
+
+return Redirect::back()->with('flash_message',$message);
+
+
 }
 
 
