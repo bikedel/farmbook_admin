@@ -102,11 +102,14 @@ input[ type=text ]{
 						<br>
 						{!! Form::submit('Delete',  array('class'=>'btn btn-danger ')) !!}
 					</div>
-                     {!! Form::close() !!}
-<br>
+					{!! Form::close() !!}
+					<br>
 					
 					{!! Form::open([ 'url' => 'createdatabase', 'method' => 'post', 'files' => 'true']) !!}
-
+					<div class="form-group">
+						{{ Form::label('text','Type',array('id'=>'','class'=>'')) }}
+						{!! Form::select('type', $type,[0], ['class'=> 'form-control col-md-6', 'id'=>'type']) !!}
+					</div>
 
 					<div class="form-group">
 						{{ Form::label('text','Create Database [_farmbook will be added]',array('id'=>'','class'=>'')) }}
@@ -115,7 +118,7 @@ input[ type=text ]{
 					<div class="form-group">	
 						{!! Form::submit('Go',  array('class'=>'btn btn-info ')) !!}
 					</div>
-                     {!! Form::close() !!}
+					{!! Form::close() !!}
 					{!! Form::open([ 'url' => 'import', 'method' => 'post', 'files' => 'true']) !!}
 					<div class="form-group">
 						{{ Form::label('text','Choose Database',array('id'=>'','class'=>'')) }}

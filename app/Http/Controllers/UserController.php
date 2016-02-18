@@ -115,7 +115,7 @@ $currentuser = User::find($id);
 
 $currentuser->farmbook = $farmbooks[0];
 $currentuser->save();
-     Session::flash('flash_message', 'Farmbook changed to'  .  $currentuser->farmbook  . ' at '.$now);
+     Session::flash('flash_message', 'Farmbook changed. '.$now);
      Session::flash('flash_type', 'alert-success');
      return Redirect::back();
  //User::where('id', $id)->update(array('admin' => $admin,'active' => $active, 'farmbook' => $default, 'updated_at' => $now));

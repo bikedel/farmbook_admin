@@ -27,28 +27,28 @@
         font-weight: 900;
     }
 
-.navbar-default {
-    border-color: Transparent; 
+    .navbar-default {
+        border-color: Transparent; 
 
-    margin-bottom: 2cm;
+        margin-bottom: 2cm;
 
-}
-.panel-body{
-       background-color: rgba(240, 240, 240, .6);
-}
+    }
+    .panel-body{
+     background-color: rgba(240, 240, 240, .6);
+ }
 
-.navbar .navbar-brand{
+ .navbar .navbar-brand{
   font-weight: 900;
-    color:#2e78ba;
+  color:#2e78ba;
 }
 
 .settings{
-margin-right: 6px;
+    margin-right: 6px;
     color:red;
 }
 
 .users{
-margin-right: 6px;
+    margin-right: 6px;
     color:teal;
 }
 
@@ -57,18 +57,18 @@ margin-right: 6px;
 }
 
 .farmbooks{
-margin-right: 6px;
+    margin-right: 6px;
     color:green;
 }
 
-    .id {
-        border-color: Transparent; 
-        border:none;
-    }
-    .fa-btn {
-        margin-right: 6px;
-    }
-    </style>
+.id {
+    border-color: Transparent; 
+    border:none;
+}
+.fa-btn {
+    margin-right: 6px;
+}
+</style>
 </head>
 <body id="app-layout">
     <nav class="navbar navbar-default">
@@ -92,45 +92,45 @@ margin-right: 6px;
             <div class="collapse navbar-collapse" id="app-navbar-collapse">
                 <!-- Left Side Of Navbar -->
                 <ul class="nav navbar-nav">
-                                 @if (!Auth::guest())
-                         <li><a href="{{ url('/userfarmbooks') }}">Farmbook [ {{ Auth::user()->getDatabaseName() }} ]</a></li>
-                         @endif
-                         <li><a href="{{ url('/home') }}">Search</a></li>
+                   @if (!Auth::guest())
+                   <li><a href="{{ url('/userfarmbooks') }}">Farmbook [ {{ Auth::user()->getDatabaseName() }} ]</a></li>
 
-                </ul>
+                   <li><a href="{{ url('/home') }}">Search</a></li>
+                   @endif
+               </ul>
 
 
-                <!-- Right Side Of Navbar -->
-                <ul class="nav navbar-nav navbar-right">
-                    <!-- Authentication Links -->
-                    @if (Auth::guest())
-                    <li><a href="{{ url('/login') }}">Login</a></li>
+               <!-- Right Side Of Navbar -->
+               <ul class="nav navbar-nav navbar-right">
+                <!-- Authentication Links -->
+                @if (Auth::guest())
+                <li><a href="{{ url('/login') }}">Login</a></li>
 
-                    @else
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                            {{ Auth::user()->name }} <span class="caret"></span>
-                        </a>
+                @else
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                        {{ Auth::user()->name }} <span class="caret"></span>
+                    </a>
 
-                        <ul class="dropdown-menu" role="menu">
-                            <li><a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i>Logout</a></li> 
-                              @if (Auth::user()->isAdmin())
-                                  <li><a href="{{ url('/users') }}"> <i class=""> <span class=" users    glyphicon glyphicon-user"> </span></i>Users</a></li>
-                                  <li><a href="{{ url('/farmbooks') }}"> <i class=""> <span class=" farmbooks    glyphicon glyphicon-grain"> </span></i>Farmbooks</a></li>
-                              @endif
-                        </ul>
-                    </li>
-                    @endif
-                </ul>
-            </div>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i>Logout</a></li> 
+                        @if (Auth::user()->isAdmin())
+                        <li><a href="{{ url('/users') }}"> <i class=""> <span class=" users    glyphicon glyphicon-user"> </span></i>Users</a></li>
+                        <li><a href="{{ url('/farmbooks') }}"> <i class=""> <span class=" farmbooks    glyphicon glyphicon-grain"> </span></i>Farmbooks</a></li>
+                        @endif
+                    </ul>
+                </li>
+                @endif
+            </ul>
         </div>
-    </nav>
+    </div>
+</nav>
 
-    @yield('content')
+@yield('content')
 
-    <!-- JavaScripts -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-    {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
+<!-- JavaScripts -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+{{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
 </body>
 </html>
