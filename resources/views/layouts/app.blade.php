@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Laravel</title>
+    <title>ProteaDB</title>
 
     <!-- Fonts -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css" rel='stylesheet' type='text/css'>
@@ -97,7 +97,7 @@
                    @if (!Auth::guest())
                    <li><a href="{{ url('/userfarmbooks') }}">Farmbook [ {{ Auth::user()->getDatabaseName() }} ]</a></li>
 
-                   <li><a href="{{ url('/home') }}">Search</a></li>
+                   <li><a href="{{ url('/home') }}">Canvass</a></li>
                    @endif
                </ul>
 
