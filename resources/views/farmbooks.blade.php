@@ -5,10 +5,29 @@
 body {
 
 }
-table td{padding:5px;}
+table { 
+  width: 100%; 
+  border-collapse: collapse; 
+}
+/* Zebra striping */
+tr:nth-of-type(odd) { 
+  background: #eee; 
+}
+th { 
+  background: #333; 
+  color: white; 
+  font-weight: bold; 
+}
+td, th { 
+  padding: 5px; 
+  border: 1px solid #ccc; 
+  text-align: left; 
+}
+
+
 th {
 
-    opacity:.2;
+    opacity:.8;
 }
 
 #strStreetNo{ color:red;}
@@ -21,15 +40,15 @@ th {
             <div class="panel panel-primary">
                 <div class="panel-heading">Farmbooks  [{{$farmbooks->count()}}]  </div>
 
-                <div class="panel-body">
+                <div class="panel-body table-responsive">
 
-                 <table style="width:100%" class="table-striped">
+                 <table class="table">
                   <tr>
-                    <th>[Action]</th>
-                    <th>[Id] </th>
-                    <th>[Name] </th> 
-                    <th> [Database]</th>
-       <th> [Type]</th>
+                    <th>Action</th>
+                    <th>Id </th>
+                    <th>Name </th> 
+                    <th>Database</th>
+                    <th>Type</th>
 
                 </tr>
                 @foreach ($farmbooks as $farm)

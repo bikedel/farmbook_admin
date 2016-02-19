@@ -6,10 +6,41 @@ body {
 
 }
 
-table td{padding:5px;}
+textarea{ 
+  border-style: none; 
+  border-color: Transparent; 
+  padding:0;
+  overflow: auto; 
+  width: 100%;
+  -webkit-box-sizing: border-box; /* <=iOS4, <= Android  2.3 */
+  -moz-box-sizing: border-box; /* FF1+ */
+  box-sizing: border-box; /* Chrome, IE8, Opera, Safari 5.1*/   
+}
+table { 
+  width: 100%; 
+  border-collapse: collapse; 
+}
+/* Zebra striping */
+tr:nth-of-type(odd) { 
+  background: #eee; 
+}
+th { 
+  background: #333; 
+  color: white; 
+  font-weight: bold; 
+}
+td, th { 
+  padding: 5px; 
+  border: 1px solid #ccc; 
+  text-align: left; 
+}
+
+
+
+
 th {
 
-    opacity:.2;
+    opacity:.8;
 }
 
 #strStreetNo{ color:red;}
@@ -22,53 +53,58 @@ th {
             <div class="panel panel-primary">
                 <div class="panel-heading">Properties [{{$properties->count()}}]  </div>
 
-                <div class="panel-body">
+                <div class="panel-body table-responsive">
                     {{ link_to(url('/complex/'.$search), 'Edit All', ['class' => 'btn btn-default']) }}
                     <p><br></p>
-                    <table style="width:100%" class="table-striped">
-                      <tr>
-                        <th>[Action]</th>
-                        <th>[Erf] </th>
-                        <th>[Complex] </th> 
-                        <th> [No]</th>
+                    <table class="table">
+                        <thead>
+                          <tr>
+                            <th>Action</th>
+                            <th>Erf </th>
+                            <th>Complex </th> 
+                            <th>No</th>
+                            <th>Owners</th> 
+                        </tr>
+                    </thead>
+                    <tbody>
+                      
+                        @foreach ($properties as $property)
 
-                        <th>[Owners]</th> 
 
+                        <tr>
+                            <td data-label="action">
 
-                    </tr>
-                    @foreach ($properties as $property)
+                            {{ link_to_action('PropertyController@edit','edit', ['id' => $property->id]) }}
 
-                    <div class="row">  
-                      <tr>
-                       <td>
+                           </td>
+                
+                        <td data-label="erf">
 
-                        {{ link_to_action('PropertyController@edit','edit', ['id' => $property->id]) }}
+                            {{  $property->numErf }}
 
-                    </td>
-                    <td>
+                        </td>
+                        <td data-label="Complex">
 
-                        {{  $property->numErf }}
+                            {{ $property->strComplexName }}
 
-                    </td>
-                    <td>
+                        </td>
+                        <td data-label="No">
 
-                        {{ $property->strComplexName }}
+                            {{ $property->strComplexNo }}
 
-                    </td>
-                    <td>
+                        </td>
 
-                        {{ $property->strComplexNo }}
+                        <td data-label="Owners">
 
-                    </td>
+                            {{ $property->strOwners }}
 
-                    <td>
-
-                        {{ $property->strOwners }}
-
-                    </td>
-
-                </div>
-                @endforeach
+                        </td>
+ 
+                    </tr> 
+               
+                    @endforeach
+                    
+                </tbody>
             </table>
         </div>
 

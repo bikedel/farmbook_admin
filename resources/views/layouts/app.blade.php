@@ -34,7 +34,7 @@
 
     }
     .panel-body{
-     background-color: rgba(240, 240, 240, .6);
+     background-color: rgba(232, 232, 232, 1);
  }
 
  .navbar .navbar-brand{
@@ -55,6 +55,8 @@
 .panel-primary .panel-heading{
 
 }
+
+
 
 .farmbooks{
     margin-right: 6px;

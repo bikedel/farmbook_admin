@@ -5,10 +5,29 @@
 body {
 
 }
-table td{padding:5px;}
+table { 
+  width: 100%; 
+  border-collapse: collapse; 
+}
+/* Zebra striping */
+tr:nth-of-type(odd) { 
+  background: #eee; 
+}
+th { 
+  background: #333; 
+  color: white; 
+  font-weight: bold; 
+}
+td, th { 
+  padding: 5px; 
+  border: 1px solid #ccc; 
+  text-align: left; 
+}
+
+
 th {
 
-    opacity:.4;
+    opacity:.8;
 }
 
 #strStreetNo{ color:red;}
@@ -21,17 +40,17 @@ th {
             <div class="panel panel-primary">
                 <div class="panel-heading">Users  [{{$users->count()}}]  </div>
 
-                <div class="panel-body">
+                <div class="panel-body table-responsive">
 
-                 <table style="width:100%" class="table-striped">
+                 <table class="table">
                   <tr>
-                    <th>[Action]</th>
-                    <th>[Id] </th>
-                    <th>[Name] </th> 
-                    <th> [Email]</th>
-                    <th>[F]</th> 
-                    <th>[L]</th> 
-                    <th>[A]</th> 
+                    <th>Action</th>
+                    <th>Id </th>
+                    <th>Name </th> 
+                    <th>Email</th>
+                    <th>Farmbook</th> 
+                    <th>Active</th> 
+                    <th>Admin</th> 
 
                 </tr>
                 @foreach ($users as $user)
