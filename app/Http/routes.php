@@ -83,6 +83,13 @@ Route::group(['middleware' => 'web'], function () {
     // delete database
     Route::post('/deletedatabase', 'CsvImportController@deletedatabase');
 
+
+Route::controller('datatables', 'DatatablesController', [
+	'anyData'  => 'datatables.data',
+	'getIndex' => 'datatables',
+	]);
+
+Route::resource('prop', 'DatatablesController');
     // rubish
     Route::get('/farmbook', 'FarmbookController@index');    
     Route::get('/settings', 'SettingsController@index');    
