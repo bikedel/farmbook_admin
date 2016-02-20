@@ -99,6 +99,7 @@
                    <li><a href="{{ url('/userfarmbooks') }}">Farmbook [ {{ Auth::user()->getDatabaseName() }} ]</a></li>
 
                    <li><a href="{{ url('/home') }}">Canvass</a></li>
+                    <li><a href="{{ url('/datatables') }}">Properties</a></li>
                    @endif
                </ul>
 
