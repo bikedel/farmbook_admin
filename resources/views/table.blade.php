@@ -22,7 +22,9 @@
 
 }
 
-th{  background-color: rgba(37, 91, 171, 1);
+th{ 
+ /* background-color: rgba(37, 91, 171, 1); */
+ background-color:#333;
   color:silver
 }
 th.sorting {color:silver;}
@@ -39,10 +41,15 @@ tfoot input {
 
 </style>
 
-
-
 <div class="container">
-  <div class="row">
+    <div class="row">
+
+            <div class="panel panel-primary">
+                <div class="panel-heading">Datatable</div>
+
+                <div class="panel-body">
+
+
 <table cellpadding="3" cellspacing="0" border="0" style="width:100%; margin: 0 auto 2em auto;">
         <thead>
             <tr>
@@ -96,6 +103,9 @@ tfoot input {
                 <td align="center"><input type="checkbox" class="column_filter" id="col5_smart" checked="checked"></td>
             </tr>
         </tbody>
+
+
+
     <table class="table table-bordered table-striped table-responsive" id="table">
       <thead>
         <tr>
@@ -141,7 +151,12 @@ tfoot input {
  </div>
 </div>
 
+ </div>
+</div>
+ </div>
 
+ </div>
+</div>
 @stop
 
 @push('scripts')
@@ -223,28 +238,6 @@ $(document).ready(function() {
         filterColumn( $(this).parents('tr').attr('data-column') );
     } );
 
-   $('#table').DataTable( {
-        initComplete: function () {
-            this.api().columns().every( function () {
-                var column = this;
-                var select = $('<select><option value=""></option></select>')
-                    .appendTo( $(column.footer()).empty() )
-                    .on( 'change', function () {
-                        var val = $.fn.dataTable.util.escapeRegex(
-                            $(this).val()
-                        );
- 
-                        column
-                            .search( val ? '^'+val+'$' : '', true, false )
-                            .draw();
-                    } );
- 
-                column.data().unique().sort().each( function ( d, j ) {
-                    select.append( '<option value="'+d+'">'+d+'</option>' )
-                } );
-            } );
-        }
-    } );
 
 
 } );
