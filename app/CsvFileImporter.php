@@ -120,7 +120,16 @@ class CsvFileImporter
         $query_delete3 = ('TRUNCATE TABLE properties');
         $query_delete4 = ('TRUNCATE TABLE streets');
 
+  $key= "CONCAT(numErf,'-', numPortion)";
 
+if (strpos($database, '_FH') !== false) {
+   $key= "CONCAT(numErf,'-', numPortion)";
+}
+if (strpos($database, '_ST') !== false) {
+    $key= "CONCAT(strComplexName,' ', strComplexNo)";
+}
+
+//dd($key);
 
         $query = sprintf("LOAD DATA INFILE '%s' REPLACE INTO TABLE properties 
             FIELDS TERMINATED BY ','  ENCLOSED BY '\"' LINES TERMINATED BY '\n'  IGNORE 1 LINES 
@@ -141,8 +150,7 @@ class CsvFileImporter
              strIdentity,
              strSellers,
              strTitleDeed  )
-        SET strKey = CONCAT(numErf,'-', numPortion)
-        ", addslashes($file_path) );
+        SET strKey = ".$key , addslashes($file_path) );
 
 
         $query_makeStreets = ('INSERT INTO streets (strStreetName) SELECT strStreetName FROM properties GROUP BY strStreetName');

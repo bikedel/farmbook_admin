@@ -219,7 +219,7 @@ table td{padding:5px;}
       {{ Form::open(array("method" =>"POST","url"=>Session::get('controllerroute'))) }}
       <input type="text" name="selected" class="hidden" value="{{Session::get('search')}}"></input>
 
-      {{Form::submit('Back', array('class' => 'btn btn-default back')) }} 
+     
 
       {{ Form::close() }}  
 
