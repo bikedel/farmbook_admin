@@ -15,7 +15,7 @@
 
     <!-- Styles -->
     <link rel="stylesheet" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.min.css">
-       <link rel="stylesheet" href="https://cdn.datatables.net/select/1.1.2/css/select.bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/select/1.1.2/css/select.bootstrap.min.css">
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
     {{-- <link href="{{ elixir('css/app.css') }}" rel="stylesheet"> --}}
 
@@ -38,15 +38,15 @@
 
     }
     .panel-body{
-     background-color: rgba(232, 232, 232, 1);
- }
+       background-color: rgba(232, 232, 232, 1);
+   }
 
- .navbar .navbar-brand{
-  font-weight: 900;
-  color:#2e78ba;
-}
+   .navbar .navbar-brand{
+      font-weight: 900;
+      color:#2e78ba;
+  }
 
-.settings{
+  .settings{
     margin-right: 6px;
     color:red;
 }
@@ -98,64 +98,80 @@
             <div class="collapse navbar-collapse" id="app-navbar-collapse">
                 <!-- Left Side Of Navbar -->
                 <ul class="nav navbar-nav">
-                   @if (!Auth::guest())
-                   <li><a href="{{ url('/userfarmbooks') }}">Farmbook [ {{ Auth::user()->getDatabaseName() }} ]</a></li>
-
-                   <li><a href="{{ url('/home') }}">Canvass</a></li>
-                    <li><a href="{{ url('/datatables') }}">Properties</a></li>
-                   @endif
-               </ul>
+                 @if (!Auth::guest())
+                 <li><a href="{{ url('/userfarmbooks') }}">Farmbook [ {{ Auth::user()->getDatabaseName() }} ]</a></li>
 
 
-               <!-- Right Side Of Navbar -->
-               <ul class="nav navbar-nav navbar-right">
-                <!-- Authentication Links -->
-                @if (Auth::guest())
-                <li><a href="{{ url('/login') }}">Login</a></li>
 
-                @else
-                <li class="dropdown">
+                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                        {{ Auth::user()->name }} <span class="caret"></span>
-                    </a>
+                     Canvass <span class="caret"></span>
+                 </a>
 
-                    <ul class="dropdown-menu" role="menu">
-                        <li><a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i>Logout</a></li> 
-                        @if (Auth::user()->isAdmin())
-                        <li><a href="{{ url('/users') }}"> <i class=""> <span class=" users    glyphicon glyphicon-user"> </span></i>Users</a></li>
-                        <li><a href="{{ url('/farmbooks') }}"> <i class=""> <span class=" farmbooks    glyphicon glyphicon-grain"> </span></i>Farmbooks</a></li>
-                        @endif
-                    </ul>
-                </li>
-                @endif
-            </ul>
-        </div>
+                 <ul class="dropdown-menu" role="menu">
+                    <li><a href="{{ url('/home') }}"><i class="farmbooks glyphicon glyphicon-road"></i>by Street</a></li> 
+
+                    <li><a href="{{ url('/home') }}"> <i class=""> <span class=" users     glyphicon glyphicon-th"> </span></i>by Complex</a></li>
+
+
+                </ul>
+            </li>
+
+
+            <li><a href="{{ url('/datatables') }}">Properties</a></li>
+            @endif
+        </ul>
+
+
+        <!-- Right Side Of Navbar -->
+        <ul class="nav navbar-nav navbar-right">
+            <!-- Authentication Links -->
+            @if (Auth::guest())
+            <li><a href="{{ url('/login') }}">Login</a></li>
+
+            @else
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                    {{ Auth::user()->name }} <span class="caret"></span>
+                </a>
+
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i>Logout</a></li> 
+                    @if (Auth::user()->isAdmin())
+                    <li><a href="{{ url('/users') }}"> <i class=""> <span class=" users    glyphicon glyphicon-user"> </span></i>Users</a></li>
+                    <li><a href="{{ url('/farmbooks') }}"> <i class=""> <span class=" farmbooks    glyphicon glyphicon-grain"> </span></i>Farmbooks</a></li>
+                    @endif
+                </ul>
+            </li>
+            @endif
+        </ul>
     </div>
+</div>
 </nav>
 
 @yield('content')
-        <!-- jQuery -->
-        <script src="//code.jquery.com/jquery.js"></script>
+<!-- jQuery -->
+<script src="//code.jquery.com/jquery.js"></script>
 
 
 
-        <!-- DataTables -->
-
-https://cdn.datatables.net/select/1.1.2/js/dataTables.select.min.js
-
-        <script src="//cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
-                <script src="https://cdn.datatables.net/select/1.1.2/js/dataTables.select.min.js"></script>
-        <script src="//cdn.datatables.net/1.10.11/js/dataTables.bootstrap.min.js"></script>
-        <!-- Bootstrap JavaScript -->
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<!-- DataTables -->
 
 
+
+<script src="//cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/select/1.1.2/js/dataTables.select.min.js"></script>
+<script src="//cdn.datatables.net/1.10.11/js/dataTables.bootstrap.min.js"></script>
+<!-- Bootstrap JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 
 
 
 
-        <!-- App scripts -->
-        @stack('scripts')
+
+
+<!-- App scripts -->
+@stack('scripts')
 <!-- JavaScripts -->
 
 
