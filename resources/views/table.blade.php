@@ -186,7 +186,7 @@ table.dataTable thead .sorting_desc:after {
 
 <script>
 $(function() {
-  $('#table').DataTable({
+ var table =  $('#table').DataTable({
     processing: true,
     serverSide: true,
     dom: 'Bfrtip',
@@ -235,6 +235,25 @@ $(function() {
   });
 });
 
+
+table
+.on( 'select', function ( e, dt, type, indexes ) {
+  var rowData = table.rows( indexes ).data().toArray();
+alert("hello");
+    } )
+
+.on( 'deselect', function ( e, dt, type, indexes ) {
+  var rowData = table.rows( indexes ).data().toArray();
+
+     } )
+
+
+
+
+
+
+
+
 function filterGlobal () {
   $('#table').DataTable().search(
     $('#global_filter').val(),
@@ -276,6 +295,6 @@ $(document).ready(function() {
 
 } );
 </script>
-   
+
 
 @endpush

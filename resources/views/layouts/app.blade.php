@@ -11,8 +11,11 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css" rel='stylesheet' type='text/css'>
     <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700" rel='stylesheet' type='text/css'>
 
+
+
     <!-- Styles -->
     <link rel="stylesheet" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.min.css">
+       <link rel="stylesheet" href="https://cdn.datatables.net/select/1.1.2/css/select.bootstrap.min.css">
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
     {{-- <link href="{{ elixir('css/app.css') }}" rel="stylesheet"> --}}
 
@@ -133,8 +136,15 @@
 @yield('content')
         <!-- jQuery -->
         <script src="//code.jquery.com/jquery.js"></script>
+
+
+
         <!-- DataTables -->
+
+https://cdn.datatables.net/select/1.1.2/js/dataTables.select.min.js
+
         <script src="//cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
+                <script src="https://cdn.datatables.net/select/1.1.2/js/dataTables.select.min.js"></script>
         <script src="//cdn.datatables.net/1.10.11/js/dataTables.bootstrap.min.js"></script>
         <!-- Bootstrap JavaScript -->
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
