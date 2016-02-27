@@ -101,6 +101,8 @@ table.dataTable thead .sorting_desc:after {
         <table class="table table-bordered table-striped table-responsive" id="table">
           <thead>
             <tr>
+             <th>Owners</th>
+             <th>Identity</th>
              <th>Suburb</th>
              <th>Erf</th>
              <th>Port</th>
@@ -114,8 +116,7 @@ table.dataTable thead .sorting_desc:after {
              <th>Amount</th>
              <th>BondHolder</th>
              <th>BondAmount</th>
-             <th>Owners</th>
-             <th>Identity</th>
+
              <th>Sellers</th>
              <th>TitleDeed</th>
              <th>Key</th>
@@ -183,9 +184,9 @@ table.dataTable thead .sorting_desc:after {
       </table>
 
       <br>
-      <button type="button" class="btn btn-default disabled" id ='Street' ><span>View</span></button>
+    
       <button type="button" class="btn btn-primary " id ='viewStreet' value=''><span>Street</span></button>
-      <button type="button" class="btn btn-default disabled" id ='Complex' value=''><span>View</span></button>
+
       <button type="button" class="btn btn-primary " id ='viewComplex'>Complex</button>
     </div>
   </div>
@@ -231,12 +232,13 @@ $(function() {
   lengthMenu: [[ 5, 10, 25, 50, -1], [ 5, 10, 25, 50, "All"]],
   ajax: '{!! route('datatables.data') !!}',
   columns: [
+  { data: 'strOwners', name: 'strOwners' },  
+  { data: 'strIdentity', name: 'strIdentity' },   
   { data: 'strSuburb', name: 'strSuburb' },
   { data: 'numErf', name: 'numErf' },
   { data: 'numPortion', name: 'numPortion' , width: '90px'},
   { data: 'numStreetNo', name: 'numStreetNo' , width: '90px'},
   { data: 'strStreetName', name: 'strStreetName' , width: '100px'},
-
   { data: 'strComplexNo', name: 'strComplexNo' , width: '90px', class: 'ellis'},
   { data: 'strComplexName', name: 'strComplexName' , width: '100px'},
   { data: 'strSqMeters', name: 'strSqMeters' , width: '80px', class: 'ellis'},
@@ -244,8 +246,7 @@ $(function() {
   { data: 'strAmount', name: 'strAmount' },
   { data: 'strBondHolder', name: 'strBondHolder' , width: '90px'},
   { data: 'strBondAmount', name: 'strBondAmount' , width: '120px'},      
-  { data: 'strOwners', name: 'strOwners' },  
-  { data: 'strIdentity', name: 'strIdentity' },    
+ 
   { data: 'strSellers', name: 'strSellers' },    
   { data: 'strTitleDeed', name: 'strTitleDeed' } ,
   { data: 'strKey', name: 'strKey' }  
@@ -280,6 +281,9 @@ function filterColumn ( i ) {
 }
 
 $(document).ready(function() {
+
+
+  $selectedrow = 0;
   $('#table').DataTable();
 
   $('input.global_filter').on( 'keyup click', function () {
@@ -316,7 +320,7 @@ $(document).ready(function() {
 
 $("#viewStreet").click(function(event){
 
-
+if ($selectedrow>0){
 
  var st =   document.getElementById('viewStreet').innerHTML;
 // route to streetgrid plus street
@@ -325,11 +329,12 @@ $path = "{{ URL::to('street') }}"+"/"+st;
 
 // navigate to route
 document.location.href=$path;
+}
 });
 
 $("#viewComplex").click(function(event){
 
-
+if ($selectedrow>0){
 
  var st =   document.getElementById('viewComplex').innerHTML;
 // route to streetgrid plus street
@@ -338,12 +343,13 @@ $path = "{{ URL::to('complex') }}"+"/"+st;
 
 // navigate to route
 document.location.href=$path;
+}
 });
 
   table
   .on( 'select', function ( e, dt, type, indexes ) {
     var rowData = table.rows( indexes ).data().toArray();
-
+  $selectedrow = 1;
   } )
 
   .on( 'deselect', function ( e, dt, type, indexes ) {

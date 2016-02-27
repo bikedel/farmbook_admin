@@ -118,7 +118,7 @@
             </li>
 
 
-            <li><a href="{{ url('/datatables') }}">Properties</a></li>
+            <li><a href="{{ url('/datatables') }}">Owners</a></li>
             @endif
         </ul>
 
