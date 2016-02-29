@@ -35,7 +35,7 @@ class FarmbookController extends Controller
 
        // dd("user controller");
 
-      $farmbooks =  Farmbook::all();
+      $farmbooks =  Farmbook::orderBy('name')->get();
  
 
       return view('farmbooks',compact('farmbooks'));
