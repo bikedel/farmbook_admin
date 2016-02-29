@@ -56,6 +56,11 @@
     color:teal;
 }
 
+.admin{
+    margin-right: 6px;
+    color:red;
+}
+
 .panel-primary .panel-heading{
 
 }
@@ -99,7 +104,7 @@
                 <!-- Left Side Of Navbar -->
                 <ul class="nav navbar-nav">
                  @if (!Auth::guest())
-                 <li><a href="{{ url('/userfarmbooks') }}">Farmbook [ {{ Auth::user()->getDatabaseName() }} ]</a></li>
+                 <li><a href="{{ url('/userfarmbooks') }}">{{ Auth::user()->getDatabaseName() }} </a></li>
 
 
 
@@ -140,6 +145,7 @@
                     @if (Auth::user()->isAdmin())
                     <li><a href="{{ url('/users') }}"> <i class=""> <span class=" users    glyphicon glyphicon-user"> </span></i>Users</a></li>
                     <li><a href="{{ url('/farmbooks') }}"> <i class=""> <span class=" farmbooks    glyphicon glyphicon-grain"> </span></i>Farmbooks</a></li>
+                    <li><a href="{{ url('/import') }}"> <i class=""> <span class=" admin glyphicon glyphicon-transfer"> </span></i>Import</a></li>
                     @endif
                 </ul>
             </li>

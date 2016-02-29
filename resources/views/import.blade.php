@@ -75,7 +75,7 @@ input[ type=text ]{
 	<div class="row">
 		<div class="col-md-10 col-md-offset-1">
 			<div class="panel panel-primary">
-				<div class="panel-heading">Import 
+				<div class="panel-heading">CSV Import 
 				</div>
 				
 
@@ -91,6 +91,22 @@ input[ type=text ]{
 
 					@endif
 
+
+
+					{!! Form::close() !!}
+					{!! Form::open([ 'url' => 'import', 'method' => 'post', 'files' => 'true']) !!}
+
+					<div class="form-group">
+						{{ Form::label('text2','Import file ',array('id'=>'f','class'=>'')) }}
+						{!! Form::file('csv_import', ['class' => 'csv_import form-control input-sm']) !!}
+					</div>
+					<div class="form-group">
+						
+						{!! Form::submit('Go',  array('class'=>'btn btn-info ')) !!}
+					</div>
+					{!! Form::close() !!}
+
+
 					{!! Form::open([ 'url' => 'deletedatabase', 'method' => 'post', 'files' => 'true']) !!}
 
 
@@ -103,39 +119,9 @@ input[ type=text ]{
 						{!! Form::submit('Delete',  array('class'=>'btn btn-danger ')) !!}
 					</div>
 					{!! Form::close() !!}
-					<br>
-					
-					{!! Form::open([ 'url' => 'createdatabase', 'method' => 'post', 'files' => 'true']) !!}
-					<div class="form-group">
-						{{ Form::label('text','Type',array('id'=>'','class'=>'')) }}
-						{!! Form::select('type', $type,[0], ['class'=> 'form-control col-md-6', 'id'=>'type']) !!}
-					</div>
-
-					<div class="form-group">
-						{{ Form::label('text','Create Database [_farmbook will be added]',array('id'=>'','class'=>'')) }}
-						{{ Form::input('text', 'database') }}
-					</div>
-					<div class="form-group">	
-						{!! Form::submit('Go',  array('class'=>'btn btn-info ')) !!}
-					</div>
-					{!! Form::close() !!}
-					{!! Form::open([ 'url' => 'import', 'method' => 'post', 'files' => 'true']) !!}
-					<div class="form-group">
-						{{ Form::label('text','Choose Database',array('id'=>'','class'=>'')) }}
-						{!! Form::select('database', $data,[0], ['class'=> 'form-control col-md-6', 'id'=>'database']) !!}
-					</div>
-					<div class="form-group">
-						<br>
-						{{ Form::label('text2','Choose CSV file ',array('id'=>'f','class'=>'')) }}
-						{!! Form::file('csv_import', ['class' => 'csv_import form-control input-sm']) !!}
-					</div>
-					<div class="form-group">
-						
 
 
-						{!! Form::submit('Go',  array('class'=>'btn btn-info ')) !!}
-					</div>
-					{!! Form::close() !!}
+
 				</div>
 
 
@@ -143,6 +129,17 @@ input[ type=text ]{
 
 			</div>
 		</div>
+
+
+
+
+
+
+
+
+
+
+
 	</div>
 </div>
 </div>
