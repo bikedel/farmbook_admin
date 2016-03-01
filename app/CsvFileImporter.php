@@ -179,7 +179,7 @@ if (strpos($database, '_ST') !== false) {
             WHERE owners.strIDNumber = farmbook_admin.contacts.strIDNumber');
 
         $query_insertContacts =  ('INSERT INTO farmbook_admin.contactsnew (strIDNumber,TITLE,INITIALS,NAME,strSurname,strFirstName,strHomePhoneNo,strWorkPhoneNo,strCellPhoneNo,EMAIL) 
-            SELECT strIDNumber,TITLE,INITIALS,NAME,strSurname,strFirstName,strHomePhoneNo,strWorkPhoneNo,strCellPhoneNo,EMAIL FROM Owners');
+            SELECT strIDNumber,TITLE,INITIALS,NAME,strSurname,strFirstName,strHomePhoneNo,strWorkPhoneNo,strCellPhoneNo,EMAIL FROM owners');
 
         try {
             //delete
