@@ -48,8 +48,17 @@ Route::group(['middleware' => 'web'], function () {
     Route::post('/street', 'StreetController@index');
     Route::get('/street/{id}', 'StreetController@rolledit');
 
+    // complex
     Route::post('/complex', 'ComplexController@index');
     Route::get('/complex/{id}', 'ComplexController@rolledit');
+
+    // erf
+    Route::post('/erf', 'ErfController@index');
+    Route::get('/erf/{id}', 'ErfController@rolledit');
+
+    // owners
+    Route::post('/owner', 'OwnerController@index');
+    Route::get('/owner/{id}', 'OwnerController@rolledit');
 
 
     // show property

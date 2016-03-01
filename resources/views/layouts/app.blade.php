@@ -115,10 +115,9 @@
 
                  <ul class="dropdown-menu" role="menu">
                     <li><a href="{{ url('/home') }}"><i class="farmbooks glyphicon glyphicon-road"></i>by Street</a></li> 
-
                     <li><a href="{{ url('/home') }}"> <i class=""> <span class=" users     glyphicon glyphicon-th"> </span></i>by Complex</a></li>
-
-
+                    <li><a href="{{ url('/home') }}"> <i class=""> <span class=" admin     glyphicon glyphicon-home"> </span></i>by Erf</a></li>
+                    <li><a href="{{ url('/home') }}"> <i class=""> <span class=" users     glyphicon glyphicon-user"> </span></i>by Owner</a></li>
                 </ul>
             </li>
 

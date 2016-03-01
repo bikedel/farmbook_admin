@@ -79,11 +79,57 @@
         </div>
         <!--  col-md-10 -->
 
+  
+            <div class="panel panel-primary">
+                <div class="panel-heading ">Find a propery by Erf Number</div>
+
+                <div class="panel-body">
+
+                    <div class='main_search_form'> 
+
+                        {{ Form::open(array('method' =>'POST','url'=>'/erf')) }}
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" placeholder="Enter Erf Number" name="input" >
+                        </div>
+
+                        <div class="col-sm-2">
+                            {{Form::submit('Go', array('class' => 'btn btn-success')) }}
+                        </div>
+                        {{ Form::close() }}
+                        <!--  </form> -->
+
+                   </div>
+                   <!--  <main_search_form -->
+            </div>
+            <!--  panel body -->
+        </div>
+        <!--  col-md-10 -->
 
 
+            <div class="panel panel-primary">
+                <div class="panel-heading ">Find a propery by Owner</div>
 
+                <div class="panel-body">
 
+                    <div class='main_search_form'> 
 
+                        {{ Form::open(array('method' =>'POST','url'=>'/owner')) }}
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" placeholder="Enter Owner Name" name="input" >
+                        </div>
+
+                        <div class="col-sm-2">
+                            {{Form::submit('Go', array('class' => 'btn btn-success')) }}
+                        </div>
+                        {{ Form::close() }}
+                        <!--  </form> -->
+
+                   </div>
+                   <!--  <main_search_form -->
+            </div>
+            <!--  panel body -->
+        </div>
+        <!--  col-md-10 -->
 
     </div>
     <!--  row -->

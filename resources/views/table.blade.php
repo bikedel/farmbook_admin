@@ -184,10 +184,10 @@ table.dataTable thead .sorting_desc:after {
       </table>
 
       <br>
-    
-      <button type="button" class="btn btn-primary " id ='viewStreet' value=''><span>Street</span></button>
-
-      <button type="button" class="btn btn-primary " id ='viewComplex'>Complex</button>
+      <button type="button" class="btn btn-success " id ='viewOwner' value=''><span>Owner</span></button>
+      <button type="button" class="btn btn-success " id ='viewErf' value=''><span>Erf</span></button>
+      <button type="button" class="btn btn-success " id ='viewStreet' value=''><span>Street</span></button>
+      <button type="button" class="btn btn-success " id ='viewComplex'>Complex</button>
     </div>
   </div>
 </div>
@@ -306,16 +306,48 @@ $(document).ready(function() {
       table.$('tr.selected').removeClass('selected');
       $(this).addClass('selected');
     }
+
+    var owner = table.row( this ).data().strOwners ;
+    var erf = table.row( this ).data().numErf ;
     var street = table.row( this ).data().strStreetName ;
     var complex = table.row( this ).data().strComplexName ;
 
-
-
+    document.getElementById('viewOwner').innerHTML = owner;
+    document.getElementById('viewErf').innerHTML = erf ;
     document.getElementById('viewStreet').innerHTML = street ;
-
-
     document.getElementById('viewComplex').innerHTML = complex ;
   } );
+
+
+
+
+$("#viewOwner").click(function(event){
+
+if ($selectedrow>0){
+
+ var st =   document.getElementById('viewOwner').innerHTML;
+// route to streetgrid plus street
+
+$path = "{{ URL::to('owner') }}"+"/"+st;
+
+// navigate to route
+document.location.href=$path;
+}
+});
+
+$("#viewErf").click(function(event){
+
+if ($selectedrow>0){
+
+ var st =   document.getElementById('viewErf').innerHTML;
+// route to streetgrid plus street
+
+$path = "{{ URL::to('erf') }}"+"/"+st;
+
+// navigate to route
+document.location.href=$path;
+}
+});
 
 
 $("#viewStreet").click(function(event){
