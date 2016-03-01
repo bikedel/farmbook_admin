@@ -17,6 +17,7 @@ use Exception;
 use DB;
 use Storage;
 use App\Farmbook;
+use App\Owner;
 
 class CsvImportController extends BaseController
 {
@@ -215,6 +216,26 @@ $dbname = 'tmp';
      if ($csv_importer->import($csv_file,$database) ){
 
       $Farmbook = Farmbook::where('database','=',$database);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
       if ($Farmbook->count() > 0 )
       {

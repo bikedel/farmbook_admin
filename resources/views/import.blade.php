@@ -75,7 +75,7 @@ input[ type=text ]{
 	<div class="row">
 		<div class="col-md-10 col-md-offset-1">
 			<div class="panel panel-primary">
-				<div class="panel-heading">CSV Import 
+				<div class="panel-heading"> Import SAPTG csv to database
 				</div>
 				
 
@@ -97,18 +97,21 @@ input[ type=text ]{
 					{!! Form::open([ 'url' => 'import', 'method' => 'post', 'files' => 'true']) !!}
 
 					<div class="form-group">
-						{{ Form::label('text2','Import file ',array('id'=>'f','class'=>'')) }}
+					
 						{!! Form::file('csv_import', ['class' => 'csv_import form-control input-sm']) !!}
 					</div>
 					<div class="form-group">
 						
-						{!! Form::submit('Go',  array('class'=>'btn btn-info ')) !!}
+						{!! Form::submit('Import',  array('class'=>'btn btn-info ')) !!}
 					</div>
 					{!! Form::close() !!}
 
 
 					{!! Form::open([ 'url' => 'deletedatabase', 'method' => 'post', 'files' => 'true']) !!}
+			<div class="form-group">
+				<hr>
 
+					</div>
 
 					<div class="form-group">
 						{{ Form::label('text','Delete Database ',array('id'=>'','class'=>'')) }}

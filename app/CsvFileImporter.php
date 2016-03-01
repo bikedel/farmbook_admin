@@ -168,6 +168,18 @@ if (strpos($database, '_ST') !== false) {
         $query_makeContacts = ('INSERT INTO owners (strIDNumber,NAME) SELECT strIdentity,strOwners FROM properties group by strIdentity');
 
         
+        $query_updateContacts = ('UPDATE owners, farmbook_admin.contacts
+            SET owners.NAME = farmbook_admin.contacts.NAME,
+            owners.strSurname = farmbook_admin.contacts.strSurname,
+            owners.strFirstName = farmbook_admin.contacts.strFirstName,
+            owners.strHomePhoneNo = farmbook_admin.contacts.strHomePhoneNo,
+            owners.strWorkPhoneNo = farmbook_admin.contacts.strWorkPhoneNo,
+            owners.strCellPhoneNo = farmbook_admin.contacts.strCellPhoneNo,
+            owners.EMAIL = farmbook_admin.contacts.EMAIL
+            WHERE owners.strIDNumber = farmbook_admin.contacts.strIDNumber');
+
+        $query_insertContacts =  ('INSERT INTO farmbook_admin.contactsnew (strIDNumber,TITLE,INITIALS,NAME,strSurname,strFirstName,strHomePhoneNo,strWorkPhoneNo,strCellPhoneNo,EMAIL) 
+            SELECT strIDNumber,TITLE,INITIALS,NAME,strSurname,strFirstName,strHomePhoneNo,strWorkPhoneNo,strCellPhoneNo,EMAIL FROM Owners');
 
         try {
             //delete
@@ -192,6 +204,8 @@ if (strpos($database, '_ST') !== false) {
             $db->getpdo()->exec( $query_comlexNo);
             $db->getpdo()->exec( $query_streetNo);  
             $db->getpdo()->exec( $query_makeContacts);  
+            $db->getpdo()->exec( $query_updateContacts);  
+            $db->getpdo()->exec( $query_insertContacts);  
 
         } catch (Exception $ex) {
 
