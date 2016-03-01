@@ -91,7 +91,12 @@
                         <div class="col-sm-4">
                             <input type="text" class="form-control" placeholder="Enter Erf Number" name="input" >
                         </div>
-
+                        <div class="col-sm-2">
+                           <input type="button" class="form-control readonly disabled id" placeholder="" name="or" value="or">
+                        </div>
+                        <div class="col-sm-4">
+                            {!! Form::select('selected', $erfs, null, ['class' => 'form-control']) !!}
+                        </div>
                         <div class="col-sm-2">
                             {{Form::submit('Go', array('class' => 'btn btn-success')) }}
                         </div>
@@ -117,7 +122,12 @@
                         <div class="col-sm-4">
                             <input type="text" class="form-control" placeholder="Enter Owner Name" name="input" >
                         </div>
-
+                        <div class="col-sm-2">
+                           <input type="button" class="form-control readonly disabled id" placeholder="" name="or" value="or">
+                        </div>
+                        <div class="col-sm-4">
+                            {!! Form::select('selected', $owners, null, ['class' => 'form-control']) !!}
+                        </div>
                         <div class="col-sm-2">
                             {{Form::submit('Go', array('class' => 'btn btn-success')) }}
                         </div>

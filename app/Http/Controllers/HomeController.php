@@ -11,6 +11,7 @@ use App\Owner;
 use App\Farmbook;
 use DB;
 use Auth;
+use App\Note;
 
 class HomeController extends Controller
 {
@@ -37,30 +38,21 @@ class HomeController extends Controller
 
         // get user id 
         // connect to farmbook and get default database
-
-
         $database = Auth::user()->getDatabase();
 
 
-        //dd(  $userDB,$database);
-        //$otf = new \App\Database\OTF(['database' => $database]);   
-
-        //change database for Street
+        //change database dynamically to user set database
         $street = new Street;
         $street->changeConnection(    $database  );
 
 
         $streets = Street::on($database )->orderBy('strStreetName','ASC')->lists('strStreetName','id');
-
-
-
-
         $complexes = Complex::on($database )->orderBy('strComplexName','ASC')->lists('strComplexName', 'id');
-        $owners = Owner::on($database )->orderBy('strIDNumber','ASC')->lists('strIDNumber', 'id');
+        $owners = Owner::on($database )->orderBy('NAME','ASC')->lists('NAME', 'id');
         $properties = Property::on($database )->orderBy('strKey','ASC')->lists('strkey', 'id');
+        $erfs = Note::on($database )->orderBy('numErf','ASC')->lists('numErf', 'id');
 
 
-
-        return view('search',compact('streets','complexes','owners','properties'));
+        return view('search',compact('streets','complexes','owners','properties','erfs'));
     }
 }

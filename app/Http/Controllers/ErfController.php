@@ -34,7 +34,9 @@ class ErfController extends Controller
         $database = Auth::user()->getDatabase();
 
 
-
+        //change database for notes
+        $erf = new Note;
+        $erf->changeConnection(    $database  );
 
        //change database for Street
         $property = new Property;
@@ -42,7 +44,7 @@ class ErfController extends Controller
 
         // get inputs
         $Input = $request->input('input');
-  
+        $Select = $request->input('selected');
 
 
 //dd(   $streetInput,$streetSelect);
@@ -54,11 +56,12 @@ class ErfController extends Controller
           $search = $Input;
           $properties = Property::on( $database)->where('numErf', 'LIKE', "$search%")->orderby('numErf','ASC')->get();
 
-      } else {
+        } else {
 
-         Session::flash('flash_message', ''  . "Please input an Erf Number.");
-         Session::flash('flash_type', 'alert-danger');
-         return Redirect::back();
+       
+          $note = Note::on( $database)->where('id', $Select)->first();
+          $search = $note->numErf;
+          $properties = Property::on( $database)->where('numErf', $search)->orderby('numErf','ASC')->get();
 
 
       }

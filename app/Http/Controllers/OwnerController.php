@@ -34,7 +34,9 @@ class OwnerController extends Controller
         $database = Auth::user()->getDatabase();
 
 
-
+        //change database for notes
+        $owner = new Owner;
+        $owner->changeConnection(    $database  );
 
        //change database for Street
         $property = new Property;
@@ -42,7 +44,7 @@ class OwnerController extends Controller
 
         // get inputs
         $Input = $request->input('input');
-  
+        $Select = $request->input('selected');
 
 
 //dd(   $streetInput,$streetSelect);
@@ -56,10 +58,9 @@ class OwnerController extends Controller
 
       } else {
 
-         Session::flash('flash_message', ''  . "Please input an Owner Name.");
-         Session::flash('flash_type', 'alert-danger');
-         return Redirect::back();
-
+          $owner = Owner::on( $database)->where('id', $Select)->first();
+          $search = $owner->NAME;
+          $properties = Property::on( $database)->where('strOwners', $search)->orderby('strOwners','ASC')->get();
 
       }
 
