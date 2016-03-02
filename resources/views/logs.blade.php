@@ -24,13 +24,13 @@
 				<div class="panel panel-primary">
 					<div class="panel-heading">Logs</div>
 					<div class='hidden'>
-						{{$i=0}}
+						{{$i=1}}
 					</div>
 					<div class="panel-body table-responsive">
 						<ul class="list-group">
-							
+
 							@foreach($logs as $log)
-							
+
 							<a href="#" class="list-group-item">{{$i++}} - {{$log}}</a>
 							@endforeach
 
