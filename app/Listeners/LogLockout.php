@@ -29,11 +29,13 @@ class LogLockout
     public function handle(Lockout $event)
     {
         
-    $email = $event->credentials['email'];
+
+    //dd($event);    
+    $email = $event->request['email'];
  
 
     //log 
-    $action = 'Login LockOut'; 
+    $action = 'Login LOCKOUT'; 
     $append =  \Carbon\Carbon::now('Africa/Johannesburg')->toDateTimeString(). '          '. trim($email).'          '.$action ;
     Storage::append( 'logfile.txt', $append );
 
