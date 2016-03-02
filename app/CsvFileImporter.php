@@ -158,9 +158,9 @@ if (strpos($database, '_ST') !== false) {
         $query_makeComplex =  ('INSERT INTO complexes (strComplexName) SELECT strComplexName FROM properties GROUP BY strComplexName');
 
         //$query_makeErfs = ('INSERT INTO notes (numErf) SELECT numErf FROM tblSuburbOwners GROUP BY numErf');
-        $query_comlexNo = ('UPDATE properties SET numComplexNo = strComplexNo');
+        $query_comlexNo = ('UPDATE IGNORE properties SET numComplexNo = strComplexNo');
 
-        $query_streetNo = ('UPDATE properties SET numStreetNo = strStreetNo');
+        $query_streetNo = ('UPDATE IGNORE properties SET numStreetNo = strStreetNo');
 
         $query_makeMems = ('INSERT INTO notes (numErf,strKey) SELECT numErf,strKey FROM properties ');
 
