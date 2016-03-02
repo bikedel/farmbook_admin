@@ -58,7 +58,7 @@
 
 .logs{
     margin-right: 6px;
-    color:blue;
+    color:orange;
 }
 
 
