@@ -62,7 +62,8 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/property/{id}', 'PropertyController@edit');
     Route::post('/property/{id}', 'PropertyController@update');
 
-
+    // print
+    Route::get('/print/{id}', 'ReportController@printreport');
 
     // set user database dynamically
     Route::get('/userfarmbooks', 'UserController@listFarmbooks');
