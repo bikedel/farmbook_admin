@@ -35,7 +35,7 @@ class LogAuthenticationAttempt
  
 
     //log 
-    $action = 'Login Invalid email / password'; 
+    $action = 'Login Authentication'; 
     $append =  \Carbon\Carbon::now('Africa/Johannesburg')->toDateTimeString(). '          '. trim($email).'          '.$action ;
     Storage::append( 'logfile.txt', $append );
 
