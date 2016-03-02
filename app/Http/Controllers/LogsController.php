@@ -56,7 +56,7 @@ $logs = explode(PHP_EOL, $contents);
 //$logs = array_reverse($logs ) ;
 
 //dd($contents,$csv);
-      return view('pages.logs',compact('logs'));
+      return view('logs',compact('logs'));
 }
 
     /**
