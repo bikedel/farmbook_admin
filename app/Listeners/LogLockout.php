@@ -29,7 +29,7 @@ class LogLockout
     public function handle(Lockout $event)
     {
         
-    $email = $event->user->email;
+    $email = $event->credentials['email'];
  
 
     //log 
