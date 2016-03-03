@@ -23,6 +23,14 @@ td, th {
   border: 1px solid #ccc; 
   text-align: left; 
 }
+.in {
+display:inline;
+ display: block;
+}
+
+form {
+    display: inline-block; //Or display: inline; 
+}
 
 
 th {
@@ -65,11 +73,14 @@ th {
                       <tr>
                          <td>
 
-                            {{ link_to_action('UserController@edit','edit', ['id' => $user->id]) }}
+                          <!--  {{ link_to_action('UserController@edit','edit', ['id' => $user->id]) }} -->
 
 
+                            {!! Form::open(['method' => 'get', 'url' => ['/user', $user->id]]) !!}
+                            {!! Form::button('<i class="glyphicon glyphicon-edit"></i>', array('type' => 'submit', 'class' => 'specialButton in')) !!}
+                            {!! Form::close() !!}
                             {!! Form::open(['method' => 'post', 'url' => ['/deleteuser', $user->id], 'onsubmit' => 'return ConfirmDelete()']) !!}
-                            {!! Form::button('<i class="glyphicon glyphicon-trash"></i>', array('type' => 'submit', 'class' => 'specialButton')) !!}
+                            {!! Form::button('<i class="glyphicon glyphicon-trash"></i>', array('type' => 'submit', 'class' => 'specialButton in')) !!}
                             {!! Form::close() !!}
                         </td>
                         <td>
