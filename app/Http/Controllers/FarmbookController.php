@@ -12,6 +12,7 @@ use Carbon;
 use App\Farmbook;
 use Session;
 use Redirect;
+use DB;
 
 class FarmbookController extends Controller
 {
@@ -36,7 +37,7 @@ class FarmbookController extends Controller
        // dd("user controller");
 
       $farmbooks =  Farmbook::orderBy('name')->get();
- 
+
 
       return view('farmbooks',compact('farmbooks'));
   }
@@ -59,6 +60,70 @@ class FarmbookController extends Controller
 //dd($users ,$user_farmbooks,$farmbooks );
        return view('editfarmbook',compact('farmbooks'));
    }
+
+
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function delete($id)
+    {
+
+       // dd("user controller EDIT ",$id);
+
+
+        $farmbooks =  Farmbook::find($id);
+
+
+   //  dd($farmbooks->database,$id);
+        $database = $farmbooks->database;
+
+        $farmbooks->delete();
+
+
+
+        $dbname = 'tmp';
+
+         // connect to tmp database
+        $otf = new \App\Database\OTF(['database' => $dbname]);
+        $db = DB::connection($dbname);
+
+        $sql = "DROP DATABASE ".$database;
+
+
+  //set created to false
+        $created = false;
+
+        try {
+    // delete database 
+          $db->getpdo()->exec(  $sql);
+          $created = true ;
+
+
+      } catch (Exception $ex) {
+
+    // dd( $ex->getMessage());
+    // error creating database
+          $message =  $ex->getMessage();
+          Session::flash('flash_message', 'Error deleting '.$message);
+          Session::flash('flash_type', 'alert-warning');
+          return Redirect::back();
+      }
+
+
+
+
+
+
+      $now = Carbon\Carbon::now('Africa/Cairo')->toDateTimeString();
+
+
+      Session::flash('flash_message', 'Farmbook deleted '  . ' at '.$now);
+      Session::flash('flash_type', 'alert-success');
+      return Redirect::back();
+  }
+
 
 
     /**

@@ -98,6 +98,8 @@ Route::group(['middleware' => 'web'], function () {
 	Route::get('/farmbooks', 'FarmbookController@index');  
 	Route::get('/farmbook/{id}', 'FarmbookController@edit');
 	Route::post('/farmbook/{id}', 'FarmbookController@store');
+    Route::post('/farmbookdelete/{id}', 'FarmbookController@delete');
+
 
     //import
 	Route::get('/import', 'CsvImportController@index');

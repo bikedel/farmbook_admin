@@ -150,7 +150,6 @@
                     @if (Auth::user()->isAdmin())
                     <li><a href="{{ url('/users') }}"> <i class=""> <span class=" users    glyphicon glyphicon-user"> </span></i>Users</a></li>
                     <li><a href="{{ url('/farmbooks') }}"> <i class=""> <span class=" farmbooks    glyphicon glyphicon-grain"> </span></i>Farmbooks</a></li>
-                    <li><a href="{{ url('/import') }}"> <i class=""> <span class=" admin glyphicon glyphicon-transfer"> </span></i>Import</a></li>
                     <li><a href="{{ url('/logs') }}"> <i class=""> <span class=" logs glyphicon glyphicon-file"> </span></i>Logs</a></li>
                     @endif
                 </ul>
