@@ -12,7 +12,7 @@
 */
 
 
- 
+
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -30,82 +30,100 @@ Route::group(['middleware' => ['web']], function () {
 
 Route::group(['middleware' => 'web'], function () {
 
-    Route::auth();
+    //Route::auth();
+    // Authentication Routes...
+	$this->get('login', 'Auth\AuthController@showLoginForm');
+	$this->post('login', 'Auth\AuthController@login');
+	$this->get('logout', 'Auth\AuthController@logout');
+
+    // Registration Routes...
+	$this->get('myregister', 'Auth\AuthController@showRegistrationForm');
+	$this->post('register', 'Auth\AuthController@register');
+
+    // Password Reset Routes...
+	$this->get('password/reset/{token?}', 'Auth\PasswordController@showResetForm');
+	$this->post('password/email', 'Auth\PasswordController@sendResetLinkEmail');
+	$this->post('password/reset', 'Auth\PasswordController@reset');
+
+	Route::get('/', function () {
+		return view('welcome');
+	});
 
 
-    Route::get('/', function () {
-        return view('welcome');
-    });
 
-
-
-    Route::get('/home', 'HomeController@index');
+	Route::get('/home', 'HomeController@index');
 
     // show street
-    Route::post('/street', 'StreetController@index');
-    Route::get('/street/{id}', 'StreetController@rolledit');
+	Route::post('/street', 'StreetController@index');
+	Route::get('/street/{id}', 'StreetController@rolledit');
 
     // complex
-    Route::post('/complex', 'ComplexController@index');
-    Route::get('/complex/{id}', 'ComplexController@rolledit');
+	Route::post('/complex', 'ComplexController@index');
+	Route::get('/complex/{id}', 'ComplexController@rolledit');
 
     // erf
-    Route::post('/erf', 'ErfController@index');
-    Route::get('/erf/{id}', 'ErfController@rolledit');
+	Route::post('/erf', 'ErfController@index');
+	Route::get('/erf/{id}', 'ErfController@rolledit');
 
     // owners
-    Route::post('/owner', 'OwnerController@index');
-    Route::get('/owner/{id}', 'OwnerController@rolledit');
+	Route::post('/owner', 'OwnerController@index');
+	Route::get('/owner/{id}', 'OwnerController@rolledit');
 
 
     // show property
-    Route::get('/property/{id}', 'PropertyController@edit');
-    Route::post('/property/{id}', 'PropertyController@update');
+	Route::get('/property/{id}', 'PropertyController@edit');
+	Route::post('/property/{id}', 'PropertyController@update');
 
     // print
-    Route::get('/print/{id}', 'ReportController@printreport');
+	Route::get('/print/{id}', 'ReportController@printreport');
+
+	Route::get('/prog', 'ReportController@testreport');
+
+
 
     // set user database dynamically
-    Route::get('/userfarmbooks', 'UserController@listFarmbooks');
-    Route::post('/setuserfarmbook', 'UserController@setFarmbook');
+	Route::get('/userfarmbooks', 'UserController@listFarmbooks');
+	Route::post('/setuserfarmbook', 'UserController@setFarmbook');
 
 
     // user admin
-    Route::get('/users', 'UserController@index');  
-    Route::get('/user/{id}', 'UserController@edit');
-    Route::post('/user/{id}', 'UserController@store');
-
+	Route::get('/users', 'UserController@index');  
+	Route::get('/user/{id}', 'UserController@edit');
+	Route::post('/user/{id}', 'UserController@store');
+	Route::get('/adduser', 'UserController@adduser');
+	Route::post('/adduser', 'UserController@storeadduser');
+	Route::post('/deleteuser/{id}', 'UserController@delete');
 
     // farmbook admin
-    Route::get('/farmbooks', 'FarmbookController@index');  
-    Route::get('/farmbook/{id}', 'FarmbookController@edit');
-    Route::post('/farmbook/{id}', 'FarmbookController@store');
+	Route::get('/farmbooks', 'FarmbookController@index');  
+	Route::get('/farmbook/{id}', 'FarmbookController@edit');
+	Route::post('/farmbook/{id}', 'FarmbookController@store');
 
     //import
-    Route::get('/import', 'CsvImportController@index');
-    Route::post('/import', 'CsvImportController@store');
+	Route::get('/import', 'CsvImportController@index');
+	Route::post('/import', 'CsvImportController@store');
 
     // create database
-    Route::post('/createdatabase', 'CsvImportController@createdatabase');
- 
+	Route::post('/createdatabase', 'CsvImportController@createdatabase');
+
     // delete database
-    Route::post('/deletedatabase', 'CsvImportController@deletedatabase');
+	Route::post('/deletedatabase', 'CsvImportController@deletedatabase');
 
 //logging
-Route::get('/logs',  'LogsController@index' );
+	Route::get('/logs',  'LogsController@index' );
 
 // datatables
-Route::controller('datatables', 'DatatablesController', [
-	'anyData'  => 'datatables.data',
-	'getIndex' => 'datatables',
-	]);
+	Route::controller('datatables', 'DatatablesController', [
+		'anyData'  => 'datatables.data',
+		'getIndex' => 'datatables',
+		]);
 
-Route::resource('prop', 'DatatablesController');
+	Route::resource('prop', 'DatatablesController');
 
 
 
     // rubish
-    Route::get('/farmbook', 'FarmbookController@index');    
-    Route::get('/settings', 'SettingsController@index');    
+	Route::get('/farmbook', 'FarmbookController@index');    
+	Route::get('/settings', 'SettingsController@index');    
 
 });

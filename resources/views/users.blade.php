@@ -40,79 +40,86 @@ th {
             <div class="panel panel-primary">
                 <div class="panel-heading">Users  [{{$users->count()}}]  </div>
 
-                <div class="panel-body table-responsive">
+                <div class="panel-body ">
+                    @if ( Session::has('flash_message') )
+                    <div class="alert {{ Session::get('flash_type') }} ">
+                      <button type="button" class="form-group btn close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                      <p>{{ Session::get('flash_message') }}</p>
+                  </div>
 
-                 <table class="table">
-                  <tr>
-                    <th>Action</th>
-                    <th>Id </th>
-                    <th>Name </th> 
-                    <th>Email</th>
-                    <th>Farmbook</th> 
-                    <th>Active</th> 
-                    <th>Admin</th> 
+                  @endif
+                  <table class="table table-responsive">
+                      <tr>
+                        <th>Action</th>
+                        <th>Id </th>
+                        <th>Name </th> 
+                        <th>Email</th>
+                        <th>Farmbook</th> 
+                        <th>Active</th> 
+                        <th>Admin</th> 
 
-                </tr>
-                @foreach ($users as $user)
+                    </tr>
+                    @foreach ($users as $user)
 
-                <div class="row">  
-                  <tr>
-                     <td>
+                    <div class="row">  
+                      <tr>
+                         <td>
 
-                        {{ link_to_action('UserController@edit','edit', ['id' => $user->id]) }}
+                            {{ link_to_action('UserController@edit','edit', ['id' => $user->id]) }}
 
-                    </td>
-                    <td>
 
-                        {{  $user->id }}
+                            {!! Form::open(['method' => 'post', 'url' => ['/deleteuser', $user->id], 'onsubmit' => 'return ConfirmDelete()']) !!}
+                            {!! Form::button('<i class="glyphicon glyphicon-trash"></i>', array('type' => 'submit', 'class' => 'specialButton')) !!}
+                            {!! Form::close() !!}
+                        </td>
+                        <td>
 
-                    </td>
-                    <td>
+                            {{  $user->id }}
 
-                        {{ $user->name }}
+                        </td>
+                        <td>
 
-                    </td>
-                    <td>
+                            {{ $user->name }}
 
-                        {{ $user->email }}
+                        </td>
+                        <td>
 
-                    </td>
-                 <td>
+                            {{ $user->email }}
 
-                        {{ $user->farmbook }}
+                        </td>
+                        <td>
 
-                    </td>
+                            {{ $user->farmbook }}
 
-                 <td>
+                        </td>
 
-                        {{ $user->active }}
+                        <td>
 
-                    </td>
+                            {{ $user->active }}
 
-                 <td>
+                        </td>
 
-                        {{ $user->admin }}
+                        <td>
 
-                    </td>
-      
-                </div>
-                @endforeach
-            </table>
+                            {{ $user->admin }}
+
+                        </td>
+
+                    </div>
+                    @endforeach
+                </table>
+
+                {{ link_to_action('UserController@adduser','Add User', ['id' => $user->id], ['class' => 'btn btn-info']) }}
+
+            </div>
+
         </div>
+
+
 
     </div>
-
-
-
 </div>
-</div>
-        @if ( Session::has('flash_message') )
-        <div class="alert {{ Session::get('flash_type') }} ">
-          <button type="button" class="form-group btn close" data-dismiss="alert" aria-hidden="true">&times;</button>
-          <p>{{ Session::get('flash_message') }}</p>
-        </div>
 
-        @endif
 <br><br>
 @endsection
 
@@ -128,6 +135,16 @@ $(document).on("ready page:load", function() {
 });
 
 
+
+
+function ConfirmDelete()
+{
+    var x = confirm("Are you sure you want to delete this user?");
+  if (x)
+    return true;
+else
+    return false;
+}
 
 
 
