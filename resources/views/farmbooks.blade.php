@@ -56,9 +56,9 @@ th {
                 <div class="row">  
                   <tr>
                      <td>
-
-                        {{ link_to_action('FarmbookController@edit','edit', ['id' => $farm->id]) }}
-
+                            {!! Form::open(['method' => 'get', 'url' => ['/farmbook', $farm->id]]) !!}
+                            {!! Form::button('<i class="glyphicon glyphicon-edit"></i>', array('type' => 'submit', 'class' => 'specialButton in')) !!}
+                            {!! Form::close() !!}
                     </td>
                     <td>
 
