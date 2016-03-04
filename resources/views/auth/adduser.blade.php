@@ -150,7 +150,7 @@ $(document).ready(function(){
 
 
                 //Validate for length of Password.
-                if (passed > 2 && $(this).val().length > 8) {
+                if (passed > 2 && $(this).val().length > 7) {
                     passed++;
                 }
 
@@ -165,9 +165,10 @@ $(document).ready(function(){
                         break;
                     case 2:
                         strength = "Good";
-                        color = "darkorange";
+                        color = "orange";
                         break;
                     case 3:
+ 
                     case 4:
                         strength = "Strong";
                         color = "green";

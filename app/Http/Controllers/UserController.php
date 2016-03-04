@@ -213,7 +213,7 @@ class UserController extends Controller
         'name' => 'required',
         'email' => 'required|unique:users|email',
         'farmbooks' => 'required',
-        'password' => 'required|confirmed|min:6'
+        'password' => 'required|confirmed|min:8'
         ]);
 
 
