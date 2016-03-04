@@ -30,7 +30,11 @@
         color:#000000;
         font-weight: 900;
     }
-
+        #password_strength
+        {
+            font-weight: bold;
+        }
+        
     .navbar-default {
         border-color: Transparent; 
 

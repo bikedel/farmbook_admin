@@ -69,11 +69,15 @@
 
 
                         <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
+
+                           
+
                             <label class="col-md-4 control-label">Password</label>
 
                             <div class="col-md-6">
-                                <input type="password" class="form-control" name="password">
-
+                                <input type="password" class="form-control" name="password" id="password">
+                                <span id="password_strength"></span>
+                                  <a href="#" data-toggle="tooltip" title="Use more than 8 characters, uppercase, lowercase, numbers and special characters.">Hint</a>
                                 @if ($errors->has('password'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('password') }}</strong>
@@ -110,3 +114,75 @@
     </div>
 </div>
 @endsection
+
+   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script type="text/javascript">
+
+
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();   
+});
+
+
+        $(function () {
+            $("#password").bind("keyup", function () {
+                //TextBox left blank.
+                if ($(this).val().length == 0) {
+                    $("#password_strength").html("");
+                    return;
+                }
+
+                //Regular Expressions.
+                var regex = new Array();
+                regex.push("[A-Z]"); //Uppercase Alphabet.
+                regex.push("[a-z]"); //Lowercase Alphabet.
+                regex.push("[0-9]"); //Digit.
+                regex.push("[$@$!%*#?&]"); //Special Character.
+
+                var passed = 0;
+
+                //Validate for each Regular Expression.
+                for (var i = 0; i < regex.length; i++) {
+                    if (new RegExp(regex[i]).test($(this).val())) {
+                        passed++;
+                    }
+                }
+
+
+                //Validate for length of Password.
+                if (passed > 2 && $(this).val().length > 8) {
+                    passed++;
+                }
+
+                //Display status.
+                var color = "";
+                var strength = "";
+                switch (passed) {
+                    case 0:
+                    case 1:
+                        strength = "Weak";
+                        color = "red";
+                        break;
+                    case 2:
+                        strength = "Good";
+                        color = "darkorange";
+                        break;
+                    case 3:
+                    case 4:
+                        strength = "Strong";
+                        color = "green";
+                        break;
+                    case 5:
+                        strength = "Very Strong";
+                        color = "darkgreen";
+                        break;
+                }
+                $("#password_strength").html(strength);
+                $("#password_strength").css("color", color);
+            });
+        });
+    </script>
+
+
+
+
