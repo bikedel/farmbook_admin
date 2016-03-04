@@ -75,7 +75,7 @@ input[ type=text ]{
 	<div class="row">
 		<div class="col-md-10 col-md-offset-1">
 			<div class="panel panel-primary">
-				<div class="panel-heading"> Import SAPTG csv to database
+				<div class="panel-heading"> Import 
 				</div>
 				
 
@@ -97,7 +97,7 @@ input[ type=text ]{
 					{!! Form::open([ 'url' => 'import', 'method' => 'post', 'files' => 'true']) !!}
 
 					<div class="form-group">
-					
+						{{ Form::label('text','SAPTG csv ',array('id'=>'','class'=>'')) }}
 						{!! Form::file('csv_import', ['class' => 'csv_import form-control input-sm']) !!}
 					</div>
 					<div class="form-group">
@@ -105,47 +105,79 @@ input[ type=text ]{
 						{!! Form::submit('Import',  array('class'=>'btn btn-info ')) !!}
 					</div>
 					{!! Form::close() !!}
+					{!! Form::open([ 'url' => '/', 'method' => 'get', 'files' => 'true']) !!}
 
+					<div class="form-group">
+						{{ Form::label('text','Select Database to Import into',array('id'=>'','class'=>'')) }}
+						{!! Form::select('database', $data,null, ['class'=> 'form-control input-sm', 'id'=>'database']) !!}
+					</div>
+					<div class="form-group">
+						{{ Form::label('text','tblSuburbOwners csv ',array('id'=>'','class'=>'')) }}
+						{!! Form::file('csv_import', ['class' => 'csv_import form-control input-sm']) !!}
+					</div>
+					<div class="form-group">
+						{{ Form::label('text','tblSuburbContactNumbers csv ',array('id'=>'','class'=>'')) }}
+						{!! Form::file('csv_import', ['class' => 'csv_import form-control input-sm']) !!}
+					</div>
+					<div class="form-group">
+						{{ Form::label('text','tblFHPropertyID csv ',array('id'=>'','class'=>'')) }}
+						{!! Form::file('csv_import', ['class' => 'csv_import form-control input-sm']) !!}
+					</div>
+
+
+
+					<div class="form-group">
+						
+						{!! Form::submit('Import',  array('class'=>'btn btn-info ')) !!}
+					</div>
+					{!! Form::close() !!}
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+
+<div class="container">
+	<div class="row">
+		<div class="col-md-10 col-md-offset-1">
+			<div class="panel panel-primary">
+				<div class="panel-heading"> Delete
+				</div>
+				<div class="panel-body">
+
+					@if ( Session::has('flash_message') )
+
+					<div class="row alert {{ Session::get('flash_type') }} ">
+						<button type="button" class="form-group btn btn-info close" data-dismiss="alert" aria-hidden="true">&times;</button>
+						<p>{{ Session::get('flash_message') }}</p>
+					</div>
+
+					@endif
 
 					{!! Form::open([ 'url' => 'deletedatabase', 'method' => 'post', 'files' => 'true']) !!}
-			<div class="form-group">
-				<hr>
-
+					<div class="form-group">
 					</div>
 
 					<div class="form-group">
 						{{ Form::label('text','Delete Database ',array('id'=>'','class'=>'')) }}
-						{!! Form::select('database', $data,null, ['class'=> 'form-control col-md-6', 'id'=>'database']) !!}
+						{!! Form::select('database', $data,null, ['class'=> 'form-control input-sm', 'id'=>'database']) !!}
 					</div>
 					<div class="form-group">	
-						<br>
+						
 						{!! Form::submit('Delete',  array('class'=>'btn btn-danger ')) !!}
 					</div>
 					{!! Form::close() !!}
-
-
-
 				</div>
-
-
-
-
 			</div>
 		</div>
-
-
-
-
-
-
-
-
-
-
-
 	</div>
 </div>
-</div>
+
+
+
 
 @stop
 

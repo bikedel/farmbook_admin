@@ -201,7 +201,7 @@ class UserController extends Controller
    public function adduser( )
    {
 
-       $farmbooks =  Farmbook::orderBy('name')->get();
+       $farmbooks =  Farmbook::orderBy('name')->lists('name','id');
 
        return view('auth.adduser',compact('farmbooks'));
    }
@@ -212,11 +212,9 @@ class UserController extends Controller
     $this->validate($request, [
         'name' => 'required',
         'email' => 'required|unique:users|email',
+        'farmbooks' => 'required',
         'password' => 'required|confirmed|min:6'
         ]);
-
-
-
 
 
     $errors = new MessageBag();
@@ -231,6 +229,8 @@ class UserController extends Controller
 
    }
 
+      $farmbooks = $request->input('farmbooks');
+
 
        $user     = new User();
 
@@ -239,13 +239,15 @@ class UserController extends Controller
           $user->password = bcrypt($request->input('password'));
           $user->name = $request->input('name');
 
-          $user->admin = 0;
+          $user->admin =  $request->input('admin');
           $user->active = 0;
 
+          $user->farmbook = $farmbooks[0];
+ 
 
           $user->save();
 
-
+          $user->farmbooks()->sync($request->input('farmbooks'));
 
         $now = Carbon\Carbon::now('Africa/Cairo')->toDateTimeString();
 

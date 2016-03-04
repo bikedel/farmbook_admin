@@ -38,6 +38,36 @@
                             </div>
                         </div>
 
+                        <div class="form-group{{ $errors->has('admin') ? ' has-error' : '' }}">
+                            <label class="col-md-4 control-label">Role</label>
+
+                            <div class="col-md-6">
+                               
+                                {!! Form::select('admin', ['User','Admin'], [0], ['class' => 'form-control']) !!}
+                                @if ($errors->has('admin'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('admin') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group{{ $errors->has('farmbooks') ? ' has-error' : '' }}">
+                            <label class="col-md-4 control-label">Farmbooks</label>
+
+                            <div class="col-md-6">
+                               
+                                {!! Form::select('farmbooks[]', $farmbooks,[0], ['multiple'=>'multiple','class'=> 'form-control col-md-6', 'id'=>'farmbooks']) !!}
+                                @if ($errors->has('farmbooks'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('farmbooks') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+
+
                         <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
                             <label class="col-md-4 control-label">Password</label>
 
