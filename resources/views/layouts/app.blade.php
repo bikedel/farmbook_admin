@@ -34,7 +34,7 @@
         {
             font-weight: bold;
         }
-        
+
     .navbar-default {
         border-color: Transparent; 
 
@@ -89,6 +89,13 @@
 .fa-btn {
     margin-right: 6px;
 }
+
+.fa{
+
+    margin-right: 6px;
+}
+
+
 </style>
 </head>
 <body id="app-layout">

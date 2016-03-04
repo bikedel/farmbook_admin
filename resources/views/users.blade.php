@@ -120,7 +120,7 @@ th {
                     @endforeach
                 </table>
 
-                {{ link_to_action('UserController@adduser','Add User', ['id' => $user->id], ['class' => 'btn btn-info']) }}
+                {{ link_to_action('UserController@adduser','Add User', ['id' => $user->id], ['class' => 'btn btn-danger ']) }}
 
             </div>
 

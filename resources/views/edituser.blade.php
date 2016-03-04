@@ -69,7 +69,7 @@ input[ type=text ]{
 
 
 @foreach ($users as $user)
-              {{ Form::open(array('method' =>'POST','url'=>'/user/'.$user->id)) }}
+{{ Form::open(array('method' =>'POST','url'=>'/user/'.$user->id)) }}
 <div class="container">
   <div class="row">
     <div class="col-md-10 col-md-offset-1">
@@ -88,9 +88,9 @@ input[ type=text ]{
 
         <div class="panel-body">
 
-       
 
-     
+
+
 
 
           <div class='property'>
@@ -107,19 +107,19 @@ input[ type=text ]{
               </tr>
 
               <tr>
-                <td class='tlabel' width="120">email </td>
+                <td class='tlabel' width="120">Email </td>
                 <td > <input type="text" name="email" value="{{ $user->email  }}" readonly></td>
               </tr>
               <tr>
-                <td class='tlabel' > Admin </td>
-                <td >{!! Form::select('admin', [0,1],$user->admin, ['class'=> 'form-control col-md-6', 'id'=>'farmbooks']) !!}</td>
+                <td class='tlabel' > Role </td>
+                <td >{!! Form::select('admin', ['User','Admin'],$user->admin, ['class'=> 'form-control col-md-6', 'id'=>'farmbooks']) !!}</td>
               </tr>
 
               <tr>
-                <td class='tlabel' width="100">Active</td>
-                <td>{!! Form::select('active',[0,1], $user->active, ['class'=> 'form-control col-md-6', 'id'=>'farmbooks']) !!}</td>
+                <td class='tlabel' width="100">Status</td>
+                <td>{!! Form::select('active',['Active','Disabled'], $user->active, ['class'=> 'form-control col-md-6', 'id'=>'farmbooks']) !!}</td>
               </tr>
-            
+
               <tr>
                 <td class='tlabel' width="100">Farmbooks</td>
                 <td> {!! Form::select('getfarmbook[]', $farmbooks,$user_farmbooks, ['multiple'=>'multiple','class'=> 'form-control col-md-6', 'id'=>'farmbooks']) !!}</td>
@@ -133,7 +133,7 @@ input[ type=text ]{
 
             </table>
 
-          
+
 
             <div class=' update'>
               <br>
@@ -144,7 +144,7 @@ input[ type=text ]{
               {{Form::submit('Update', array('class' => 'btn btn-danger update')) }} 
               {{ Form::close() }}   
 
-  @endforeach
+              @endforeach
 
             </div>
 
@@ -156,7 +156,7 @@ input[ type=text ]{
       </div>
 
 
-  {{ Form::open(array('method' =>'GET','url'=>'/users/')) }}
+      {{ Form::open(array('method' =>'GET','url'=>'/users/')) }}
       {{Form::submit('Back', array('class' => 'btn btn-default back')) }} 
       {{ Form::close() }}  
 
@@ -167,18 +167,18 @@ input[ type=text ]{
 
 
 
-<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
-<script >
+  <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+  <script >
 
 
 
-$(document).on("ready page:load", function() {
-  setTimeout(function() { $(".alert").fadeOut(); }, 4000);
+  $(document).on("ready page:load", function() {
+    setTimeout(function() { $(".alert").fadeOut(); }, 4000);
 
-});
-
-
+  });
 
 
 
-</script>
+
+
+  </script>
