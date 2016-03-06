@@ -102,7 +102,7 @@ input[ type=text ]{
 					</div>
 					<div class="form-group">
 						
-						{!! Form::submit('Import',  array('class'=>'btn btn-info ')) !!}
+						{!! Form::submit('Import',  array('class'=>'btn btn-success ')) !!}
 					</div>
 					{!! Form::close() !!}
 
@@ -152,7 +152,7 @@ input[ type=text ]{
 
 					<div class="form-group">
 						
-						{!! Form::submit('Import',  array('class'=>'btn btn-info ')) !!}
+						{!! Form::submit('Import',  array('class'=>'btn btn-success ')) !!}
 					</div>
 					{!! Form::close() !!}
 				</div>
