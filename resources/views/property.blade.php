@@ -202,6 +202,7 @@ table td{padding:5px;}
               <input type="text" name="strKey" class="hidden" value="{{ $property->strKey }}"></input>
               <input type="text" name="strIdentity" class="hidden" value="{{ $property->strIdentity }}"></input>
               <input type="text" name="strOwners" class="hidden" value="{{ $property->strOwners }}"></input>
+              {{ link_to(url('/home'), 'Back to Search', ['class' => 'btn btn-default']) }}
               {{Form::submit('Update', array('class' => 'btn btn-danger update')) }} 
               {{ Form::close() }}   
 

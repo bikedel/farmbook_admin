@@ -42,6 +42,7 @@ th {
 
                 <div class="panel-body table-responsive">
                     {{ link_to(url('/erf/'.$search), 'Edit All', ['class' => 'btn btn-default']) }}
+                    {{ link_to(url('/home'), 'Back to Search', ['class' => 'btn btn-default']) }}
                     <p><br></p>
                     <table class="table">
                       <tr>
@@ -59,7 +60,7 @@ th {
                       <tr>
                        <td>
 
-                        {{ link_to_action('PropertyController@edit','edit', ['id' => $property->id]) }}
+                        {{ link_to_action('PropertyController@edit','view/edit', ['id' => $property->id]) }}
 
                     </td>
                     <td>
