@@ -89,7 +89,7 @@ th {
             </table>
             <br>
                 {{ link_to(url('/erf/'.$search), 'Edit All', ['class' => 'btn btn-default']) }}
-                    {{ link_to(url('/home'), 'Back to Search', ['class' => 'btn btn-default']) }}
+                {{ link_to(url('/home'), 'Back to Search', ['class' => 'btn btn-default']) }}
 
         </div>
 

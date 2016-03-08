@@ -92,6 +92,11 @@ table td{padding:5px;}
 <div class="container">
   <div class="row">
     <div class="col-md-10 col-md-offset-1">
+    <div>
+                    {{ link_to(url('/home'), 'Back to Search', ['class' => 'btn btn-default']) }}
+                    
+    </div>
+
       <div class="panel panel-primary">
         <div class="panel-heading">Property   [  {{$property->strKey }}  ]
 
