@@ -283,9 +283,7 @@ function filterColumn ( i ) {
 $(document).ready(function() {
 
 
-$('body, html').mousedown(function(event) {
-    event.preventDefault();
-});
+
 
 
 
@@ -398,6 +396,11 @@ document.location.href=$path;
 
 
 } );
+
+
+$('table').mousedown(function(event) {
+    event.preventDefault();
+});
 
 
  (function($){
