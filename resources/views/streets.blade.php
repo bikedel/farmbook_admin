@@ -88,10 +88,14 @@ th {
                 </div>
                 @endforeach
             </table>
+                      <br>
+                      {{ link_to(url('/street/'.$search), 'Edit All', ['class' => 'btn btn-default']) }}
+                      {{ link_to(url('/home'), 'Back to Search', ['class' => 'btn btn-default']) }}
+                      {{ link_to(url('/print/'.$search), 'Print', ['class' => 'btn btn-info']) }}
         </div>
 
     </div>
-    {{ link_to(url('/home'), 'Back', ['class' => 'btn btn-default']) }}
+
  
 
 
