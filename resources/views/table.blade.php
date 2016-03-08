@@ -283,6 +283,12 @@ function filterColumn ( i ) {
 $(document).ready(function() {
 
 
+$('body, html').mousedown(function(event) {
+    event.preventDefault();
+});
+
+
+
   $selectedrow = 0;
   $('#table').DataTable();
 
