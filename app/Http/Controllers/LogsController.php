@@ -46,7 +46,8 @@ class LogsController extends Controller
     }
    catch(\Exception $e){
    
-        die("No Logfile");
+        $filename = storage_path().'/app/'.'logfile.txt';
+         File::put($filename, \Carbon\Carbon::now('Africa/Johannesburg')->toDateTimeString());
     }
 
 
