@@ -16,6 +16,7 @@ use Carbon;
 use App\User;
 use URL;
 
+
 class ErfController extends Controller
 {
 
@@ -89,9 +90,13 @@ class ErfController extends Controller
 
 
     // edit all
- public function rolledit($id)
+ public function rolledit($id, $eventid )
  {
     try{
+
+
+
+
 
         // set database
         $database = Auth::user()->getDatabase();
@@ -128,6 +133,45 @@ class ErfController extends Controller
 }
 
 
+  // edit all
+ public function test($id, $page , Request $request)
+ {
+    try{
 
+
+
+        // set database
+        $database = Auth::user()->getDatabase();
+
+
+       //change database
+        $property = new Property;
+        $property->changeConnection(    $database  );
+
+
+        // search on street name
+        $query = Property::on(   $database)->like('numErf', $id)->orderby('numErf','ASC')->get();
+        $properties = Property::on(   $database )->like('numErf', $id)->orderby('numErf','ASC')->simplePaginate(1);
+
+        // get relationship data
+        $properties->load('owner', 'note');
+
+        // get total records as simplepagination does not do this
+        $count =  $query->count();
+        $search = $id;
+
+    }
+    catch (exception $e)
+    {
+        dd($e->getMessage());
+    }
+
+
+
+
+
+    return view('property',compact('properties','count','search','page'));
+
+}
 
 }

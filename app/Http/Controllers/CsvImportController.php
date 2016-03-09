@@ -219,24 +219,6 @@ $dbname = 'tmp';
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
       if ($Farmbook->count() > 0 )
       {
 
@@ -400,9 +382,29 @@ public function createdatabase(Request $request)
   }
 
 
-
     // database created success
   if ($created == true) {
+
+      $Farmbook = Farmbook::where('database','=',$database);
+      $normal_name = str_replace('_',' ',$database);
+      $normal_name = str_replace('farmbook2',' ', $normal_name);
+
+
+      if ($Farmbook->count() > 0 )
+      {
+
+        $Farmbook = Farmbook::where('database','=',$database)->update(['database'=> $database]);
+
+      } else {
+                // add to farmbooks
+        $Farmbook = new Farmbook;
+        $Farmbook->name = $normal_name ;
+        $Farmbook->database = $database;
+        $Farmbook->type = 0;
+        $Farmbook->save();
+      }
+
+
 
         // connect to the new database
     $otf = new \App\Database\OTF(['database' => $database]);

@@ -65,6 +65,10 @@ Route::group(['middleware' => 'web'], function () {
 	Route::post('/erf', 'ErfController@index');
 	Route::get('/erf/{id}', 'ErfController@rolledit');
 
+	Route::get('/erf/{id}/page/{page}', 'ErfController@test');
+
+
+
     // owners
 	Route::post('/owner', 'OwnerController@index');
 	Route::get('/owner/{id}', 'OwnerController@rolledit');

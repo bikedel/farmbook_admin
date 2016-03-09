@@ -165,7 +165,7 @@ input[ type=text ]{
 	<div class="row">
 		<div class="col-md-10 col-md-offset-1">
 			<div class="panel panel-primary">
-				<div class="panel-heading"> Create Databse
+				<div class="panel-heading"> Create Database
 				</div>
 				<div class="panel-body">
 

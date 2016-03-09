@@ -85,6 +85,11 @@ table td{padding:5px;}
 
 @section('content')
 
+@if (isset($page))
+<h1>{{$page}}</h1>
+@endif
+
+
 
 
 @foreach ($properties as $property)
