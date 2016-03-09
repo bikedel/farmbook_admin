@@ -48,6 +48,7 @@ class LogsController extends Controller
    
         $filename = storage_path().'/app/'.'logfile.txt';
          File::put($filename, \Carbon\Carbon::now('Africa/Johannesburg')->toDateTimeString());
+         $contents = File::get($filename);
     }
 
 
