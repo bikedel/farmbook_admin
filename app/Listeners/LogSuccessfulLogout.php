@@ -7,6 +7,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
 use Storage;
+use Auth;
 
 class LogSuccessfulLogout
 {
