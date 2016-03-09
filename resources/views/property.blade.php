@@ -63,15 +63,15 @@ table td{padding:5px;}
 }
 
 .center {
-    position: absolute;
-    top: 55px; /* or whatever top you need */
-    left: 50%;
-    width: auto;
-    -webkit-transform: translateX(-50%);
-    -moz-transform: translateX(-50%);
-    -ms-transform: translateX(-50%);
-    -o-transform: translateX(-50%);
-    transform: translateX(-50%);
+  position: absolute;
+  top: 55px; /* or whatever top you need */
+  left: 50%;
+  width: auto;
+  -webkit-transform: translateX(-50%);
+  -moz-transform: translateX(-50%);
+  -ms-transform: translateX(-50%);
+  -o-transform: translateX(-50%);
+  transform: translateX(-50%);
 }
 
 
@@ -83,19 +83,19 @@ table td{padding:5px;}
 
 @foreach ($properties as $property)
 <div class="container">
-    <div class="row">
-<div class='center'>
-{!! $properties->links() !!}  
-</div>
-</div>
+  <div class="row">
+    <div class='center'>
+      {!! $properties->links() !!}  
+    </div>
+  </div>
 </div>
 <div class="container">
   <div class="row">
     <div class="col-md-10 col-md-offset-1">
-    <div>
-                    {{ link_to(url('/home'), 'Back to Search', ['class' => 'btn btn-default']) }}
-                    
-    </div>
+      <div>
+        {{ link_to(url('/home'), 'Back to Search', ['class' => 'btn btn-default']) }}
+
+      </div>
 
       <div class="panel panel-primary">
         <div class="panel-heading">Property   [  {{$property->strKey }}  ]
@@ -144,7 +144,7 @@ table td{padding:5px;}
               </tr>
               <tr>
                 <td class='tlabel' >Sq Meters</td>
-                <td>{{$property->owner->strSqMeters }}</td>
+                <td>{{$property->strSqMeters }}</td>
               </tr>
               <tr>
                 <td class='tlabel' width="120">Reg Date  </td>
@@ -168,7 +168,11 @@ table td{padding:5px;}
               </tr>
               <tr>
                 <td class='tlabel' >Surname</td>
+                @if (!is_null($property->owner ))
                 <td>{{$property->owner->strSurname }}</td>
+                @else
+                <td>Error</td>
+                @endif
               </tr>
               <tr>
                 <td class='tlabel' >Identity</td>
@@ -176,23 +180,44 @@ table td{padding:5px;}
               </tr>
               <tr>
                 <td class='tlabel' >Home Phone</td>
+                @if (!is_null($property->owner ))
                 <td contenteditable='true'><input type="text" name="strHomePhoneNo" value="{{ $property->owner->strHomePhoneNo  }}"></td>
+                @else
+                <td>Error</td>
+                @endif
+
               </tr>
               <tr>
                 <td class='tlabel' >Work Phone</td>
+                @if (!is_null($property->owner ))
                 <td contenteditable='true'><input type="text" name="strWorkPhoneNo" value="{{ $property->owner->strWorkPhoneNo  }}"></td>
+                @else
+                <td>Error</td>
+                @endif
               </tr>
               <tr>
                 <td class='tlabel' >Cell Phone</td>
+                @if (!is_null($property->owner ))
                 <td contenteditable='true'><input type="text" name="strCellPhoneNo" value="{{ $property->owner->strCellPhoneNo  }}"></td>
+                @else
+                <td>Error</td>
+                @endif
               </tr>
               <tr>
                 <td class='tlabel' >Email</td>
+                @if (!is_null($property->owner ))
                 <td min-width="600" contenteditable='true'><input type="text" name="EMAIL" value="{{ $property->owner->EMAIL  }}"></td>
+                @else
+                <td>Error</td>
+                @endif
               </tr>
               <tr>
                 <td class='tlabel' >Previous Notes </td>
+                @if (!is_null($property->note ))
                 <td ><textarea  rows="6" cols="160" name="note" readonly> {{$property->note->memNotes }}</textarea></td>
+                @else
+                <td ><textarea  rows="6" cols="160" name="note" readonly> Error</textarea></td>
+                @endif
               </tr>
               <tr>
                 <td class='tlabel' >New Notes </td>
@@ -225,7 +250,7 @@ table td{padding:5px;}
       {{ Form::open(array("method" =>"POST","url"=>Session::get('controllerroute'))) }}
       <input type="text" name="selected" class="hidden" value="{{Session::get('search')}}"></input>
 
-     
+
 
       {{ Form::close() }}  
 
