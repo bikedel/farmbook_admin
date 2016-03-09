@@ -167,9 +167,6 @@ class ErfController extends Controller
     }
 
 
-
-
-
     return view('property',compact('properties','count','search','page'));
 
 }

@@ -57,13 +57,15 @@ th {
             </div>
 
             @foreach ($properties as $property)
-
+       <div class='hidden'>
+              {{$i++}}
+            </div>
             <div class="row">  
               <tr>
                <td>
 
                 {{ link_to_action('PropertyController@edit','view/edit', ['id' => $property->id]) }}
-                {!!link_to('/erf/'.$search.'/page/'.$i++, 'Test '.$i, $parameters = array('eventid' => $i, 'userid' => $i) )!!}
+                {!!link_to('/erf/'.$search.'/page/'.$i, 'Test '.$i, $parameters = array('eventid' => $i, 'userid' => $i) )!!}
 
               </td>
               <td>

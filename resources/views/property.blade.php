@@ -85,8 +85,13 @@ table td{padding:5px;}
 
 @section('content')
 
-@if (isset($page))
+@if (isset($page) && $page > 0)
+<div class='hidden'>
 <h1>{{$page}}</h1>
+{{$url = url()->current().'?page='.$page}}
+
+
+</div>
 @endif
 
 
@@ -96,7 +101,7 @@ table td{padding:5px;}
 <div class="container">
   <div class="row">
     <div class='center'>
-      {!! $properties->links() !!}  
+      {!! $properties->render() !!}  
     </div>
   </div>
 </div>
@@ -105,7 +110,7 @@ table td{padding:5px;}
     <div class="col-md-10 col-md-offset-1">
       <div>
         {{ link_to(url('/home'), 'Back to Search', ['class' => 'btn btn-default']) }}
-
+  {{ link_to(url($url), 'pointer '.$page, ['class' => 'btn btn-default']) }}
       </div>
 
       <div class="panel panel-primary">
@@ -278,6 +283,8 @@ table td{padding:5px;}
 
 
   $(document).on("ready page:load", function() {
+
+
     setTimeout(function() { $(".alert").fadeOut(); }, 4000);
 
   });
