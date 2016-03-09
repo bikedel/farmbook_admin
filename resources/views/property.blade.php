@@ -62,6 +62,12 @@ table td{padding:5px;}
   margin-right: 6px;
 }
 
+.error{
+ border-color: Transparent; 
+ color:red;
+ font-weight:900px;
+}
+
 .center {
   position: absolute;
   top: 55px; /* or whatever top you need */
@@ -171,7 +177,7 @@ table td{padding:5px;}
                 @if (!is_null($property->owner ))
                 <td>{{$property->owner->strSurname }}</td>
                 @else
-                <td>Error</td>
+                <td class="error">Error</td>
                 @endif
               </tr>
               <tr>
@@ -183,7 +189,7 @@ table td{padding:5px;}
                 @if (!is_null($property->owner ))
                 <td contenteditable='true'><input type="text" name="strHomePhoneNo" value="{{ $property->owner->strHomePhoneNo  }}"></td>
                 @else
-                <td>Error</td>
+                <td class="error">Error</td>
                 @endif
 
               </tr>
@@ -192,7 +198,7 @@ table td{padding:5px;}
                 @if (!is_null($property->owner ))
                 <td contenteditable='true'><input type="text" name="strWorkPhoneNo" value="{{ $property->owner->strWorkPhoneNo  }}"></td>
                 @else
-                <td>Error</td>
+                <td class="error">Error</td>
                 @endif
               </tr>
               <tr>
@@ -200,7 +206,7 @@ table td{padding:5px;}
                 @if (!is_null($property->owner ))
                 <td contenteditable='true'><input type="text" name="strCellPhoneNo" value="{{ $property->owner->strCellPhoneNo  }}"></td>
                 @else
-                <td>Error</td>
+                <td class="error">Error</td>
                 @endif
               </tr>
               <tr>
@@ -208,7 +214,7 @@ table td{padding:5px;}
                 @if (!is_null($property->owner ))
                 <td min-width="600" contenteditable='true'><input type="text" name="EMAIL" value="{{ $property->owner->EMAIL  }}"></td>
                 @else
-                <td>Error</td>
+                <td class="error">Error - Problem with database relationship.</td>
                 @endif
               </tr>
               <tr>
@@ -216,7 +222,7 @@ table td{padding:5px;}
                 @if (!is_null($property->note ))
                 <td ><textarea  rows="6" cols="160" name="note" readonly> {{$property->note->memNotes }}</textarea></td>
                 @else
-                <td ><textarea  rows="6" cols="160" name="note" readonly> Error</textarea></td>
+                <td class="error"><textarea  rows="6" cols="160" name="note" readonly> Error - Problem with database relationship.</textarea></td>
                 @endif
               </tr>
               <tr>
