@@ -111,10 +111,11 @@ Route::group(['middleware' => 'web'], function () {
     // delete database
 	Route::post('/deletedatabase', 'CsvImportController@deletedatabase');
 
-//logging
+    //logging
 	Route::get('/logs',  'LogsController@index' );
+	Route::get('/deletelogs',  'LogsController@destroy' );
 
-// datatables
+    // datatables
 	Route::controller('datatables', 'DatatablesController', [
 		'anyData'  => 'datatables.data',
 		'getIndex' => 'datatables',

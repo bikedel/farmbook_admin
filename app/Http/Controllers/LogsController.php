@@ -13,6 +13,7 @@ use Storage;
 use File;
 use Response;
 use Exception;
+use Redirect;
 
 class LogsController extends Controller
 {
@@ -122,8 +123,10 @@ $logs = explode(PHP_EOL, $contents);
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy()
     {
-        //
+        $filename = storage_path().'/app/'.'logfile.txt';
+        file::delete($filename);
+        return Redirect::back();
     }
 }

@@ -26,12 +26,16 @@
 					<div class='hidden'>
 						{{$i=1}}
 					</div>
-					<div class="panel-body table-responsive">
+					<div class="panel-body ">
+						{{ link_to(url('/deletelogs'), 'Delete Log', ['class' => 'btn btn-danger']) }}   
+                        <div>
+                        	<p><br></p>
+                        </div>
 						<ul class="list-group">
 
 							@foreach($logs as $log)
 
-							<a href="#" class="list-group-item">{{$i++}} - {{$log}}</a>
+							<a href="#" class="list-group-item"> {{$log}}</a>
 							@endforeach
 
 						</ul>
