@@ -88,10 +88,14 @@ table td{padding:5px;}
 @if (isset($page) && $page > 0)
 <div class='hidden'>
 <h1>{{$page}}</h1>
+
 {{$url = url()->current().'?page='.$page}}
 
 
 </div>
+@else
+{{$url = ""}}
+{{$page = ""}}
 @endif
 
 
@@ -110,7 +114,10 @@ table td{padding:5px;}
     <div class="col-md-10 col-md-offset-1">
       <div>
         {{ link_to(url('/home'), 'Back to Search', ['class' => 'btn btn-default']) }}
-  {{ link_to(url($url), 'pointer '.$page, ['class' => 'btn btn-default']) }}
+        @if (isset($page) && $page > 0)
+
+        {{ link_to(url($url), 'pointer '.$page, ['class' => 'btn btn-default']) }}
+        @endif
       </div>
 
       <div class="panel panel-primary">
