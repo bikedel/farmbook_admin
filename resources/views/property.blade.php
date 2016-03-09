@@ -214,7 +214,7 @@ table td{padding:5px;}
                 @if (!is_null($property->owner ))
                 <td min-width="600" contenteditable='true'><input type="text" name="EMAIL" value="{{ $property->owner->EMAIL  }}"></td>
                 @else
-                <td class="error">Error - Problem with database relationship.</td>
+                <td class="error">Error - Problem with database relationship, please inform System Admin.</td>
                 @endif
               </tr>
               <tr>
@@ -222,7 +222,7 @@ table td{padding:5px;}
                 @if (!is_null($property->note ))
                 <td ><textarea  rows="6" cols="160" name="note" readonly> {{$property->note->memNotes }}</textarea></td>
                 @else
-                <td class="error"><textarea  rows="6" cols="160" name="note" readonly> Error - Problem with database relationship.</textarea></td>
+                <td class="error"><textarea  rows="6" cols="160" name="note" readonly>Error - Problem with database relationship, please inform System Admin.</textarea></td>
                 @endif
               </tr>
               <tr>
