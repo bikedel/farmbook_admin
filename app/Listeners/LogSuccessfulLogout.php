@@ -36,7 +36,7 @@ class LogSuccessfulLogout
             $email = $event->user->email;
 
             //log 
-            $action = 'Login Out'; 
+            $action = 'LogOut'; 
             $append =  \Carbon\Carbon::now('Africa/Johannesburg')->toDateTimeString(). '          '. trim($email).'          '.$action ;
             Storage::append( 'logfile.txt', $append );
          }
