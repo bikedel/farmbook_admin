@@ -55,7 +55,7 @@ th {
 
       
                     </tr>
-                    {!! $i =0 !!}
+                 
                     @foreach ($properties as $property)
 
                     <div class="row">  
