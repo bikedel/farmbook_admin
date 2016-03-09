@@ -47,7 +47,7 @@ class LogsController extends Controller
    catch(\Exception $e){
    
         $filename = storage_path().'/app/'.'logfile.txt';
-         File::put($filename, \Carbon\Carbon::now('Africa/Johannesburg')->toDateTimeString());
+         File::put($filename, \Carbon\Carbon::now('Africa/Johannesburg')->toDateTimeString()." Log started.");
          $contents = File::get($filename);
     }
 
