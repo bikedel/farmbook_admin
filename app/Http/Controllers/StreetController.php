@@ -87,13 +87,12 @@ class StreetController extends Controller
 
 
     // edit all
- public function rolledit($id)
+ public function rolledit($id,Request $request)
  {
     try{
 
         // set database
         $database = Auth::user()->getDatabase();
-
 
        //change database
         $property = new Property;
@@ -116,9 +115,6 @@ class StreetController extends Controller
     {
         dd($e->getMessage());
     }
-
-
-
 
 
     return view('property',compact('properties','count','search'));

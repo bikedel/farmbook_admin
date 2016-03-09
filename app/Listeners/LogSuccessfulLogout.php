@@ -28,16 +28,17 @@ class LogSuccessfulLogout
      */
     public function handle(Logout $event)
     {
-       
 
-    $email = $event->user->email;
- 
+         if (Auth::check())
+         {      
+            // get logged in user email
+            $email = $event->user->email;
 
-    //log 
-    $action = 'Login Out'; 
-    $append =  \Carbon\Carbon::now('Africa/Johannesburg')->toDateTimeString(). '          '. trim($email).'          '.$action ;
-    Storage::append( 'logfile.txt', $append );
+            //log 
+            $action = 'Login Out'; 
+            $append =  \Carbon\Carbon::now('Africa/Johannesburg')->toDateTimeString(). '          '. trim($email).'          '.$action ;
+            Storage::append( 'logfile.txt', $append );
+         }
 
-
-    }
+     }
 }

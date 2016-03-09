@@ -61,7 +61,7 @@ th {
                        <td>
 
                         {{ link_to_action('PropertyController@edit','view/edit', ['id' => $property->id]) }}
-
+                        {{ link_to(url('/erf/'.$search), 'Edit All', ['class' => 'btn btn-default']) }}
                     </td>
                     <td>
 

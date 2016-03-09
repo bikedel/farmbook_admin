@@ -53,8 +53,9 @@ th {
                         <th>No</th>
                         <th>Owners</th> 
 
-
+      
                     </tr>
+                    {!! $i =0 !!}
                     @foreach ($properties as $property)
 
                     <div class="row">  
@@ -62,7 +63,8 @@ th {
                        <td>
 
                         {{ link_to_action('PropertyController@edit','view/edit', ['id' => $property->id]) }}
-
+                        {{ link_to(url('/street/'.$search), 'Edit All', ['class' => 'btn btn-default']) }}   
+                        {{$i++}}
                     </td>
                     <td>
 
