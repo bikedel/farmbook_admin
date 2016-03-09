@@ -90,7 +90,7 @@ class ErfController extends Controller
 
 
     // edit all
- public function rolledit($id, $eventid )
+ public function rolledit($id )
  {
     try{
 
