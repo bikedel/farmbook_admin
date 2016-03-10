@@ -107,7 +107,7 @@ table td{padding:5px;}
     </div>
   </div>
 </div>
-{{$properties->count()}}
+
 @foreach ($properties as $key => $property)
 
 

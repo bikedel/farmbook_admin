@@ -70,4 +70,26 @@ class Property extends Model
         return $query->where($field, 'LIKE', "%$value%");
     }
 
+
+     // accessor for amount strAmount
+    public function getStrAmountAttribute($number)
+
+    {
+        $length = strlen($number);
+        if ($length > 0 ){
+          return "R ".number_format($number);;
+        }
+     
+    }
+
+     // accessor for bond amount strAmount
+    public function getStrBondAmountAttribute($number)
+
+    {
+        $length = strlen($number);
+        if ($length > 0 ){
+          return "R ".number_format($number);;
+        }
+     
+    }
 }

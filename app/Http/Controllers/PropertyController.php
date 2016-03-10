@@ -97,12 +97,27 @@ class PropertyController extends Controller
       try {
 
          // update personal details
-         $owner = Owner::on( $database )->where('strIDNumber', $strIdentity)->update(array('strCellPhoneNo' => $cellPhone,
-            'strHomePhoneNo' => $homePhone,
-            'strWorkPhoneNo' => $workPhone,
-            'EMAIL' => $email,
-            'updated_at'=> $now
-            ));
+      //   $owner = Owner::on( $database )->where('strIDNumber', $strIdentity)->update(array('strCellPhoneNo' => $cellPhone,
+      //      'strHomePhoneNo' => $homePhone,
+      //      'strWorkPhoneNo' => $workPhone,
+      //      'EMAIL' => $email,
+      //      'updated_at'=> $now
+      //      ));
+
+
+
+        //update owner details
+
+        $owner = Owner::on( $database )->where('strIDNumber', $strIdentity)->first();
+
+
+        $owner->strHomePhoneNo = $homePhone;
+        $owner->strCellPhoneNo = $cellPhone;
+        $owner->strWorkPhoneNo = $workPhone;
+        $owner->EMAIL = $email;
+
+        $owner->save();
+
 
              // check if there is a new note
              if (strlen($newnote) > 0 ){

@@ -38,4 +38,100 @@ class Owner extends Model
 
         //return $this->hasMany('App\Properties', 'strIDNumber', 'strIdentity');
     }
+
+
+    // accessor for Home telephone number
+    public function getStrHomePhoneNoAttribute($phone)
+
+    {
+        $length = strlen($phone);
+        if ($length == 9){
+          $phone = preg_replace("/[^0-9]/", "", $phone);
+          $phone = "(0".substr($phone,0,2).") ".substr($phone,2,3)."-".substr($phone,5);
+        }
+        if ($length == 10){
+          $phone = preg_replace("/[^0-9]/", "", $phone);
+          $phone = "(".substr($phone,0,3).") ".substr($phone,3,3)."-".substr($phone,6);
+        }
+        return $phone;
+     
+    }
+
+    // mutator for Home telephone number
+    public function setStrHomePhoneNoAttribute($phone)
+
+    {
+       
+
+        $phone = str_replace('-', '', $phone);
+        $phone = str_replace('(', '', $phone);
+        $phone = str_replace(')', '', $phone);
+        $phone = str_replace(' ', '', $phone);
+
+        $this->attributes['strHomePhoneNo'] = $phone;
+    }
+
+     // accessor for Work telephone number
+    public function getStrWorkPhoneNoAttribute($phone)
+
+    {
+        $length = strlen($phone);
+        if ($length == 9){
+          $phone = preg_replace("/[^0-9]/", "", $phone);
+          $phone = "(0".substr($phone,0,2).") ".substr($phone,2,3)."-".substr($phone,5);
+        }
+        if ($length == 10){
+          $phone = preg_replace("/[^0-9]/", "", $phone);
+          $phone = "(".substr($phone,0,3).") ".substr($phone,3,3)."-".substr($phone,6);
+        }
+        return $phone;
+     
+    }
+
+    // mutator for Work telephone number
+    public function setStrWorkPhoneNoAttribute($phone)
+
+    {
+       
+
+        $phone = str_replace('-', '', $phone);
+        $phone = str_replace('(', '', $phone);
+        $phone = str_replace(')', '', $phone);
+        $phone = str_replace(' ', '', $phone);
+
+        $this->attributes['strWorkPhoneNo'] = $phone;
+    }
+
+     // accessor for Cell telephone number
+    public function getStrCellPhoneNoAttribute($phone)
+
+    {
+        $length = strlen($phone);
+        if ($length == 9){
+          $phone = preg_replace("/[^0-9]/", "", $phone);
+          $phone = "(0".substr($phone,0,2).") ".substr($phone,2,3)."-".substr($phone,5);
+        }
+        if ($length == 10){
+          $phone = preg_replace("/[^0-9]/", "", $phone);
+          $phone = "(".substr($phone,0,3).") ".substr($phone,3,3)."-".substr($phone,6);
+        }
+        return $phone;
+     
+    }
+
+    // mutator forCell telephone number
+    public function setStrCellPhoneNoAttribute($phone)
+
+    {
+       
+
+        $phone = str_replace('-', '', $phone);
+        $phone = str_replace('(', '', $phone);
+        $phone = str_replace(')', '', $phone);
+        $phone = str_replace(' ', '', $phone);
+
+        $this->attributes['strCellPhoneNo'] = $phone;
+    }
+
+
 }
