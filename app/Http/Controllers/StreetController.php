@@ -103,6 +103,16 @@ class StreetController extends Controller
         $query = Property::on(   $database)->like('strStreetName', $id)->orderby('strStreetName','ASC')->orderby('strStreetNo','ASC')->get();
         $properties = Property::on(   $database )->like('strStreetName', $id)->orderby('strStreetName','ASC')->orderby('numStreetNo','ASC')->simplePaginate(1);
 
+
+        // get streets and prepend selected street
+
+        $streets = Street::on($database )->orderBy('strStreetName','ASC')->lists('strStreetName','strStreetName');
+       // $streets->prepend(['selected' => $streetname]);
+
+
+
+
+
         // get relationship data
         $properties->load('owner', 'note');
 
@@ -117,7 +127,7 @@ class StreetController extends Controller
     }
 
 
-    return view('property',compact('properties','count','search'));
+    return view('property',compact('properties','count','search','streets'));
 
 }
 

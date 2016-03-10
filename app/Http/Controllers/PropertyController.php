@@ -42,6 +42,9 @@ class PropertyController extends Controller
             $properties =Property::on(   $database)->where('id', $id)->paginate(1);
             $properties->load('owner', 'note');
 
+            // get all streets
+            $streets = Street::on($database )->orderBy('strStreetName','ASC')->lists('strStreetName','strStreetName');
+
             // pass searched string
             $search = $id;
 
@@ -56,7 +59,7 @@ class PropertyController extends Controller
 
 
 
-        return view('property',compact('properties','count','search'));
+        return view('property',compact('properties','count','search','streets'));
 
     }
 
@@ -85,6 +88,7 @@ class PropertyController extends Controller
       $strKey = $request->input('strKey');
       $strIdentity = $request->input('strIdentity');
       $strOwners = $request->input('strOwners');
+
       $homePhone = $request->input('strHomePhoneNo');
       $workPhone = $request->input('strWorkPhoneNo');
       $cellPhone = $request->input('strCellPhoneNo');
@@ -92,7 +96,8 @@ class PropertyController extends Controller
       $note = $request->input('note');
       $newnote = $request->input('newnote');
 
-
+      $strStreetNo = $request->input('strStreetNo');
+      $strStreetName = $request->input('strStreetName');
 
       try {
 
@@ -105,6 +110,10 @@ class PropertyController extends Controller
       //      ));
 
 
+
+       $properties = Property::on( $database )->where('strKey', $strKey)->update(array('strStreetNo' => $strStreetNo , 'numStreetNo' => $strStreetNo ,'strStreetName' => $strStreetName ));
+
+//dd($properties);
 
         //update owner details
 

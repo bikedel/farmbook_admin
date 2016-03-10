@@ -158,12 +158,24 @@ $currentPage = $page;
         $property->changeConnection(    $database  );
 
 
+        
+
         // search on street name
-        $query = Property::on(   $database)->like('numErf', $id)->orderby('numErf','ASC')->get();
+        $query = Property::on(   $database)->where('numErf', $id)->orderby('numErf','ASC')->get();
         $count =  $query->count();
 
 
-        $properties = Property::on(   $database )->like('numErf', $id)->orderby('numErf','ASC')->simplePaginate(1);
+        $properties = Property::on(   $database )->where('numErf', $id)->orderby('numErf','ASC')->simplePaginate(1);
+
+//dd($properties);
+
+        // get streets and prepend selected street
+      //  $streetname = Property::on(   $database )->where('numErf', $id)->first();
+      //   $streetname = $streetname->strStreetName;
+
+      //  $streets = Street::on($database )->orderBy('strStreetName','ASC')->lists('strStreetName','strStreetName');
+      //  $streets->prepend(['selected' => $streetname]);
+
 
         // get relationship data
         $properties->load('owner', 'note');

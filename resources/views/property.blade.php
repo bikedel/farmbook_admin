@@ -117,7 +117,7 @@ table td{padding:5px;}
       <div>
         {{ link_to(url('/home'), 'Back to Search', ['class' => 'btn btn-default']) }}
         @if (isset($page) && $page > 0)
-           {{ link_to(url($url), 'Selected', ['class' => 'btn btn-default']) }}
+          <!-- {{ link_to(url($url), 'Selected', ['class' => 'btn btn-default']) }} -->
         @endif
       </div>
 
@@ -152,11 +152,15 @@ table td{padding:5px;}
               </tr>
               <tr>
                 <td class='tlabel' width="120">Street No  </td>
-                <td class='street'> {{$property->strStreetNo }}</td>
+                 <td class='street' contenteditable='true'><input type="text" name="strStreetNo" value="{{$property->strStreetNo }}"></td>
               </tr>
               <tr>
                 <td class='tlabel' >Street Name </td>
-                <td class='street'>{{$property->strStreetName }}</td>
+                @if (isset($streets))
+                <td class='street'>   {!! Form::select('strStreetName', $streets, [$property->strStreetName], ['class' => 'form-control']) !!}</td>
+                @else
+                 <td class='street'>  {{ $property->strStreetName }}</td>
+                @endif
               </tr>
               <tr>
                 <td class='tlabel' width="100">Complex No  </td>
