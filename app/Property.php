@@ -80,7 +80,7 @@ class Property extends Model
       //   $number = str_replace('.', '', $number);
         $length = strlen($number);
         if ($length > 0 ){
-          return "R ".number_format($number);
+          return "R ".number_format($number,2);
         }
      
     }
@@ -94,7 +94,7 @@ class Property extends Model
      //    $number = str_replace('.', '', $number);
         $length = strlen($number);
         if ($length > 0 ){
-          return "R ".number_format($number);;
+          return "R ".number_format($number,2);;
         }
      
     }
