@@ -77,7 +77,7 @@ class Property extends Model
     {
 
          $number = str_replace(',', '', $number);
-         $number = str_replace('.', '', $number);
+      //   $number = str_replace('.', '', $number);
         $length = strlen($number);
         if ($length > 0 ){
           return "R ".number_format($number);
@@ -91,7 +91,7 @@ class Property extends Model
     {
 
          $number = str_replace(',', '', $number);
-         $number = str_replace('.', '', $number);
+     //    $number = str_replace('.', '', $number);
         $length = strlen($number);
         if ($length > 0 ){
           return "R ".number_format($number);;
