@@ -48,7 +48,8 @@ class HomeController extends Controller
 
         $streets = Street::on($database )->orderBy('strStreetName','ASC')->lists('strStreetName','id');
         $complexes = Complex::on($database )->orderBy('strComplexName','ASC')->lists('strComplexName', 'id');
-        $owners = Owner::on($database )->orderBy('NAME','DESC')->lists('NAME', 'id');
+       // $owners = Owner::on($database )->orderBy('NAME','DESC')->lists('NAME', 'id');
+          $owners = Property::on($database )->orderBy('strOwners','DESC')->groupBy('strOwners')->lists('strOwners', 'id');
         $properties = Property::on($database )->orderBy('strKey','ASC')->lists('strkey', 'id');
         $erfs = Note::on($database )->orderBy('numErf','ASC')->lists('numErf', 'id');
 

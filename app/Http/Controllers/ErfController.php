@@ -15,6 +15,7 @@ use Auth;
 use Carbon;
 use App\User;
 use URL;
+use \Illuminate\Pagination\Paginator;
 
 
 class ErfController extends Controller
@@ -95,9 +96,6 @@ class ErfController extends Controller
     try{
 
 
-
-
-
         // set database
         $database = Auth::user()->getDatabase();
 
@@ -139,6 +137,17 @@ class ErfController extends Controller
     try{
 
 
+$currentPage = $page;
+
+// force current page to 5
+
+//Paginator::currentPageResolver(function() use ($currentPage) {
+// return $currentPage;
+//});
+
+
+
+
 
         // set database
         $database = Auth::user()->getDatabase();
@@ -151,6 +160,9 @@ class ErfController extends Controller
 
         // search on street name
         $query = Property::on(   $database)->like('numErf', $id)->orderby('numErf','ASC')->get();
+        $count =  $query->count();
+
+
         $properties = Property::on(   $database )->like('numErf', $id)->orderby('numErf','ASC')->simplePaginate(1);
 
         // get relationship data
@@ -167,6 +179,7 @@ class ErfController extends Controller
     }
 
 
+ 
     return view('property',compact('properties','count','search','page'));
 
 }

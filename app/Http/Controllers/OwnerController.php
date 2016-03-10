@@ -58,8 +58,8 @@ class OwnerController extends Controller
 
       } else {
 
-          $owner = Owner::on( $database)->where('id', $Select)->first();
-          $search = $owner->NAME;
+          $owner = Property::on( $database)->where('id', $Select)->first();
+          $search = $owner->strOwners;
           $properties = Property::on( $database)->where('strOwners', $search)->orderby('strOwners','ASC')->get();
 
       }
