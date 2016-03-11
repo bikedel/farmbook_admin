@@ -56,23 +56,23 @@ Route::group(['middleware' => 'web'], function () {
     // show street
 	Route::post('/street', 'StreetController@index');
 	Route::get('/street/{id}', 'StreetController@rolledit');
+	Route::get('/street/{id}?page={item}', 'StreetController@rolledit');
 
     // complex
 	Route::post('/complex', 'ComplexController@index');
 	Route::get('/complex/{id}', 'ComplexController@rolledit');
+	Route::get('/complex/{id}?page={item}', 'ComplexController@rolledit');
 
     // erf
 	Route::post('/erf', 'ErfController@index');
 	Route::get('/erf/{id}', 'ErfController@rolledit');
-
-	Route::get('/erf/{id}/page/{page}', 'ErfController@test');
-
+	Route::get('/erf/{id}?page={item}', 'ErfController@rolledit');
 
 
     // owners
 	Route::post('/owner', 'OwnerController@index');
 	Route::get('/owner/{id}', 'OwnerController@rolledit');
-
+	Route::get('/owner/{id}?page={item}', 'OwnerController@rolledit');
 
     // show property
 	Route::get('/property/{id}', 'PropertyController@edit');

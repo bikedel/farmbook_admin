@@ -41,7 +41,7 @@ th {
         <div class="panel-heading">Properties [{{$properties->count()}}]  </div>
 
         <div class="panel-body table-responsive">
-          {{ link_to(url('/erf/'.$search), 'Edit All', ['class' => 'btn btn-default']) }} 
+         <!-- {{ link_to(url('/erf/'.$search), 'Edit All', ['class' => 'btn btn-default']) }} -->
           {{ link_to(url('/home'), 'Back to Search', ['class' => 'btn btn-default']) }}
           <p><br></p>
           <table class="table">
@@ -64,9 +64,9 @@ th {
               <tr>
                <td>
 
-            {{ link_to_action('PropertyController@edit','view/edit', ['id' => $property->id]) }} 
-                <!--    {!!link_to('/erf/'.$property->numErf.'/page/'.$i, 'View/Edit', $parameters = array('eventid' => $i, 'userid' => $i) )!!} -->
-
+              <!--    {{ link_to_action('PropertyController@edit','view/edit', ['id' => $property->id]) }} -->
+               <!--   {!!link_to('/erf/'.$property->numErf.'/item/'.$i, 'PAGE', $parameters = array('eventid' => $i, 'userid' => $i) )!!} -->
+                  {!!link_to_action('ErfController@rolledit', 'View/Edit',  array('id' => $property->numErf, 'item' => $i) )!!} 
               </td>
               <td>
 

@@ -100,8 +100,8 @@ class StreetController extends Controller
 
 
         // search on street name
-        $query = Property::on(   $database)->like('strStreetName', $id)->orderby('strStreetName','ASC')->orderby('strStreetNo','ASC')->get();
-        $properties = Property::on(   $database )->like('strStreetName', $id)->orderby('strStreetName','ASC')->orderby('numStreetNo','ASC')->simplePaginate(1);
+        $query = Property::on(   $database)->where('strStreetName', $id)->orderby('strStreetName','ASC')->orderby('strStreetNo','ASC')->get();
+        $properties = Property::on(   $database )->where('strStreetName', $id)->orderby('strStreetName','ASC')->orderby('numStreetNo','ASC')->simplePaginate(1);
 
 
         // get streets and prepend selected street

@@ -19,7 +19,7 @@
 
 
             <div class="panel panel-primary">
-                <div class="panel-heading"><i class="farmbooks glyphicon glyphicon-road"></i>Canvass by Street </div>
+                <div class="panel-heading">Find a propery by Street Name</div>
 
                 <div class="panel-body">
 
@@ -45,7 +45,7 @@
 
 
             <div class="panel panel-primary">
-                <div class="panel-heading "><i class=""> <span class=" users     glyphicon glyphicon-th"> </span></i>Canvass by Complex </div>
+                <div class="panel-heading ">Find a propery by Complex Name</div>
 
                 <div class="panel-body">
 
@@ -71,7 +71,7 @@
 
   
             <div class="panel panel-primary">
-                <div class="panel-heading "> <i class=""> <span class=" admin     glyphicon glyphicon-home"> </span></i>Canvass by Erf</div>
+                <div class="panel-heading ">Find a propery by Erf Number</div>
 
                 <div class="panel-body">
 
@@ -97,7 +97,7 @@
 
 
             <div class="panel panel-primary">
-                <div class="panel-heading "><i class=""> <span class=" owner    glyphicon glyphicon-user"> </span></i>Canvass by Owner</div>
+                <div class="panel-heading ">Find a propery by Owner</div>
 
                 <div class="panel-body">
 
@@ -105,7 +105,7 @@
 
                         {{ Form::open(array('method' =>'POST','url'=>'/owner')) }}
 
-                        <div class="col-sm-4">
+                        <div class="col-sm-10">
                             {!! Form::select('selected', $owners, null, ['class' => 'form-control']) !!}
                         </div>
                         <div class="col-sm-2">

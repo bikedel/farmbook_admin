@@ -57,7 +57,12 @@
 
 .users{
     margin-right: 6px;
-    color:teal;
+    color:orange;
+}
+
+.owner{
+    margin-right: 6px;
+    color:Gold ;
 }
 
 .logs{
@@ -79,7 +84,7 @@
 
 .farmbooks{
     margin-right: 6px;
-    color:green;
+    color:Chartreuse ;
 }
 
 .id {
@@ -134,7 +139,7 @@
                     <li><a href="{{ url('/home') }}"><i class="farmbooks glyphicon glyphicon-road"></i>by Street</a></li> 
                     <li><a href="{{ url('/home') }}"> <i class=""> <span class=" users     glyphicon glyphicon-th"> </span></i>by Complex</a></li>
                     <li><a href="{{ url('/home') }}"> <i class=""> <span class=" admin     glyphicon glyphicon-home"> </span></i>by Erf</a></li>
-                    <li><a href="{{ url('/home') }}"> <i class=""> <span class=" users     glyphicon glyphicon-user"> </span></i>by Owner</a></li>
+                    <li><a href="{{ url('/home') }}"> <i class=""> <span class=" owner     glyphicon glyphicon-user"> </span></i>by Owner</a></li>
                 </ul>
             </li>
 

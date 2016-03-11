@@ -53,6 +53,9 @@ table td{padding:5px;}
 .update{
   float:right;
 }
+.backsearch {
+  float:left;
+}
 
 .id {
   border-color: Transparent; 
@@ -87,9 +90,9 @@ table td{padding:5px;}
 
 @if (isset($page) && $page > 0)
 <div class='hidden'>
-<h1>{{$page}}</h1>
+  <h1>{{$page}}</h1>
 
-{{$url = url()->current().'?page='.$page}}
+  {{$url = url()->current().'?page='.$page}}
 
 </div>
 @else
@@ -117,7 +120,9 @@ table td{padding:5px;}
       <div>
         {{ link_to(url('/home'), 'Back to Search', ['class' => 'btn btn-default']) }}
         @if (isset($page) && $page > 0)
-          <!-- {{ link_to(url($url), 'Selected', ['class' => 'btn btn-default']) }} -->
+
+        {{ link_to(url($url), 'Selected', ['class' => 'btn btn-default']) }} 
+
         @endif
       </div>
 
@@ -152,14 +157,17 @@ table td{padding:5px;}
               </tr>
               <tr>
                 <td class='tlabel' width="120">Street No  </td>
-                 <td class='street' contenteditable='true'><input type="text" name="strStreetNo" value="{{$property->strStreetNo }}"></td>
+                <td class='street' contenteditable='true'><input type="text" name="strStreetNo" value="{{$property->strStreetNo }}"></td>
               </tr>
               <tr>
                 <td class='tlabel' >Street Name </td>
                 @if (isset($streets))
-                <td class='street'>   {!! Form::select('strStreetName', $streets, [$property->strStreetName], ['class' => 'form-control']) !!}</td>
+
+                <td class='street '>   {!! Form::select('strStreetName', $streets, [$property->strStreetName],  ['class' => 'form-control ','style' =>'width:100%']) !!} </td>
+
+
                 @else
-                 <td class='street'>  {{ $property->strStreetName }}</td>
+                <td class='street'>  {{ $property->strStreetName }}</td>
                 @endif
               </tr>
               <tr>
@@ -254,19 +262,21 @@ table td{padding:5px;}
             </table>
 
             @endforeach
-
-            <div class=' update'>
+           
+            <div class='backsearch'>
               <br>
-              <input type="text" name="strKey" class="hidden" value="{{ $property->strKey }}"></input>
-              <input type="text" name="strIdentity" class="hidden" value="{{ $property->strIdentity }}"></input>
-              <input type="text" name="strOwners" class="hidden" value="{{ $property->strOwners }}"></input>
-              {{ link_to(url('/home'), 'Back to Search', ['class' => 'btn btn-default']) }}
-              {{Form::submit('Update', array('class' => 'btn btn-danger update')) }} 
-              {{ Form::close() }}   
+             {{ link_to(url('/home'), 'Back to Search', ['class' => ' btn btn-default']) }}
+           </div>
+           <div class=' update'>
+           <br>
+            <input type="text" name="strKey" class="hidden" value="{{ $property->strKey }}"></input>
+            <input type="text" name="strIdentity" class="hidden" value="{{ $property->strIdentity }}"></input>
+            <input type="text" name="strOwners" class="hidden" value="{{ $property->strOwners }}"></input>
+
+            {{Form::submit('Update', array('class' => 'btn btn-danger update')) }} 
+            {{ Form::close() }}   
 
 
-
-            </div>
 
           </div>
 
@@ -274,35 +284,37 @@ table td{padding:5px;}
 
       </div>
 
-
-      {{ Form::open(array("method" =>"POST","url"=>Session::get('controllerroute'))) }}
-      <input type="text" name="selected" class="hidden" value="{{Session::get('search')}}"></input>
-
-
-
-      {{ Form::close() }}  
-
     </div>
+
+
+    {{ Form::open(array("method" =>"POST","url"=>Session::get('controllerroute'))) }}
+    <input type="text" name="selected" class="hidden" value="{{Session::get('search')}}"></input>
+
+
+
+    {{ Form::close() }}  
+
   </div>
+</div>
 
-  @endsection
-
-
-
-  <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
-  <script >
+@endsection
 
 
 
-  $(document).on("ready page:load", function() {
-
-
-    setTimeout(function() { $(".alert").fadeOut(); }, 4000);
-
-  });
+<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+<script >
 
 
 
+$(document).on("ready page:load", function() {
 
 
-  </script>
+  setTimeout(function() { $(".alert").fadeOut(); }, 4000);
+
+});
+
+
+
+
+
+</script>

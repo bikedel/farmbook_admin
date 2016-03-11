@@ -102,8 +102,8 @@ class OwnerController extends Controller
 
 
         // search on street name
-        $query = Property::on(   $database)->like('strOwners', $id)->orderby('strOwners','ASC')->get();
-        $properties = Property::on(   $database )->like('strOwners', $id)->orderby('strOwners','ASC')->simplePaginate(1);
+        $query = Property::on(   $database)->where('strOwners', $id)->orderby('strOwners','ASC')->get();
+        $properties = Property::on(   $database )->where('strOwners', $id)->orderby('strOwners','ASC')->simplePaginate(1);
 
         // get relationship data
         $properties->load('owner', 'note');

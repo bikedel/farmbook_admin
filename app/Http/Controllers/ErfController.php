@@ -16,7 +16,7 @@ use Carbon;
 use App\User;
 use URL;
 use \Illuminate\Pagination\Paginator;
-
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class ErfController extends Controller
 {
@@ -99,15 +99,13 @@ class ErfController extends Controller
         // set database
         $database = Auth::user()->getDatabase();
 
-
        //change database
         $property = new Property;
         $property->changeConnection(    $database  );
 
-
         // search on street name
-        $query = Property::on(   $database)->like('numErf', $id)->orderby('numErf','ASC')->get();
-        $properties = Property::on(   $database )->like('numErf', $id)->orderby('numErf','ASC')->simplePaginate(1);
+        $query = Property::on(   $database)->where('numErf', $id)->orderby('numErf','ASC')->get();
+        $properties = Property::on(   $database )->where('numErf', $id)->orderby('numErf','ASC')->simplePaginate(1);
 
         // get relationship data
         $properties->load('owner', 'note');
@@ -131,69 +129,6 @@ class ErfController extends Controller
 }
 
 
-  // edit all
- public function test($id, $page , Request $request)
- {
-    try{
-
-
-$currentPage = $page;
-
-// force current page to 5
-
-//Paginator::currentPageResolver(function() use ($currentPage) {
-// return $currentPage;
-//});
-
-
-
-
-
-        // set database
-        $database = Auth::user()->getDatabase();
-
-
-       //change database
-        $property = new Property;
-        $property->changeConnection(    $database  );
-
-
-        
-
-        // search on street name
-        $query = Property::on(   $database)->where('numErf', $id)->orderby('numErf','ASC')->get();
-        $count =  $query->count();
-
-
-        $properties = Property::on(   $database )->where('numErf', $id)->orderby('numErf','ASC')->simplePaginate(1);
-
-//dd($properties);
-
-        // get streets and prepend selected street
-      //  $streetname = Property::on(   $database )->where('numErf', $id)->first();
-      //   $streetname = $streetname->strStreetName;
-
-      //  $streets = Street::on($database )->orderBy('strStreetName','ASC')->lists('strStreetName','strStreetName');
-      //  $streets->prepend(['selected' => $streetname]);
-
-
-        // get relationship data
-        $properties->load('owner', 'note');
-
-        // get total records as simplepagination does not do this
-        $count =  $query->count();
-        $search = $id;
-
-    }
-    catch (exception $e)
-    {
-        dd($e->getMessage());
-    }
-
-
  
-    return view('property',compact('properties','count','search','page'));
-
-}
 
 }

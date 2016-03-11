@@ -54,7 +54,7 @@ th {
                 <div class="panel-heading">Properties [{{$properties->count()}}]  </div>
 
                 <div class="panel-body table-responsive">
-                    {{ link_to(url('/complex/'.$search), 'Edit All', ['class' => 'btn btn-default']) }}
+                  <!--   {{ link_to(url('/complex/'.$search), 'Edit All', ['class' => 'btn btn-default']) }}  -->
                     {{ link_to(url('/home'), 'Back to Search', ['class' => 'btn btn-default']) }}
                     <p><br></p>
                     <table class="table">
@@ -68,15 +68,19 @@ th {
                         </tr>
                     </thead>
                     <tbody>
-                      
+                                  <div class='hidden'>
+              {{$i=0}}
+            </div>
                         @foreach ($properties as $property)
-
+           <div class='hidden'>
+              {{$i++}}
+            </div>
 
                         <tr>
                             <td data-label="action">
 
-                            {{ link_to_action('PropertyController@edit','view/edit', ['id' => $property->id]) }}
-
+                          <!--  {{ link_to_action('PropertyController@edit','view/edit', ['id' => $property->id]) }}     -->
+                            {!!link_to_action('ComplexController@rolledit', 'View/Edit',  array('id' => $property->strComplexName, 'item' => $i) )!!} 
                            </td>
                 
                         <td data-label="erf">
@@ -108,7 +112,7 @@ th {
                 </tbody>
             </table>
                     <br>
-                    {{ link_to(url('/complex/'.$search), 'Edit All', ['class' => 'btn btn-default']) }}
+         
                     {{ link_to(url('/home'), 'Back to Search', ['class' => 'btn btn-default']) }}
 
         </div>

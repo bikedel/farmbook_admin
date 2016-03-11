@@ -41,7 +41,7 @@ th {
                 <div class="panel-heading">Properties [{{$properties->count()}}]  </div>
 
                 <div class="panel-body table-responsive">
-                    {{ link_to(url('/street/'.$search), 'Edit All', ['class' => 'btn btn-default']) }}
+                 <!--   {{ link_to(url('/street/'.$search), 'Edit All', ['class' => 'btn btn-default']) }} -->
                       {{ link_to(url('/home'), 'Back to Search', ['class' => 'btn btn-default']) }}
                       {{ link_to(url('/print/'.$search), 'Print', ['class' => 'btn btn-info']) }}
                     <p><br></p>
@@ -55,15 +55,19 @@ th {
 
       
                     </tr>
-                 
+                             <div class='hidden'>
+              {{$i=0}}
+            </div>
                     @foreach ($properties as $property)
-
+           <div class='hidden'>
+              {{$i++}}
+            </div>
                     <div class="row">  
                       <tr>
                        <td>
 
-                        {{ link_to_action('PropertyController@edit','view/edit', ['id' => $property->id]) }}
-                      
+                      <!--  {{ link_to_action('PropertyController@edit','view/edit', ['id' => $property->id]) }}  -->
+                          {!!link_to_action('StreetController@rolledit', 'View/Edit',  array('id' => $property->strStreetName, 'item' => $i) )!!} 
                        
                     </td>
                     <td>
@@ -91,7 +95,7 @@ th {
                 @endforeach
             </table>
                       <br>
-                      {{ link_to(url('/street/'.$search), 'Edit All', ['class' => 'btn btn-default']) }}
+
                       {{ link_to(url('/home'), 'Back to Search', ['class' => 'btn btn-default']) }}
                       {{ link_to(url('/print/'.$search), 'Print', ['class' => 'btn btn-info']) }}
         </div>
