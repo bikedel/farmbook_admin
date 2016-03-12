@@ -112,6 +112,9 @@ class OwnerController extends Controller
         $count =  $query->count();
         $search = $id;
 
+
+  $streets = Street::on($database )->orderBy('strStreetName','ASC')->lists('strStreetName','strStreetName');
+
     }
     catch (exception $e)
     {
@@ -122,7 +125,7 @@ class OwnerController extends Controller
 
 
 
-    return view('property',compact('properties','count','search'));
+    return view('property',compact('properties','count','search','streets'));
 
 }
 

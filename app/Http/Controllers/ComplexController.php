@@ -112,6 +112,9 @@ class ComplexController extends Controller
         $count =  $query->count();
         $search = $id;
 
+
+          $streets = Street::on($database )->orderBy('strStreetName','ASC')->lists('strStreetName','strStreetName');
+
     }
     catch (exception $e)
     {
@@ -121,7 +124,7 @@ class ComplexController extends Controller
 //dd($properties);
 
 
-    return view('property',compact('properties','count','search'));
+    return view('property',compact('properties','count','search','streets'));
 
 }
 
