@@ -35,8 +35,8 @@ class LogSuccessfulLogin
     $ip = Request::ip();
 
     //log 
-    $action = 'Login'; 
-    $append =  \Carbon\Carbon::now('Africa/Johannesburg')->toDateTimeString(). '          '. trim($email).'          '.$action . '    IP:   '. $ip;
+    $action = 'LOGIN'; 
+    $append =  \Carbon\Carbon::now('Africa/Johannesburg')->toDateTimeString(). '          '. trim($email).'          '.$action . '              IP:   '. $ip;
     Storage::append( 'logfile.txt', $append );
 
 
