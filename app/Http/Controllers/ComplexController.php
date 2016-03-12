@@ -65,7 +65,7 @@ class ComplexController extends Controller
 
       }
 
-     
+    
 
 
       {
@@ -102,8 +102,8 @@ class ComplexController extends Controller
 
 
         // search on street name
-        $query = Property::on(   $database)->like('strComplexName', $id)->orderby('strComplexName','ASC')->orderby('strStreetName','ASC')->orderby('numComplexNo','ASC')->get();
-        $properties = Property::on(   $database )->like('strComplexName', $id)->orderby('strComplexName','ASC')->orderby('strStreetName','ASC')->orderby('numComplexNo','ASC')->simplePaginate(1);
+        $query = Property::on(   $database)->where('strComplexName', $id)->orderby('strComplexName','ASC')->orderby('strStreetName','ASC')->orderby('numComplexNo','ASC')->get();
+        $properties = Property::on(   $database )->where('strComplexName', $id)->orderby('strComplexName','ASC')->orderby('strStreetName','ASC')->orderby('numComplexNo','ASC')->simplePaginate(1);
 
         // get relationship data
         $properties->load('owner', 'note');
