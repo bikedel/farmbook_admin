@@ -27,7 +27,7 @@
 						{{$i=1}}
 					</div>
 					<div class="panel-body ">
-						{{ link_to(url('/deletelogs'), 'Delete Log', ['class' => 'btn btn-danger']) }}   
+						{{ link_to(url('/deletelogs'), 'Clear Log', ['class' => 'btn btn-danger']) }}   
                         <div>
                         	<p><br></p>
                         </div>

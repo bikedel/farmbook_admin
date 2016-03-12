@@ -125,8 +125,16 @@ $logs = explode(PHP_EOL, $contents);
      */
     public function destroy()
     {
+
+        $now = \Carbon\Carbon::now('Africa/Johannesburg')->toDateTimeString();
+       $now = str_replace(':','-',$now);
+        $now = str_replace(' ','-',$now);
+      
         $filename = storage_path().'/app/'.'logfile.txt';
-        file::delete($filename);
+        $newfile = storage_path().'/app/'.'logfile_'.$now.'.txt';
+        File::move($filename, $newfile);
+
+       // file::delete($filename);
         return Redirect::back();
     }
 }
