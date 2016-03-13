@@ -14,6 +14,8 @@ use Auth;
 use App\Note;
 use Lava;
 use Carbon\Carbon;
+use App\User;
+use App\Contact;
 
 class DashboardController extends Controller
 {
@@ -51,7 +53,7 @@ class DashboardController extends Controller
 
 
 
- $query1 = Property::on(   $database)->select(  [DB::raw('cast(dtmRegDate as date) as dd'),DB::raw('count(dtmRegDate) as sales') ,DB::raw('max(strBondAmount) as low'),DB::raw('max(strAmount) as high')])->groupBy(DB::raw('Year(dd)'))->get();
+        $query1 = Property::on(   $database)->select(  [DB::raw('cast(dtmRegDate as date) as dd'),DB::raw('count(dtmRegDate) as sales') ,DB::raw('max(strBondAmount) as low'),DB::raw('max(strAmount) as high')])->groupBy(DB::raw('Year(dd)'))->get();
 
 
         $min = $query1->min('dd');
@@ -63,10 +65,10 @@ class DashboardController extends Controller
 
 
 
-$dateStart = Carbon::createFromFormat('Y-m-d', $min);
-$dateEnd = Carbon::createFromFormat('Y-m-d', $max);
+        $dateStart = Carbon::createFromFormat('Y-m-d', $min);
+        $dateEnd = Carbon::createFromFormat('Y-m-d', $max);
 
-$diffInYears = $dateStart->diffInYears($dateEnd, false);
+        $diffInYears = $dateStart->diffInYears($dateEnd, false);
 
 
 
@@ -86,46 +88,52 @@ $diffInYears = $dateStart->diffInYears($dateEnd, false);
         $stocksTable = Lava::DataTable();  // Lava::DataTable() if using Laravel
 
         $stocksTable->addDateColumn('Date')
-                    ->addNumberColumn('Registered');
+        ->addNumberColumn('Registered');
                   //  ->addNumberColumn('Bond');
 
         // Random Data For Example
 
 
- foreach($query1 as &$q)
- {
+        foreach($query1 as &$q)
+        {
   //  echo  substr($q->dd,0,4).'    -    '. $q->sales;
   //  echo "<br>";
             $stocksTable->addRow([
-             $q->dd  , $q->sales
-            ]);
- }
+               $q->dd  , $q->sales
+               ]);
+        }
 
 
 
         $priceTable = Lava::DataTable();  // Lava::DataTable() if using Laravel
 
         $priceTable->addDateColumn('Date')
-                    ->addNumberColumn('Price');
+        ->addNumberColumn('Price');
 
- foreach($query1 as &$q)
- {
+        foreach($query1 as &$q)
+        {
   //  echo  substr($q->dd,0,4).'    -    '. $q->sales;
   //  echo "<br>";
             $priceTable->addRow([
-             $q->dd  , $q->high
-            ]);
- }
+               $q->dd  , $q->high
+               ]);
+        }
+
+
+$u = User::count();
+$f = Farmbook::count();
+$c = Contact::count();
 
  $junkTable = Lava::DataTable();  // Lava::DataTable() if using Laravel
 
-$junkTable->addStringColumn('Type')
-      ->addNumberColumn('Value')
-      ->addRow(['Streets', rand(0,100)])
-      ->addRow(['Complex', rand(0,100)])
-      ->addRow(['Properties', rand(0,100)]);
+ $junkTable->addStringColumn('Type')
+ ->addNumberColumn('Value')
+ ->addRow(['Users', $u])
+ ->addRow(['Databases', $f])
+ ->addRow(['Contacts', $c])
+ ->addRow(['Logs', rand(0,100)]);
 
-$chart3 = Lava::GaugeChart('Temps', $junkTable, [
+ $chart3 = Lava::GaugeChart('Temps', $junkTable, [
     'width'      => 400,
     'greenFrom'  => 0,
     'greenTo'    => 69,
@@ -134,10 +142,10 @@ $chart3 = Lava::GaugeChart('Temps', $junkTable, [
     'redFrom'    => 90,
     'redTo'      => 100,
     'majorTicks' => [
-        'Safe',
-        'Critical'
+    'Safe',
+    'Critical'
     ]
-]);
+    ]);
 
 
 
@@ -161,7 +169,7 @@ $chart2 = Lava::LineChart('Prices', $priceTable); //if using Laravel
 
 
 
-   return view('dashboard',compact('chart','chart2'));
+return view('dashboard',compact('chart','chart2'));
 
-    }
+}
 }
