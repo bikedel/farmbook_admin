@@ -51,20 +51,20 @@ class DashboardController extends Controller
 
 
 
- $query1 = Property::on(   $database)->select(  [DB::raw('cast(dtmRegDate as decimal) as dd'),DB::raw('count(dtmRegDate) as sales') ,DB::raw('max(strBondAmount) as low'),DB::raw('max(strAmount) as high')])->groupBy('dd')->get();
+ $query1 = Property::on(   $database)->select(  [DB::raw('cast(dtmRegDate as date) as dd'),DB::raw('count(dtmRegDate) as sales') ,DB::raw('max(strBondAmount) as low'),DB::raw('max(strAmount) as high')])->groupBy(DB::raw('Year(dd)'))->get();
 
 
         $min = $query1->min('dd');
         $max = $query1->max('dd');
 
 
-
+ //$query1->groupBy('Year(dd)');
         
 
 
 
-$dateStart = Carbon::createFromFormat('Y', $min);
-$dateEnd = Carbon::createFromFormat('Y', $max);
+$dateStart = Carbon::createFromFormat('Y-m-d', $min);
+$dateEnd = Carbon::createFromFormat('Y-m-d', $max);
 
 $diffInYears = $dateStart->diffInYears($dateEnd, false);
 
@@ -85,7 +85,7 @@ $diffInYears = $dateStart->diffInYears($dateEnd, false);
 
         $stocksTable = Lava::DataTable();  // Lava::DataTable() if using Laravel
 
-        $stocksTable->addDateColumn('Year')
+        $stocksTable->addDateColumn('Date')
                     ->addNumberColumn('Registered');
                   //  ->addNumberColumn('Bond');
 
@@ -94,14 +94,21 @@ $diffInYears = $dateStart->diffInYears($dateEnd, false);
 
  foreach($query1 as &$q)
  {
-            $stocksTable->addRow([
+    echo  substr($q->dd,0,4).'    -    '. $q->sales;
+    echo "<br>";
 
-              $q->dd , $q->sales
+
+
+
+
+
+            $stocksTable->addRow([
+             $q->dd  , $q->sales
             ]);
  }
 //dd($query1,$min,$max,$diffInYears );
 
-
+//dd();
 //$chart = $lava->LineChart('MyStocks', $stocksTable);
  $chart = Lava::LineChart('MyStocks', $stocksTable); //if using Laravel
 
