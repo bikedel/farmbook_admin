@@ -96,23 +96,34 @@ $diffInYears = $dateStart->diffInYears($dateEnd, false);
  {
   //  echo  substr($q->dd,0,4).'    -    '. $q->sales;
   //  echo "<br>";
-
-
-
-
-
-
             $stocksTable->addRow([
              $q->dd  , $q->sales
             ]);
  }
+
+
+
+        $priceTable = Lava::DataTable();  // Lava::DataTable() if using Laravel
+
+        $priceTable->addDateColumn('Date')
+                    ->addNumberColumn('Price');
+
+ foreach($query1 as &$q)
+ {
+  //  echo  substr($q->dd,0,4).'    -    '. $q->sales;
+  //  echo "<br>";
+            $priceTable->addRow([
+             $q->dd  , $q->high
+            ]);
+ }
+
 //dd($query1,$min,$max,$diffInYears );
 
 //dd();
 //$chart = $lava->LineChart('MyStocks', $stocksTable);
- $chart = Lava::LineChart('MyStocks', $stocksTable); //if using Laravel
-
-   return view('dashboard',compact('chart'));
+ $chart = Lava::LineChart('Registrations', $stocksTable); //if using Laravel
+$chart2 = Lava::LineChart('Prices', $priceTable); //if using Laravel
+   return view('dashboard',compact('chart','chart2'));
 
     }
 }

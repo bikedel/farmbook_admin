@@ -10,12 +10,17 @@
 
 
 
-@linechart('MyStocks', 'chart-div')	
+@linechart('Registrations', 'chart-div')	
 <div id="chart-div">
 	
 
 </div>
+@linechart('Prices', 'chart2-div')	
+<br>
+<div id="chart2-div">
+	
 
+</div>
 
 
 
