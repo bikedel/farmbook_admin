@@ -94,8 +94,8 @@ $diffInYears = $dateStart->diffInYears($dateEnd, false);
 
  foreach($query1 as &$q)
  {
-    echo  substr($q->dd,0,4).'    -    '. $q->sales;
-    echo "<br>";
+  //  echo  substr($q->dd,0,4).'    -    '. $q->sales;
+  //  echo "<br>";
 
 
 
