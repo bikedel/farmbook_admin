@@ -22,10 +22,13 @@
 
 </div>
 
+@gaugechart('Temps', 'chart3_div')
 
+<br>
+<div id="chart3_div">
+	
 
-
-
+</div>
 
         </div>
     </div>

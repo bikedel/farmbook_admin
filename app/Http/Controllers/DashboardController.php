@@ -117,12 +117,50 @@ $diffInYears = $dateStart->diffInYears($dateEnd, false);
             ]);
  }
 
+ $junkTable = Lava::DataTable();  // Lava::DataTable() if using Laravel
+
+$junkTable->addStringColumn('Type')
+      ->addNumberColumn('Value')
+      ->addRow(['Streets', rand(0,100)])
+      ->addRow(['Complex', rand(0,100)])
+      ->addRow(['Properties', rand(0,100)]);
+
+$chart3 = Lava::GaugeChart('Temps', $junkTable, [
+    'width'      => 400,
+    'greenFrom'  => 0,
+    'greenTo'    => 69,
+    'yellowFrom' => 70,
+    'yellowTo'   => 89,
+    'redFrom'    => 90,
+    'redTo'      => 100,
+    'majorTicks' => [
+        'Safe',
+        'Critical'
+    ]
+]);
+
+
+
+
+
+
 //dd($query1,$min,$max,$diffInYears );
 
 //dd();
 //$chart = $lava->LineChart('MyStocks', $stocksTable);
  $chart = Lava::LineChart('Registrations', $stocksTable); //if using Laravel
 $chart2 = Lava::LineChart('Prices', $priceTable); //if using Laravel
+
+
+
+
+
+
+
+
+
+
+
    return view('dashboard',compact('chart','chart2'));
 
     }
