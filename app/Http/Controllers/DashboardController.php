@@ -16,6 +16,7 @@ use Lava;
 use Carbon\Carbon;
 use App\User;
 use App\Contact;
+use File;
 
 class DashboardController extends Controller
 {
@@ -123,6 +124,11 @@ class DashboardController extends Controller
 $u = User::count();
 $f = Farmbook::count();
 $c = Contact::count();
+$filename = storage_path().'/app/'.'logfile.txt';
+$content = File::get($filename);
+
+$logs = explode(PHP_EOL, $content);
+
 
  $junkTable = Lava::DataTable();  // Lava::DataTable() if using Laravel
 
@@ -131,7 +137,7 @@ $c = Contact::count();
  ->addRow(['Users', $u])
  ->addRow(['Databases', $f])
  ->addRow(['Contacts', $c])
- ->addRow(['Logs', rand(0,100)]);
+ ->addRow(['Logs',sizeof($logs)]);
 
  $chart3 = Lava::GaugeChart('Temps', $junkTable, [
     'width'      => 400,
