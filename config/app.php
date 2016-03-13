@@ -155,8 +155,8 @@ return [
         App\Providers\AuthServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-        Yajra\Datatables\DatatablesServiceProvider::class
-
+        Yajra\Datatables\DatatablesServiceProvider::class,
+        Khill\Lavacharts\Laravel\LavachartsServiceProvider::class
     ],
 
     /*

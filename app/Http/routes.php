@@ -127,7 +127,8 @@ Route::group(['middleware' => 'web'], function () {
 
 	Route::resource('prop', 'DatatablesController');
 
-
+	//dashboard
+	Route::get('dash', 'DashboardController@index');
 
     // rubish
 	Route::get('/farmbook', 'FarmbookController@index');    
