@@ -108,7 +108,7 @@
 
     margin-right: 6px;
 }
-
+.low{opacity:.6;}
 
 </style>
 </head>
@@ -126,7 +126,7 @@
                 </button>
 
                 <!-- Branding Image -->
-                <a class="navbar-brand" href="{{ url('/') }}"> <span class="glyphicon glyphicon-grain"></span>
+                <a class="navbar-brand" href="{{ url('dash') }}"> <span class="glyphicon glyphicon-grain"></span>
                     ProteaDB
                 </a>
             </div>

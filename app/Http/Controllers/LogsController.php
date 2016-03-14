@@ -14,6 +14,10 @@ use File;
 use Response;
 use Exception;
 use Redirect;
+use Lava;
+use App\User;
+use App\Farmbook;
+use App\Contact;
 
 class LogsController extends Controller
 {
@@ -25,12 +29,6 @@ class LogsController extends Controller
 
 
     }
-
-
-
-
-
-
 
 
     /**
@@ -53,9 +51,37 @@ class LogsController extends Controller
     }
 
 
-$logs = explode(PHP_EOL, $contents);
+        $logs = explode(PHP_EOL, $contents);
+
+        $u = User::count();
+        $f = Farmbook::count();
+        $c = Contact::count();
+        $filename = storage_path().'/app/'.'logfile.txt';
 
 
+ $junkTable = Lava::DataTable();  // Lava::DataTable() if using Laravel
+
+ $junkTable->addStringColumn('Type')
+ ->addNumberColumn('Value')
+ ->addRow(['Users', $u])
+ ->addRow(['Farmbooks', $f])
+ ->addRow(['Logs',sizeof($logs)])
+ ->addRow(['Contacts', $c])
+ ;
+
+ $chart3 = Lava::GaugeChart('Temps', $junkTable, [
+    'width'      => 600,
+    'greenFrom'  => 0,
+    'greenTo'    => 69,
+    'yellowFrom' => 70,
+    'yellowTo'   => 89,
+    'redFrom'    => 90,
+    'redTo'      => 100,
+    'majorTicks' => [
+    'Safe',
+    'Critical'
+    ]
+    ]);
 //$logs = array_reverse($logs ) ;
 
 //dd($contents,$csv);
@@ -127,7 +153,7 @@ $logs = explode(PHP_EOL, $contents);
     {
 
         $now = \Carbon\Carbon::now('Africa/Johannesburg')->toDateTimeString();
-       $now = str_replace(':','-',$now);
+        $now = str_replace(':','-',$now);
         $now = str_replace(' ','-',$now);
       
         $filename = storage_path().'/app/'.'logfile.txt';

@@ -1,3 +1,5 @@
+
+
 @extends('layouts.app')
 
 @section('content')
@@ -11,28 +13,19 @@
 
 
 @linechart('Registrations', 'chart-div')	
-<div id="chart-div">
+<div id="chart-div" class='low'>
 	
 
 </div>
 @linechart('Prices', 'chart2-div')	
 <br>
-<div id="chart2-div">
+<div id="chart2-div" class='low'>
 	
 
 </div>
-
-@gaugechart('Temps', 'chart3_div')
-
 <br>
-<div id="chart3_div" class='center responsive'>
-	
-
-</div>
-
-
-
-<div id="poll_div">
+@barchart('Votes', 'poll_div')
+<div id="poll_div" class='low'>
 	
 
 </div>

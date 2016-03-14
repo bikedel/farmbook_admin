@@ -54,7 +54,7 @@ class DashboardController extends Controller
 
 
 
-        $query1 = Property::on(   $database)->select(  [DB::raw('cast(dtmRegDate as date) as dd'),DB::raw('count(dtmRegDate) as sales') ,DB::raw('max(strAmount) as high'),DB::raw('avg(strAmount) as avg')])->groupBy(DB::raw('Year(dd)'))->where('strAmount','>',0)->get();
+        $query1 = Property::on(   $database)->select(  [DB::raw('cast(dtmRegDate as date) as dd'),DB::raw('count(dtmRegDate) as sales') ,DB::raw('max(strAmount) as high'),DB::raw('avg(strAmount) as avg')])->groupBy(DB::raw('Year(dd)'))->get();
 
 
         $min = $query1->min('dd');
@@ -88,7 +88,7 @@ class DashboardController extends Controller
 
         $stocksTable = Lava::DataTable();  // Lava::DataTable() if using Laravel
 
-        $stocksTable->addDateColumn('Date')
+        $stocksTable->addStringColumn('Date')
         ->addNumberColumn('Registered');
                   //  ->addNumberColumn('Bond');
 
@@ -99,89 +99,59 @@ class DashboardController extends Controller
         {
   //  echo  substr($q->dd,0,4).'    -    '. $q->sales;
   //  echo "<br>";
-            $stocksTable->addRow([
-               $q->dd  , $q->sales
-               ]);
-        }
+         $mdate = intval(substr($q->dd,0,4));
 
+         if ($mdate > 2004){
+           // dd($q->dd);
+            $stocksTable->addRow([
+             $mdate  , $q->sales
+             ]);
+        }
+    }
 
 
         $priceTable = Lava::DataTable();  // Lava::DataTable() if using Laravel
 
-        $priceTable->addDateColumn('Date')
+        $priceTable->addStringColumn('Date')
         ->addNumberColumn('Avg Price')
-       ;
+        ;
 
-        foreach($query1 as &$q)
+        foreach($query1 as $key =>$q)
         {
   //  echo  substr($q->dd,0,4).'    -    '. $q->sales;
   //  echo "<br>";
+         $mdate = intval(substr($q->dd,0,4));
+
+         if ($mdate > 2004){
             $priceTable->addRow([
-               $q->dd  , intval($q->avg)
-               ]);
-        }
+             $mdate , intval($q->avg)
+             ]);
+        }}
 
 
 
 
+  $c1 = Street::on(   $database)->count('id');
+
+ $c2 = Complex::on(   $database)->count('id');
+
+   $c3 = Property::on(   $database)->select('id')->groupBy('strKey')->get()->count();
+
+  $c4 = Property::on(   $database)->count('id');
 
 
 
-$u = User::count();
-$f = Farmbook::count();
-$c = Contact::count();
-$filename = storage_path().'/app/'.'logfile.txt';
-$content = File::get($filename);
+ $votes  = Lava::DataTable();
 
-$logs = explode(PHP_EOL, $content);
-
-
- $junkTable = Lava::DataTable();  // Lava::DataTable() if using Laravel
-
- $junkTable->addStringColumn('Type')
- ->addNumberColumn('Value')
- ->addRow(['Users', $u])
- ->addRow(['Databases', $f])
- ->addRow(['Contacts', $c])
- ->addRow(['Logs',sizeof($logs)]);
-
- $chart3 = Lava::GaugeChart('Temps', $junkTable, [
-    'width'      => 600,
-    'greenFrom'  => 0,
-    'greenTo'    => 69,
-    'yellowFrom' => 70,
-    'yellowTo'   => 89,
-    'redFrom'    => 90,
-    'redTo'      => 100,
-    'majorTicks' => [
-    'Safe',
-    'Critical'
-    ]
-    ]);
+ $votes->addStringColumn('Food Poll')
+ ->addNumberColumn('Count')
+ ->addRow(['Streets',  $c1])
+ ->addRow(['Complexes',  $c2])
+ ->addRow(['Properties',  $c3])
+ ->addRow(['Owners', $c4])
 
 
-
-
-
-$votes  = Lava::DataTable();
-
-$votes->addStringColumn('Food Poll')
-      ->addNumberColumn('Votes')
-      ->addRow(['Tacos',  rand(1000,5000)])
-      ->addRow(['Salad',  rand(1000,5000)])
-      ->addRow(['Pizza',  rand(1000,5000)])
-      ->addRow(['Apples', rand(1000,5000)])
-      ->addRow(['Fish',   rand(1000,5000)])
-
-      ;
-
-
-
-
-
-
-
-
+ ;
 
 
 
@@ -193,27 +163,31 @@ $votes->addStringColumn('Food Poll')
 //$chart = $lava->LineChart('MyStocks', $stocksTable);
 
 //$chart2 = Lava::LineChart('Prices', $priceTable); //if using Laravel
-    $chart = Lava::LineChart('Registrations', $stocksTable, [
-        'title' => "Properties registered per Year",
-        'colors' => ['blue'],
-   
+ $chart = Lava::LineChart('Registrations', $stocksTable, [
+    'title' => "Properties registered ",
+    'colors' => ['blue'],
+
     ]);
 
 
 
-    $chart2 = Lava::LineChart('Prices', $priceTable, [
-        'title' => "Average Price for the Year",
-        'colors' => ['green','red'],
-        'vAxis' => ['format' => 'R###,###,###,###'],
+ $chart2 = Lava::LineChart('Prices', $priceTable, [
+    'title' => "Average price ",
+    'colors' => ['green','red'],
+    'vAxis' => ['format' => 'R###,###,###,###'],
     ]);
 
 
+ $chart2 = Lava::BarChart('Votes', $votes, [
+    'title' => "Totals ",
+    'colors' => ['DeepSkyBlue']
 
-$chart3 = Lava::BarChart('Votes', $votes);
+    ]);
+ //$chart3 = Lava::BarChart('Votes', $votes);
 
 
 
-return view('dashboard',compact('chart','chart2'));
+ return view('dashboard',compact('chart','chart2'));
 
 }
 }
