@@ -57,6 +57,7 @@ Route::group(['middleware' => 'web'], function () {
 	Route::post('/street', 'StreetController@index');
 	Route::get('/street/{id}', 'StreetController@rolledit');
 	Route::get('/street/{id}?page={item}', 'StreetController@rolledit');
+	Route::post('/addStreet', 'StreetController@add');
 
     // complex
 	Route::post('/complex', 'ComplexController@index');

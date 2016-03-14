@@ -64,31 +64,31 @@ class StreetController extends Controller
 
       }
 
-     
+
 
 
       {
         Session::put('search',  $Select);
         Session::put('controllerroute',  '/street');
-      }
+    }
 
         // view properties
         // return with error if no result
-      if ($properties->count()){
-          return view('streets',compact('properties','search'));
-      }
-      else{
-         Session::flash('flash_message', ''  . "No properties matching search criteria.");
-         Session::flash('flash_type', 'alert-danger');
-         return Redirect::back();
-     }
-
+    if ($properties->count()){
+      return view('streets',compact('properties','search'));
+  }
+  else{
+     Session::flash('flash_message', ''  . "No properties matching search criteria.");
+     Session::flash('flash_type', 'alert-danger');
+     return Redirect::back();
  }
+
+}
 
 
     // edit all
- public function rolledit($id,Request $request)
- {
+public function rolledit($id,Request $request)
+{
     try{
 
         // set database
@@ -132,6 +132,51 @@ class StreetController extends Controller
 }
 
 
+public function add(Request $request)
+{
 
+        // set database
+        $database = Auth::user()->getDatabase();
+
+       //change database
+        $property = new Property;
+        $property->changeConnection(    $database  );
+
+    // input street name
+    $newstreet = $request->input('street');
+
+//dd($newstreet,$request);
+    // check if street exists
+    $query = Street::on($database )->where('strStreetName',$newstreet)->first();
+
+//dd(strlen($newstreet));
+
+    if (is_null($query) && strlen($newstreet)>0)
+
+    {
+        try
+        {
+         Session::flash('flash_message', ''  . "Ok to add as not found");
+         Session::flash('flash_type', 'alert-success');
+         }
+         catch (exception $e)
+         {
+          Session::flash('flash_message', ''  . $e->getMessage());
+          Session::flash('flash_type', 'alert-danger');
+         }
+    }  
+      else 
+      {
+
+          Session::flash('flash_message', ''  ."Street already exists.");
+          Session::flash('flash_type', 'alert-danger');
+
+      }
+
+
+
+  return Redirect::back();
+
+}
 
 }

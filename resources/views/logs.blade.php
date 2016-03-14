@@ -2,7 +2,12 @@
 
 @section('content')
 
+@gaugechart('Temps', 'chart3_div')
 
+<div id="chart3_div" class='center'>
+	
+
+</div>
 
 <div class="container-fluid">	
 
@@ -16,12 +21,7 @@
 
 	@endif
 
-@gaugechart('Temps', 'chart3_div')
 
-<div id="chart3_div" class='center '>
-	
-
-</div>
 
 	<div class="container">
 		<div class="row">

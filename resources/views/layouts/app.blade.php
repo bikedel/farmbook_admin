@@ -66,10 +66,11 @@
 }
 
 .center {
-    margin: auto;
-    width: 80%;
+    display: block;
 
-    padding: 10px;
+    margin-left: auto;
+    margin-right: auto ;
+    padding:50px;
 }
 
 
@@ -108,7 +109,7 @@
 
     margin-right: 6px;
 }
-.low{opacity:.6;}
+.low{opacity:.8;}
 
 </style>
 </head>
