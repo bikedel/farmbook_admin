@@ -54,7 +54,7 @@ class DashboardController extends Controller
 
 
 
-        $query1 = Property::on(   $database)->select(  [DB::raw('cast(dtmRegDate as date) as dd'),DB::raw('count(dtmRegDate) as sales') ,DB::raw('max(strBondAmount) as low'),DB::raw('max(strAmount) as high')])->groupBy(DB::raw('Year(dd)'))->get();
+        $query1 = Property::on(   $database)->select(  [DB::raw('cast(dtmRegDate as date) as dd'),DB::raw('count(dtmRegDate) as sales') ,DB::raw('max(strBondAmount) as low'),DB::raw('avg(strAmount) as high')])->groupBy(DB::raw('Year(dd)'))->where('strAmount','>',0)->get();
 
 
         $min = $query1->min('dd');
@@ -79,7 +79,7 @@ class DashboardController extends Controller
         $Amax =  Property::on(   $database)->max('strAmount');
 
         $sum = Property::on(   $database)->sum('strAmount');
-        $avg = Property::on(   $database)->where('strAmount')->avg('strAmount');
+        $avg = Property::on(   $database)->where('strAmount','>',0)->avg('strAmount');
 
 
 
@@ -116,9 +116,14 @@ class DashboardController extends Controller
   //  echo  substr($q->dd,0,4).'    -    '. $q->sales;
   //  echo "<br>";
             $priceTable->addRow([
-               $q->dd  , $q->high
+               $q->dd  , round($q->high,2)
                ]);
         }
+
+
+
+
+
 
 
 $u = User::count();
@@ -162,12 +167,21 @@ $logs = explode(PHP_EOL, $content);
 
 //dd();
 //$chart = $lava->LineChart('MyStocks', $stocksTable);
- $chart = Lava::LineChart('Registrations', $stocksTable); //if using Laravel
-$chart2 = Lava::LineChart('Prices', $priceTable); //if using Laravel
+
+//$chart2 = Lava::LineChart('Prices', $priceTable); //if using Laravel
+    $chart = Lava::LineChart('Registrations', $stocksTable, [
+        'title' => "Properties registered per Year",
+        'colors' => ['red'],
+   
+    ]);
 
 
 
-
+    $chart2 = Lava::LineChart('Prices', $priceTable, [
+        'title' => "Average Price for the Year",
+        'colors' => ['green'],
+        'vAxis' => ['format' => 'R###,###,###,###'],
+    ]);
 
 
 
