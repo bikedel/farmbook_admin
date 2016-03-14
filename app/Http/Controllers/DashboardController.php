@@ -50,11 +50,11 @@ class DashboardController extends Controller
         $property->changeConnection(    $database  );
 
         // search on street name
-        $query = Property::on(   $database)->select('*')->get();
+       // $query = Property::on(   $database)->select('*')->get();
 
 
 
-        $query1 = Property::on(   $database)->select(  [DB::raw('cast(dtmRegDate as date) as dd'),DB::raw('count(dtmRegDate) as sales') ,DB::raw('max(strBondAmount) as low'),DB::raw('avg(strAmount) as high')])->groupBy(DB::raw('Year(dd)'))->where('strAmount','>',0)->get();
+        $query1 = Property::on(   $database)->select(  [DB::raw('cast(dtmRegDate as date) as dd'),DB::raw('count(dtmRegDate) as sales') ,DB::raw('max(strAmount) as high'),DB::raw('avg(strAmount) as avg')])->groupBy(DB::raw('Year(dd)'))->where('strAmount','>',0)->get();
 
 
         $min = $query1->min('dd');
@@ -109,14 +109,15 @@ class DashboardController extends Controller
         $priceTable = Lava::DataTable();  // Lava::DataTable() if using Laravel
 
         $priceTable->addDateColumn('Date')
-        ->addNumberColumn('Price');
+        ->addNumberColumn('Avg Price')
+       ;
 
         foreach($query1 as &$q)
         {
   //  echo  substr($q->dd,0,4).'    -    '. $q->sales;
   //  echo "<br>";
             $priceTable->addRow([
-               $q->dd  , round($q->high,2)
+               $q->dd  , intval($q->avg)
                ]);
         }
 
@@ -145,7 +146,7 @@ $logs = explode(PHP_EOL, $content);
  ->addRow(['Logs',sizeof($logs)]);
 
  $chart3 = Lava::GaugeChart('Temps', $junkTable, [
-    'width'      => 400,
+    'width'      => 600,
     'greenFrom'  => 0,
     'greenTo'    => 69,
     'yellowFrom' => 70,
@@ -162,6 +163,29 @@ $logs = explode(PHP_EOL, $content);
 
 
 
+$votes  = Lava::DataTable();
+
+$votes->addStringColumn('Food Poll')
+      ->addNumberColumn('Votes')
+      ->addRow(['Tacos',  rand(1000,5000)])
+      ->addRow(['Salad',  rand(1000,5000)])
+      ->addRow(['Pizza',  rand(1000,5000)])
+      ->addRow(['Apples', rand(1000,5000)])
+      ->addRow(['Fish',   rand(1000,5000)])
+
+      ;
+
+
+
+
+
+
+
+
+
+
+
+
 
 //dd($query1,$min,$max,$diffInYears );
 
@@ -171,7 +195,7 @@ $logs = explode(PHP_EOL, $content);
 //$chart2 = Lava::LineChart('Prices', $priceTable); //if using Laravel
     $chart = Lava::LineChart('Registrations', $stocksTable, [
         'title' => "Properties registered per Year",
-        'colors' => ['red'],
+        'colors' => ['blue'],
    
     ]);
 
@@ -179,13 +203,13 @@ $logs = explode(PHP_EOL, $content);
 
     $chart2 = Lava::LineChart('Prices', $priceTable, [
         'title' => "Average Price for the Year",
-        'colors' => ['green'],
+        'colors' => ['green','red'],
         'vAxis' => ['format' => 'R###,###,###,###'],
     ]);
 
 
 
-
+$chart3 = Lava::BarChart('Votes', $votes);
 
 
 

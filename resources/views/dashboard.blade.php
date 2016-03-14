@@ -25,10 +25,18 @@
 @gaugechart('Temps', 'chart3_div')
 
 <br>
-<div id="chart3_div">
+<div id="chart3_div" class='center responsive'>
 	
 
 </div>
+
+
+
+<div id="poll_div">
+	
+
+</div>
+
 
         </div>
     </div>

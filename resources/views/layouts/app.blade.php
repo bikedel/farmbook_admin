@@ -65,6 +65,15 @@
     color:Gold ;
 }
 
+.center {
+    margin: auto;
+    width: 80%;
+
+    padding: 10px;
+}
+
+
+
 .logs{
     margin-right: 6px;
     color:orange;
