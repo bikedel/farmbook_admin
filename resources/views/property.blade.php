@@ -46,7 +46,7 @@ table td{padding:5px;}
 }
 
 .links a{
-  color:red;
+
  background-color: orange;
  border-color: red; 
 }
@@ -111,7 +111,7 @@ table td{padding:5px;}
 
 <div class="container">
   <div class="row">
-    <div class='links center'>
+    <div class=''>
       {!! $properties->render() !!}  
     </div>
   </div>

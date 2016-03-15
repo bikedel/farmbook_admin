@@ -116,6 +116,9 @@ public function rolledit($id,Request $request)
         // get relationship data
         $properties->load('owner', 'note');
 
+
+
+
         // get total records as simplepagination does not do this
         $count =  $query->count();
         $search = $id;
@@ -125,6 +128,8 @@ public function rolledit($id,Request $request)
     {
         dd($e->getMessage());
     }
+
+ //dd($properties,$count);
 
 
     return view('property',compact('properties','count','search','streets'));
@@ -156,6 +161,9 @@ public function add(Request $request)
     {
         try
         {
+
+
+
          Session::flash('flash_message', ''  . "Ok to add as not found");
          Session::flash('flash_type', 'alert-success');
          }
