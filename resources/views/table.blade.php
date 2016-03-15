@@ -121,6 +121,8 @@ table.dataTable thead .sorting_desc:after {
              <th>TitleDeed</th>
              <th>Key</th>
              <th>Updated_at</th>
+             <th>Notes</th>
+
            </tr>
          </thead>
 
@@ -247,11 +249,12 @@ $(function() {
   { data: 'strAmount', name: 'strAmount' },
   { data: 'strBondHolder', name: 'strBondHolder' , width: '90px'},
   { data: 'strBondAmount', name: 'strBondAmount' , width: '120px'},
-
   { data: 'strSellers', name: 'strSellers' },
   { data: 'strTitleDeed', name: 'strTitleDeed' } ,
   { data: 'strKey', name: 'strKey' },
-  { data: 'updated_at', name: 'updated_at' }
+  { data: 'updated_at', name: 'updated_at' },
+  { data: 'note.memNotes', name: 'Notes' },
+
   ]
 });
 });

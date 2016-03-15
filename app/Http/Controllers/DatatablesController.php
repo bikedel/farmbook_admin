@@ -2,87 +2,58 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
-use App\Http\Requests;
-use App\Http\Controllers\Controller;
-use Session;
-use Auth;
-use Yajra\Datatables\Datatables;
-
-use Input;
 use App\DataTables\PropertyDataTable;
-use Redirect;
-use Route;
-use Log;
-use DB;
-use Exception;
-use Carbon;
-use App\helpers;
+use App\Http\Controllers\Controller;
 use App\Property;
-
+use Auth;
+use Illuminate\Http\Request;
+use Yajra\Datatables\Datatables;
 
 class DatatablesController extends Controller
 {
 
+    public $currUrl = "";
 
-
-	public $currUrl = "";
-
-
-	public function __construct()
-	{
-		$this->middleware('auth');
-	}
-
-
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
 
     public function index(PropertyDataTable $dataTable)
     {
         return $dataTable->render('table');
     }
 
+    /**
+     * Displays datatables front end view
+     *
+     * @return \Illuminate\View\View
+     */
+    public function getIndex()
+    {
 
-		 /**
-		 * Displays datatables front end view
-		 *
-		 * @return \Illuminate\View\View
-		 */
-		 public function getIndex()
-		 {
+        return view('table');
+    }
 
+    /**
+     * Process datatables ajax request.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function anyData()
+    {
 
-		 	return view('table');
-		 }
+        $database = Auth::user()->getDatabase();
 
+        $property = new Property;
+        $property->changeConnection($database);
 
+        $d = Property::on($database)->with('note')->select('*');
 
+        //$d->load('owner', 'note');
 
-		/**
-		 * Process datatables ajax request.
-		 *
-		 * @return \Illuminate\Http\JsonResponse
-		 */
-		public function anyData()
-		{
+        return Datatables::of($d)->make(true);
 
-			$database = Auth::user()->getDatabase();
+    }
 
-
-			$property = new Property;
-			$property->changeConnection(    $database  );
-
-			$d = Property::on(   $database)->select('*');
-
-
-			return Datatables::of($d)->make(true);
-
-
-		}
-
-
-
-		
-
-
-	}
+}
