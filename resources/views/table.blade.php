@@ -106,7 +106,7 @@ table.dataTable thead .sorting_desc:after {
              <th>Home Phone</th>
              <th>Home Work</th>
              <th>Home Cell</th>
-             <th class='ellis'>Email</th>
+             <th lass='ellis'>Email</th>
              <th>Suburb</th>
              <th>Erf</th>
              <th>Port</th>
@@ -260,7 +260,7 @@ $(function() {
   { data: 'strSellers', name: 'strSellers' },
   { data: 'strTitleDeed', name: 'strTitleDeed' } ,
   { data: 'strKey', name: 'strKey' },
-  { data: 'updated_at', name: 'updated_at' },
+  { data: 'updated_at', name: 'updated_at' , width: '120px'},
   { data: 'note.memNotes', name: 'Notes' },
 
   ]
