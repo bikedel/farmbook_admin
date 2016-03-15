@@ -48,7 +48,7 @@ class DatatablesController extends Controller
         $property = new Property;
         $property->changeConnection($database);
 
-        $d = Property::on($database)->with('note')->select('*');
+        $d = Property::on($database)->with('note', 'owner')->select('*');
 
         //$d->load('owner', 'note');
 
