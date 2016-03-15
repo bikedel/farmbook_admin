@@ -164,6 +164,7 @@ if (strpos($database, '_ST') !== false) {
 
         $query_makeMems = ('INSERT INTO notes (numErf,strKey) SELECT numErf,strKey FROM properties ');
 
+        $query_blankid = ('UPDATE IGNORE properties SET strIdentity = strOwners WHERE strIdentity = ""');
 
         $query_makeContacts = ('INSERT INTO owners (strIDNumber,NAME) SELECT strIdentity,strOwners FROM properties group by strIdentity');
 
@@ -200,6 +201,9 @@ if (strpos($database, '_ST') !== false) {
            // $db->getpdo()->exec( $query_makeErfs);
             // make Mem
             $db->getpdo()->exec( $query_makeMems);
+            
+            $db->getpdo()->exec( $query_blankid);
+
 
             $db->getpdo()->exec( $query_comlexNo);
             $db->getpdo()->exec( $query_streetNo);  
