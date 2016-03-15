@@ -28,12 +28,12 @@
 
 }
 
-th{ 
+th{
  /* background-color: rgba(37, 91, 171, 1); */
  width:120%;
- background: #333; 
- color: white; 
- font-weight: bold; 
+ background: #333;
+ color: white;
+ font-weight: bold;
 
 
 }
@@ -49,14 +49,14 @@ th{
 tr.selected{
   background-color:  rgba(37, 99, 171, 1) !important;
 
-  color: white; 
-  font-weight: bold; 
+  color: white;
+  font-weight: bold;
 
 }
 
 th.sorting {color:silver;}
 
-th, td { white-space: nowrap; 
+th, td { white-space: nowrap;
   overflow: ellipsis;
 }
 
@@ -108,7 +108,7 @@ table.dataTable thead .sorting_desc:after {
              <th>Port</th>
              <th>StreetNo</th>
              <th>StreetName</th>
-             
+
              <th class='ellis'>ComplexNo</th>
              <th>ComplexName</th>
              <th class='ellis'>SqMeters</th>
@@ -120,6 +120,7 @@ table.dataTable thead .sorting_desc:after {
              <th>Sellers</th>
              <th>TitleDeed</th>
              <th>Key</th>
+             <th>Updated_at</th>
            </tr>
          </thead>
 
@@ -232,8 +233,8 @@ $(function() {
   lengthMenu: [[ 5, 10, 25, 50, -1], [ 5, 10, 25, 50, "All"]],
   ajax: '{!! route('datatables.data') !!}',
   columns: [
-  { data: 'strOwners', name: 'strOwners' },  
-  { data: 'strIdentity', name: 'strIdentity' },   
+  { data: 'strOwners', name: 'strOwners' },
+  { data: 'strIdentity', name: 'strIdentity' },
   { data: 'strSuburb', name: 'strSuburb' },
   { data: 'numErf', name: 'numErf' },
   { data: 'numPortion', name: 'numPortion' , width: '90px'},
@@ -245,11 +246,12 @@ $(function() {
   { data: 'dtmRegDate', name: 'dtmRegDate' },
   { data: 'strAmount', name: 'strAmount' },
   { data: 'strBondHolder', name: 'strBondHolder' , width: '90px'},
-  { data: 'strBondAmount', name: 'strBondAmount' , width: '120px'},      
- 
-  { data: 'strSellers', name: 'strSellers' },    
+  { data: 'strBondAmount', name: 'strBondAmount' , width: '120px'},
+
+  { data: 'strSellers', name: 'strSellers' },
   { data: 'strTitleDeed', name: 'strTitleDeed' } ,
-  { data: 'strKey', name: 'strKey' }  
+  { data: 'strKey', name: 'strKey' },
+  { data: 'updated_at', name: 'updated_at' }
   ]
 });
 });
@@ -304,7 +306,7 @@ $(document).ready(function() {
 
     if ( !$(this).hasClass('selected') ) {
       $(this).removeClass('selected');
-      
+
     }
     else {
       table.$('tr.selected').removeClass('selected');
@@ -404,7 +406,7 @@ $('table').mousedown(function(event) {
 
 
  (function($){
-    
+
       $.fn.ctrl = function(key, callback) {
 
         // Hey, this does not work on Mac OsX!
@@ -427,8 +429,8 @@ $('table').mousedown(function(event) {
         return true;
         });
     };
-    
-    
+
+
     $.fn.disableSelection = function() {
 
       this.ctrl(['a','s','c']);
@@ -443,7 +445,7 @@ $('table').mousedown(function(event) {
                'user-select':'none'})
                  .bind('selectstart', function(){ return false; });
     };
-    
+
     })(jQuery);
 
 

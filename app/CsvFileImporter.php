@@ -198,10 +198,10 @@ if (strpos($database, '_ST') !== false) {
             // make complex
             $db->getpdo()->exec( $query_makeComplex);
             // make Erf
-           // $db->getpdo()->exec( $query_makeErfs);
+            // $db->getpdo()->exec( $query_makeErfs);
             // make Mem
             $db->getpdo()->exec( $query_makeMems);
-            
+
             $db->getpdo()->exec( $query_blankid);
 
 
