@@ -98,6 +98,9 @@ table td {
 						<td width='100px'> {{ $property->owner->strWorkPhoneNo }} </td>
 						<td width='100px'> {{ $property->owner->strCellPhoneNo }} </td>
 				</tr>
+				<tr>
+					<td colspan="8"> {{ $property->owner->EMAIL }} </td>
+				</tr>
 			</tbody>
 		</table>
 
