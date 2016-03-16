@@ -117,7 +117,8 @@ table td {
 					<td colspan="3"> {{ $property->owner->EMAIL }} </td>
 				</tr>
 				<tr>
-					<td colspan="7"> {{ $property->note->memNotes }} </td>
+				    <th width='50px'> </th>
+					<td colspan="6"> {{ $property->note->memNotes }} </td>
 				</tr>
 
 			</tbody>
