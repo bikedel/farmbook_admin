@@ -75,14 +75,21 @@ table td {
 
 
 		<table class="table table-bordered " style="table-layout: fixed; width: 700px">
+		<tr>
 			<th width='100px'> Street Name </th>
-			<th width='40px'> No </th>
-			<th width='50px'> Erf </th>
-			<th width='100px'> Owner </th>
-			<th width='70px'> Id </th>
+			<th width='100px'> No </th>
+			<th width='100px'> Erf </th>
+			<th width='100px'> Id </th>
+			<th width='300px'> Owner </th>
+        </tr>
+        <tr>
+        	<th width='100px'> </th>
 			<th width='100px'> H Phone </th>
 			<th width='100px'> W Phone </th>
 			<th width='100px'> C Phone </th>
+			<th colspan="3" width='300px'>Email  </th>
+
+		</tr>
 		</table>
 
 		@foreach($properties as $property)
@@ -90,25 +97,23 @@ table td {
 			<tbody>
 				<tr>
 						<td width='100px'> {{ $property->strStreetName }}  </td>
-						<td width='40px'> {{ $property->strStreetNo }} </td>
-						<td width='50px'> {{ $property->numErf }} </td>
-						<td width='100px'> {{ $property->strOwners }} </td>
-						<td width='70px'> {{ substr($property->strIdentity ,0,6)}} </td>
-						<td width='100px'> {{ $property->owner->strHomePhoneNo }} </td>
-						<td width='100px'> {{ $property->owner->strWorkPhoneNo }} </td>
-						<td width='100px'> {{ $property->owner->strCellPhoneNo }} </td>
+						<td width='100px'> {{ $property->strStreetNo }} </td>
+						<td width='100px'> {{ $property->numErf }} </td>
+						<td width='100px'> {{ substr($property->strIdentity ,0,6)}} </td>
+						<td width='300px'> {{ $property->strOwners }} </td>
 				</tr>
 				<tr>
-					<td colspan="8"> {{ $property->owner->EMAIL }} </td>
+					<td width='100px'> {{ $property->owner->strHomePhoneNo }} </td>
+					<td width='100px'> {{ $property->owner->strWorkPhoneNo }} </td>
+					<td width='100px'> {{ $property->owner->strCellPhoneNo }} </td>
+					<td colspan="4"> {{ $property->owner->EMAIL }} </td>
 				</tr>
+				<tr>
+					<td colspan="7"> {{ $property->note->memNotes }} </td>
+				</tr>
+
 			</tbody>
 		</table>
-
-		<p class="t" style="width:700px">
-			{{ $property->note->memNotes }}
-
-		</p>
-
 
 		@endforeach
 
