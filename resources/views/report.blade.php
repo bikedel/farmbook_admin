@@ -48,11 +48,15 @@ table td {
     text-overflow: ellipsis;
 }
 
-    table.print-friendly tr td, table.print-friendly tr th {
+    table.print-friendly tr td table, table.print-friendly tr th table{
         page-break-inside: avoid;
     }
 
+.report-entry table {
 
+    page-break-after: auto;
+    page-break-inside: avoid;
+}
 
 
 </style>
@@ -95,6 +99,7 @@ table td {
 		</table>
 
 		@foreach($properties as $property)
+		 <div class="report-entry">
 		<table class="table table-bordered print-friendly" style="table-layout: fixed; width: 700px">
 			<tbody>
 				<tr>
@@ -117,7 +122,7 @@ table td {
 
 			</tbody>
 		</table>
-
+       </div>
 		@endforeach
 
 
