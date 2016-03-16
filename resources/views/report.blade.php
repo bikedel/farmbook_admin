@@ -75,28 +75,28 @@ table td {
 
 
 		<table class="table table-bordered " style="table-layout: fixed; width: 700px">
-			<th width='80px'> Street Name </th>
+			<th width='100px'> Street Name </th>
 			<th width='30px'> No </th>
 			<th width='50px'> Erf </th>
 			<th width='100px'> Owner </th>
-			<th width='50px'> Id </th>
-			<th width='50px'> H Phone </th>
-			<th width='50px'> W Phone </th>
-			<th width='50px'> C Phone </th>
+			<th width='70px'> Id </th>
+			<th width='100px'> H Phone </th>
+			<th width='100px'> W Phone </th>
+			<th width='100px'> C Phone </th>
 		</table>
 
 		@foreach($properties as $property)
 		<table class="table table-bordered " style="table-layout: fixed; width: 700px">
 			<tbody>
 				<tr>
-						<td width='80px'> {{ $property->strStreetName }}  </td>
+						<td width='100px'> {{ $property->strStreetName }}  </td>
 						<td width='30px'> {{ $property->strStreetNo }} </td>
 						<td width='50px'> {{ $property->numErf }} </td>
 						<td width='100px'> {{ $property->strOwners }} </td>
-						<td width='50px'> {{ substr($property->strIdentity ,0,6)}} </td>
-						<td width='50px'> {{ $property->owner->strHomePhoneNo }} </td>
-						<td width='50px'> {{ $property->owner->strWorkPhoneNo }} </td>
-						<td width='50px'> {{ $property->owner->strCellPhoneNo }} </td>
+						<td width='70px'> {{ substr($property->strIdentity ,0,6)}} </td>
+						<td width='100px'> {{ $property->owner->strHomePhoneNo }} </td>
+						<td width='100px'> {{ $property->owner->strWorkPhoneNo }} </td>
+						<td width='100px'> {{ $property->owner->strCellPhoneNo }} </td>
 				</tr>
 			</tbody>
 		</table>
