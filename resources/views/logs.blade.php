@@ -2,14 +2,14 @@
 
 @section('content')
 
-@gaugechart('Temps', 'chart3_div')
+<!--  @gaugechart('Temps', 'chart3_div') -->
 
 <div id="chart3_div" class='center'>
-	
+
 
 </div>
 
-<div class="container-fluid">	
+<div class="container-fluid">
 
 
 	@if ( Session::has('flash_message') )
@@ -32,7 +32,7 @@
 						{{$i=1}}
 					</div>
 					<div class="panel-body ">
-						{{ link_to(url('/deletelogs'), 'Clear Log', ['class' => 'btn btn-danger']) }}   
+						{{ link_to(url('/deletelogs'), 'Clear Log', ['class' => 'btn btn-danger']) }}
                         <div>
                         	<p><br></p>
                         </div>
@@ -52,7 +52,3 @@
 	</div>
 </div>
 @stop
-
-
-
-
