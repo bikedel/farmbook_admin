@@ -32,7 +32,7 @@ body {
 }
 .t{
 
-    font-size: 80%;
+    font-size: 90%;
     padding:0;
      clear;
 }
