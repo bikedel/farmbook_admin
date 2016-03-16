@@ -13,7 +13,7 @@
 }
 ul  {
 
-	
+
 	margin-left: 120px;
 	float:left;
 }
@@ -21,7 +21,7 @@ ul  {
 
 table {
     table-layout:fixed;
-    font-size: 60%;
+    font-size: 100%;
     padding:0;
     align:center;
 }
@@ -31,8 +31,8 @@ body {
 	background-color: white;
 }
 .t{
-    
-    font-size: 60%;
+
+    font-size: 80%;
     padding:0;
      clear;
 }
@@ -54,11 +54,11 @@ table td {
 
 
 </style>
- 
+
 <div class="container-fluid col-md-10 col-md-offset-1" >
 	<h2> {{ $properties[0]->strSuburb }} - {{ $search }}  	<a href="javascript:window.print()" class='btn btn-success'>Print</a></h2>
-	
-	
+
+
 	@if ( Session::has('flash_message') )
 
 	<div class="alert {{ Session::get('flash_type') }} ">
@@ -70,7 +70,7 @@ table td {
 
 
 
-      
+
 
 
 
@@ -85,7 +85,7 @@ table td {
 			<th width='50px'> C Phone </th>
 		</table>
 
-		@foreach($properties as $property)	
+		@foreach($properties as $property)
 		<table class="table table-bordered " style="table-layout: fixed; width: 700px">
 			<tbody>
 				<tr>
@@ -93,10 +93,10 @@ table td {
 						<td width='30px'> {{ $property->strStreetNo }} </td>
 						<td width='50px'> {{ $property->numErf }} </td>
 						<td width='100px'> {{ $property->strOwners }} </td>
-						<td width='50px'> {{ substr($property->strIdentity ,0,6)}} </td>			
-						<td width='50px'> {{ $property->owner->strHomePhoneNo }} </td>		
-						<td width='50px'> {{ $property->owner->strWorkPhoneNo }} </td>		
-						<td width='50px'> {{ $property->owner->strCellPhoneNo }} </td>	
+						<td width='50px'> {{ substr($property->strIdentity ,0,6)}} </td>
+						<td width='50px'> {{ $property->owner->strHomePhoneNo }} </td>
+						<td width='50px'> {{ $property->owner->strWorkPhoneNo }} </td>
+						<td width='50px'> {{ $property->owner->strCellPhoneNo }} </td>
 				</tr>
 			</tbody>
 		</table>
@@ -106,7 +106,7 @@ table td {
 
 		</p>
 
-		
+
 		@endforeach
 
 
@@ -144,4 +144,3 @@ function mychange(street){
 }
 
 </script>
-

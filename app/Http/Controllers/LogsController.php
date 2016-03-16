@@ -2,14 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Contact;
-use App\Farmbook;
 use App\Http\Controllers\Controller;
-use App\User;
 use Exception;
 use File;
 use Illuminate\Http\Request;
-use Lava;
 use Redirect;
 use Response;
 use Storage;
@@ -43,37 +39,42 @@ class LogsController extends Controller
 
         $logs = explode(PHP_EOL, $contents);
 
-        $u        = User::count();
-        $f        = Farmbook::count();
-        $c        = Contact::count();
-        $filename = storage_path() . '/app/' . 'logfile.txt';
+/*  CHARTS
 
-        $junkTable = Lava::DataTable(); // Lava::DataTable() if using Laravel
+$u        = User::count();
+$f        = Farmbook::count();
+$c        = Contact::count();
+$filename = storage_path() . '/app/' . 'logfile.txt';
 
-        $junkTable->addStringColumn('Type')
-            ->addNumberColumn('Value')
-            ->addRow(['Users', $u])
-            ->addRow(['Farmbooks', $f])
-            ->addRow(['Logs', sizeof($logs)])
-            ->addRow(['Contacts', $c])
-        ;
+$junkTable = Lava::DataTable(); // Lava::DataTable() if using Laravel
 
-        $chart3 = Lava::GaugeChart('Temps', $junkTable, [
-            'width'      => 600,
-            'greenFrom'  => 0,
-            'greenTo'    => 69,
-            'yellowFrom' => 70,
-            'yellowTo'   => 89,
-            'redFrom'    => 90,
-            'redTo'      => 100,
-            'majorTicks' => [
-                'Safe',
-                'Critical',
-            ],
-        ]);
+$junkTable->addStringColumn('Type')
+->addNumberColumn('Value')
+->addRow(['Users', $u])
+->addRow(['Farmbooks', $f])
+->addRow(['Logs', sizeof($logs)])
+->addRow(['Contacts', $c])
+;
+
+$chart3 = Lava::GaugeChart('Temps', $junkTable, [
+'width'      => 600,
+'greenFrom'  => 0,
+'greenTo'    => 69,
+'yellowFrom' => 70,
+'yellowTo'   => 89,
+'redFrom'    => 90,
+'redTo'      => 100,
+'majorTicks' => [
+'Safe',
+'Critical',
+],
+]);
 //$logs = array_reverse($logs ) ;
 
 //dd($contents,$csv);
+
+ */
+
         return view('logs', compact('logs'));
     }
 

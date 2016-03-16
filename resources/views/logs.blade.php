@@ -2,7 +2,7 @@
 
 @section('content')
 
-<!--  @gaugechart('Temps', 'chart3_div') -->
+<!--  @  gaugechart('Temps', 'chart3_div') -->
 
 <div id="chart3_div" class='center'>
 
