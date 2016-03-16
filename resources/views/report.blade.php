@@ -48,7 +48,9 @@ table td {
     text-overflow: ellipsis;
 }
 
-
+    table.print-friendly tr td, table.print-friendly tr th {
+        page-break-inside: avoid;
+    }
 
 
 
@@ -93,7 +95,7 @@ table td {
 		</table>
 
 		@foreach($properties as $property)
-		<table class="table table-bordered " style="table-layout: fixed; width: 700px">
+		<table class="table table-bordered print-friendly" style="table-layout: fixed; width: 700px">
 			<tbody>
 				<tr>
 						<td width='100px'> {{ $property->strStreetName }}  </td>
