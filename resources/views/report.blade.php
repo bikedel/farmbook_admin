@@ -103,10 +103,11 @@ table td {
 						<td width='300px'> {{ $property->strOwners }} </td>
 				</tr>
 				<tr>
+				    <th width='100px'> </th>
 					<td width='100px'> {{ $property->owner->strHomePhoneNo }} </td>
 					<td width='100px'> {{ $property->owner->strWorkPhoneNo }} </td>
 					<td width='100px'> {{ $property->owner->strCellPhoneNo }} </td>
-					<td colspan="4"> {{ $property->owner->EMAIL }} </td>
+					<td colspan="3"> {{ $property->owner->EMAIL }} </td>
 				</tr>
 				<tr>
 					<td colspan="7"> {{ $property->note->memNotes }} </td>
