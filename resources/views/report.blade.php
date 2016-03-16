@@ -21,7 +21,7 @@ ul  {
 
 table {
     table-layout:fixed;
-    font-size: 100%;
+    font-size: 80%;
     padding:0;
     align:center;
 }
@@ -32,7 +32,7 @@ body {
 }
 .t{
 
-    font-size: 90%;
+    font-size: 80%;
     padding:0;
      clear;
 }
@@ -76,7 +76,7 @@ table td {
 
 		<table class="table table-bordered " style="table-layout: fixed; width: 700px">
 			<th width='100px'> Street Name </th>
-			<th width='30px'> No </th>
+			<th width='40px'> No </th>
 			<th width='50px'> Erf </th>
 			<th width='100px'> Owner </th>
 			<th width='70px'> Id </th>
@@ -90,7 +90,7 @@ table td {
 			<tbody>
 				<tr>
 						<td width='100px'> {{ $property->strStreetName }}  </td>
-						<td width='30px'> {{ $property->strStreetNo }} </td>
+						<td width='40px'> {{ $property->strStreetNo }} </td>
 						<td width='50px'> {{ $property->numErf }} </td>
 						<td width='100px'> {{ $property->strOwners }} </td>
 						<td width='70px'> {{ substr($property->strIdentity ,0,6)}} </td>
