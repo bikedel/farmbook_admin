@@ -23,6 +23,8 @@ class UpdateController extends Controller
 
     }
 
+    // FH Update
+    //
     public function update()
     {
 
@@ -33,7 +35,7 @@ class UpdateController extends Controller
         $now        = \Carbon\Carbon::now('Africa/Johannesburg')->toDateTimeString();
 
         // dummy database
-        $database = 'testing_updates';
+        $database = 'Lake_Michelle_FH_farmbook2';
         $otf      = new \App\Database\OTF(['database' => $database]);
         $db       = DB::connection($database);
 

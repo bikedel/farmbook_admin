@@ -157,7 +157,9 @@ class CsvFileImporter
 
         $query_makeMems = ('INSERT INTO notes (numErf,strKey) SELECT DISTINCT numErf,strKey FROM properties ');
 
-        $query_blankid = ('UPDATE IGNORE properties SET strIdentity = strOwners WHERE strIdentity = ""');
+        $query_blankid  = ('UPDATE IGNORE properties SET strIdentity = strOwners WHERE strIdentity = ""');
+        $query_blankid2 = ('UPDATE IGNORE properties SET strIdentity = REPLACE(strTitleDeed,"/","") WHERE strIdentity = ""');
+        $query_blankid3 = ('UPDATE IGNORE properties SET strOwners = REPLACE(strTitleDeed,"/","") WHERE strOwners = ""');
 
         $query_makeContacts = ('INSERT INTO owners (strIDNumber,NAME) SELECT strIdentity,strOwners FROM properties group by strIdentity');
 
@@ -196,6 +198,10 @@ class CsvFileImporter
 
             // set the id = owner if the id is a blank
             $db->getpdo()->exec($query_blankid);
+
+            // if id still blank set it to titledeed and owners to titledeed if that is blank
+            $db->getpdo()->exec($query_blankid2);
+            $db->getpdo()->exec($query_blankid3);
 
             $db->getpdo()->exec($query_comlexNo);
             $db->getpdo()->exec($query_streetNo);

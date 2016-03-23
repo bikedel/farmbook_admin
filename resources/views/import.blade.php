@@ -12,31 +12,31 @@ body {
 
 	color:#000000;
 	font-weight: 900;
-	border-style: none; 
-	border-color: Transparent; 
+	border-style: none;
+	border-color: Transparent;
 	background-color: #f2f2f2
 
 }
-textarea{ 
-	border-style: none; 
-	border-color: Transparent; 
+textarea{
+	border-style: none;
+	border-color: Transparent;
 	padding:0;
-	overflow: auto; 
+	overflow: auto;
 	width: 100%;
 	-webkit-box-sizing: border-box; /* <=iOS4, <= Android  2.3 */
 	-moz-box-sizing: border-box; /* FF1+ */
-	box-sizing: border-box; /* Chrome, IE8, Opera, Safari 5.1*/   
+	box-sizing: border-box; /* Chrome, IE8, Opera, Safari 5.1*/
 }
 
-input[ type=text ]{ 
-	border-style: none; 
-	border-color: Transparent; 
+input[ type=text ]{
+	border-style: none;
+	border-color: Transparent;
 	padding:5;
 
 	width: 100%;
 
 }
-.btn{float:right;} 
+.btn{float:right;}
 
 .records{
 	padding:0px;
@@ -56,7 +56,7 @@ input[ type=text ]{
 }
 
 .id {
-	border-color: Transparent; 
+	border-color: Transparent;
 	border:none;
 }
 .fa-btn {
@@ -77,7 +77,7 @@ input[ type=text ]{
 			<div class="panel panel-primary">
 				<div class="panel-heading"> Import from SAPTG
 				</div>
-				
+
 
 
 				<div class="panel-body">
@@ -101,7 +101,7 @@ input[ type=text ]{
 						{!! Form::file('csv_import', ['class' => 'csv_import form-control input-sm']) !!}
 					</div>
 					<div class="form-group">
-						
+
 						{!! Form::submit('Import',  array('class'=>'btn btn-success ')) !!}
 					</div>
 					{!! Form::close() !!}
@@ -116,7 +116,7 @@ input[ type=text ]{
 	<div class="row">
 		<div class="col-md-10 col-md-offset-1">
 			<div class="panel panel-primary">
-				<div class="panel-heading">Import from Access - NOT SETUP 
+				<div class="panel-heading">Update Freehold
 				</div>
 				<div class="panel-body">
 
@@ -131,28 +131,16 @@ input[ type=text ]{
 
 					{!! Form::open([ 'url' => '/', 'method' => 'get', 'files' => 'true']) !!}
 
+
 					<div class="form-group">
-						{{ Form::label('text','Select Database to Import into',array('id'=>'','class'=>'')) }}
-						{!! Form::select('database', $data,null, ['class'=> 'form-control input-sm', 'id'=>'database']) !!}
-					</div>
-					<div class="form-group">
-						{{ Form::label('text','tblSuburbOwners csv ',array('id'=>'','class'=>'')) }}
-						{!! Form::file('csv_import', ['class' => 'csv_import form-control input-sm']) !!}
-					</div>
-					<div class="form-group">
-						{{ Form::label('text','tblSuburbContactNumbers csv ',array('id'=>'','class'=>'')) }}
-						{!! Form::file('csv_import', ['class' => 'csv_import form-control input-sm']) !!}
-					</div>
-					<div class="form-group">
-						{{ Form::label('text','tblFHPropertyID csv ',array('id'=>'','class'=>'')) }}
-						{!! Form::file('csv_import', ['class' => 'csv_import form-control input-sm']) !!}
+						{{ Form::label('text','SAPTG csv ',array('id'=>'','class'=>'')) }}
+						{!! Form::file('csv_update', ['class' => 'csv_import form-control input-sm']) !!}
 					</div>
 
 
-
 					<div class="form-group">
-						
-						{!! Form::submit('Import',  array('class'=>'btn btn-success ')) !!}
+
+						{!! Form::submit('Update',  array('class'=>'btn btn-success ')) !!}
 					</div>
 					{!! Form::close() !!}
 				</div>
@@ -188,8 +176,8 @@ input[ type=text ]{
 						{{ Form::label('text','Select Type ',array('id'=>'','class'=>'')) }}
 						{!! Form::select('type', $type,null, ['class'=> 'form-control input-sm', 'id'=>'type']) !!}
 					</div>
-					<div class="form-group">	
-						
+					<div class="form-group">
+
 						{!! Form::submit('Create',  array('class'=>'btn btn-danger ')) !!}
 					</div>
 					{!! Form::close() !!}
@@ -225,8 +213,8 @@ input[ type=text ]{
 						{{ Form::label('text','Delete Database ',array('id'=>'','class'=>'')) }}
 						{!! Form::select('database', $data,null, ['class'=> 'form-control input-sm', 'id'=>'database']) !!}
 					</div>
-					<div class="form-group">	
-						
+					<div class="form-group">
+
 						{!! Form::submit('Delete',  array('class'=>'btn btn-danger ')) !!}
 					</div>
 					{!! Form::close() !!}
@@ -254,4 +242,3 @@ input[ type=text ]{
 
 
 </script>
-
