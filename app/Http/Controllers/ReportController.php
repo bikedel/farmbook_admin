@@ -82,7 +82,7 @@ class ReportController extends Controller
             $email    = Auth::user()->email;
 
             //log
-            $action = 'PRINTING Report for ' . $id;
+            $action = 'PRINTING Report for ' . $database . ' - ' . $id;
             $append = \Carbon\Carbon::now('Africa/Johannesburg')->toDateTimeString() . '          ' . trim($email) . '          ' . $action;
             Storage::append('logfile.txt', $append);
 
