@@ -116,7 +116,7 @@ input[ type=text ]{
 	<div class="row">
 		<div class="col-md-10 col-md-offset-1">
 			<div class="panel panel-primary">
-				<div class="panel-heading">Update Freehold
+				<div class="panel-heading">Update from SAPTG
 				</div>
 				<div class="panel-body">
 
@@ -129,7 +129,7 @@ input[ type=text ]{
 
 					@endif
 
-					{!! Form::open([ 'url' => '/', 'method' => 'get', 'files' => 'true']) !!}
+					{!! Form::open([ 'url' => 'update', 'method' => 'post', 'files' => 'true']) !!}
 
 
 					<div class="form-group">

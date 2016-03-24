@@ -1,6 +1,7 @@
 /vendor
 /node_modules
 /storage/imports
+/storage/updates
 Homestead.yaml
 Homestead.json
 .env
