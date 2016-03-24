@@ -140,7 +140,7 @@ input[ type=text ]{
 
 					<div class="form-group">
 
-						{!! Form::submit('Update',  array('class'=>'btn btn-success ')) !!}
+						{!! Form::submit('Update',  array('class'=>'btn btn-success disabled')) !!}
 					</div>
 					{!! Form::close() !!}
 				</div>
