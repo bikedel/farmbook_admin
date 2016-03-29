@@ -123,11 +123,6 @@ class UpdateController extends Controller
         $lastupdate = "none";
         $now        = \Carbon\Carbon::now('Africa/Johannesburg')->toDateTimeString();
 
-        // dummy database
-        $database = 'Lake_Michelle_FH_farmbook2';
-        $otf      = new \App\Database\OTF(['database' => $database]);
-        $db       = DB::connection($database);
-
         // get all update records
         $updates = Update::on($database)->orderBy('strKey')->orderBy(DB::raw("STR_TO_DATE(dtmRegDate, '%Y-%m-%d')"))->get();
 

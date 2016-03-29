@@ -94,7 +94,7 @@ input[ type=text ]{
 
 
 					{!! Form::close() !!}
-					{!! Form::open([ 'url' => 'import', 'method' => 'post', 'files' => 'true']) !!}
+					{!! Form::open([ 'url' => 'import', 'method' => 'post', 'files' => 'true','onsubmit' => 'return ConfirmDelete()']) !!}
 
 					<div class="form-group">
 						{{ Form::label('text','SAPTG csv ',array('id'=>'','class'=>'')) }}
@@ -116,7 +116,7 @@ input[ type=text ]{
 	<div class="row">
 		<div class="col-md-10 col-md-offset-1">
 			<div class="panel panel-primary">
-				<div class="panel-heading">Update from SAPTG
+				<div class="panel-heading">Update from SAPTG - NOT READY FOR USE!!!
 				</div>
 				<div class="panel-body">
 
@@ -129,7 +129,7 @@ input[ type=text ]{
 
 					@endif
 
-					{!! Form::open([ 'url' => 'update', 'method' => 'post', 'files' => 'true']) !!}
+					{!! Form::open([ 'url' => 'update', 'method' => 'post', 'files' => 'true','onsubmit' => 'return ConfirmDelete()']) !!}
 
 
 					<div class="form-group">
@@ -140,7 +140,7 @@ input[ type=text ]{
 
 					<div class="form-group">
 
-						{!! Form::submit('Update',  array('class'=>'btn btn-success disabled', 'disabled' =>'disabled')) !!}
+						{!! Form::submit('Update',  array('class'=>'btn btn-success ')) !!}
 					</div>
 					{!! Form::close() !!}
 				</div>
@@ -166,7 +166,7 @@ input[ type=text ]{
 
 					@endif
 
-					{!! Form::open([ 'url' => 'createdatabase', 'method' => 'post', 'files' => 'true']) !!}
+					{!! Form::open([ 'url' => 'createdatabase', 'method' => 'post', 'files' => 'true','onsubmit' => 'return ConfirmDelete()']) !!}
 					<div class="form-group">
                         {{ Form::label('text','Suburb Name ',array('id'=>'','class'=>'')) }}
 						{{ Form::text('database') }}

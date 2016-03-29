@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use DB;
 use Exception;
 use File;
@@ -103,6 +104,9 @@ class CsvFileUpdater
         $dbname   = $database;
         $dsn      = 'mysql:dbname=test1;';
 
+        // get time and date
+        $now = \Carbon\Carbon::now('Africa/Johannesburg')->toDateTimeString();
+
         // connect to tmp database
         $otf = new \App\Database\OTF(['database' => $dbname]);
         $db  = DB::connection($dbname);
@@ -140,7 +144,9 @@ class CsvFileUpdater
              strIdentity,
              strSellers,
              strTitleDeed  )
-        SET strKey = " . $key, addslashes($file_path));
+        SET strKey = " . $key . " , created_at = now()", addslashes($file_path)
+
+        );
 
         $query_blankid  = ('UPDATE IGNORE updates SET strIdentity = strOwners WHERE strIdentity = ""');
         $query_blankid2 = ('UPDATE IGNORE updates SET strIdentity = REPLACE(strTitleDeed,"/","") WHERE strIdentity = ""');
