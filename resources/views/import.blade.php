@@ -116,7 +116,7 @@ input[ type=text ]{
 	<div class="row">
 		<div class="col-md-10 col-md-offset-1">
 			<div class="panel panel-primary">
-				<div class="panel-heading">Update from SAPTG - NOT READY FOR USE!!!
+				<div class="panel-heading">Update from SAPTG - FH ready for testing - ST not implemented yet.
 				</div>
 				<div class="panel-body">
 

@@ -60,15 +60,20 @@ class UpdateController extends Controller
             $type  = "FH";
             $valid = 1;
         }
+
+        //
+        //
+        //  disallow as not implemented
+        //
         if (strpos($fileinfo['filename'], 'ST') !== false) {
             $type  = "ST";
-            $valid = 1;
+            $valid = 0;
         }
 
         // if not FH or ST the return error
         //
         if ($valid !== 1) {
-            $message = 'Please provide a valid SAPTG file';
+            $message = 'Please provide a valid SAPTG file - ST not implemented yet.';
             Session::flash('flash_type', 'alert-danger');
             return Redirect::back()->with('flash_message', $message);
         }
