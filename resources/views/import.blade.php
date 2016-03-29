@@ -205,7 +205,7 @@ input[ type=text ]{
 
 					@endif
 
-					{!! Form::open([ 'url' => 'deletedatabase', 'method' => 'post', 'files' => 'true']) !!}
+					{!! Form::open([ 'url' => 'deletedatabase', 'method' => 'post', 'files' => 'true','onsubmit' => 'return ConfirmDelete()']) !!}
 					<div class="form-group">
 					</div>
 
@@ -235,9 +235,20 @@ input[ type=text ]{
 
 
 
+$(document).on("ready page:load", function() {
+  setTimeout(function() { $(".alert").fadeOut(); }, 4000);
+
+});
 
 
-
+function ConfirmDelete()
+{
+    var x = confirm("Are you sure you want to perform this action?");
+  if (x)
+    return true;
+else
+    return false;
+}
 
 
 
