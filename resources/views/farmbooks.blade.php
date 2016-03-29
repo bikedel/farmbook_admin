@@ -5,23 +5,23 @@
 body {
 
 }
-table { 
-  width: 100%; 
-  border-collapse: collapse; 
+table {
+  width: 100%;
+  border-collapse: collapse;
 }
 /* Zebra striping */
-tr:nth-of-type(odd) { 
-  background: #eee; 
+tr:nth-of-type(odd) {
+  background: #eee;
 }
-th { 
-  background: #333; 
-  color: white; 
-  font-weight: bold; 
+th {
+  background: #333;
+  color: white;
+  font-weight: bold;
 }
-td, th { 
-  padding: 5px; 
-  border: 1px solid #ccc; 
-  text-align: left; 
+td, th {
+  padding: 5px;
+  border: 1px solid #ccc;
+  text-align: left;
 }
 .in {
 display:inline;
@@ -29,7 +29,7 @@ display:inline;
 }
 
 form {
-    display: inline-block; //Or display: inline; 
+    display: inline-block; //Or display: inline;
 }
 
 th {
@@ -59,14 +59,13 @@ th {
                   <tr>
                     <th>Action</th>
                     <th>Id </th>
-                    <th>Name </th> 
-                    <th>Database</th>
-                    <th>Type</th>
+                    <th>Name </th>
+
 
                 </tr>
                 @foreach ($farmbooks as $farm)
 
-                <div class="row">  
+                <div class="row">
                   <tr>
                      <td>
 
@@ -88,20 +87,12 @@ th {
                         {{ $farm->name }}
 
                     </td>
-                    <td>
 
-                        {{ $farm->database }}
 
-                    </td>
-                 <td>
-
-                        {{ $farm->type }}
-
-                    </td>
 
 
                     </td>
-      
+
                 </div>
                 @endforeach
             </table>
