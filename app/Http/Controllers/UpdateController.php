@@ -124,13 +124,11 @@ class UpdateController extends Controller
         $lastupdate = "none";
         $now        = \Carbon\Carbon::now('Africa/Johannesburg')->toDateTimeString();
 
-        // setup log file
-
+        // setup log file - same name as csv with .log ext
         $destination_directory = storage_path('updates/tmp');
         $original_file_name    = $csv_file->getClientOriginalName();
         $logfilename           = $destination_directory . '/' . $original_file_name;
         $logfilename           = str_replace('.csv', '.log', $logfilename);
-        dd($logfilename);
 
         File::put($logfilename, '');
 
