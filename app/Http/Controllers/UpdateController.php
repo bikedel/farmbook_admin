@@ -128,7 +128,10 @@ class UpdateController extends Controller
 
         $destination_directory = storage_path('updates/tmp');
         $original_file_name    = $csv_file->getClientOriginalName();
-        $logfilename           = $destination_directory . '/' . $original_file_name . '.log';
+        $logfilename           = $destination_directory . '/' . $original_file_name;
+        $logfilename           = str_replace('.csv', '.log', $logfilename);
+        dd($logfilename);
+
         File::put($logfilename, '');
 
         // get all update records
