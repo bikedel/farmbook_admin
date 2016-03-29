@@ -3,9 +3,6 @@
 namespace App\Listeners;
 
 use Illuminate\Auth\Events\Attempting;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Contracts\Queue\ShouldQueue;
-
 use Storage;
 
 class LogAuthenticationAttempt
@@ -28,16 +25,14 @@ class LogAuthenticationAttempt
      */
     public function handle(Attempting $event)
     {
-        
 
-    //dd($event);
-    $email = $event->credentials['email'];
- 
+        //dd($event);
+        $email = $event->credentials['email'];
 
-    //log 
-    $action = 'Login Authentication'; 
-    $append =  \Carbon\Carbon::now('Africa/Johannesburg')->toDateTimeString(). '          '. trim($email).'          '.$action ;
-    Storage::append( 'logfile.txt', $append );
+        //log
+        $action = 'Login Authentication';
+        $append = \Carbon\Carbon::now('Africa/Johannesburg')->toDateTimeString() . ',          ' . trim($email) . ',          ' . $action;
+        Storage::append('logfile.txt', $append);
 
     }
 }

@@ -3,10 +3,7 @@
 namespace App\Listeners;
 
 use Illuminate\Auth\Events\Login;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Request;
-
 use Storage;
 
 class LogSuccessfulLogin
@@ -30,16 +27,13 @@ class LogSuccessfulLogin
     public function handle(Login $event)
     {
 
+        $email = $event->user->email;
+        $ip    = Request::ip();
 
-    $email = $event->user->email;
-    $ip = Request::ip();
-
-    //log 
-    $action = 'LOGIN'; 
-    $append =  \Carbon\Carbon::now('Africa/Johannesburg')->toDateTimeString(). '          '. trim($email).'          '.$action . '              IP:   '. $ip;
-    Storage::append( 'logfile.txt', $append );
-
-
+        //log
+        $action = 'LOGIN';
+        $append = \Carbon\Carbon::now('Africa/Johannesburg')->toDateTimeString() . ',          ' . trim($email) . ',          ' . $action . ',              IP:   ' . $ip;
+        Storage::append('logfile.txt', $append);
 
     }
 }

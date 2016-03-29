@@ -2,12 +2,9 @@
 
 namespace App\Listeners;
 
-use Illuminate\Auth\Events\Logout;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Contracts\Queue\ShouldQueue;
-
-use Storage;
 use Auth;
+use Illuminate\Auth\Events\Logout;
+use Storage;
 
 class LogSuccessfulLogout
 {
@@ -30,16 +27,15 @@ class LogSuccessfulLogout
     public function handle(Logout $event)
     {
 
-         if (Auth::check())
-         {      
+        if (Auth::check()) {
             // get logged in user email
             $email = $event->user->email;
 
-            //log 
-            $action = 'LogOut'; 
-            $append =  \Carbon\Carbon::now('Africa/Johannesburg')->toDateTimeString(). '          '. trim($email).'          '.$action ;
-            Storage::append( 'logfile.txt', $append );
-         }
+            //log
+            $action = 'LogOut';
+            $append = \Carbon\Carbon::now('Africa/Johannesburg')->toDateTimeString() . ',          ' . trim($email) . ',          ' . $action;
+            Storage::append('logfile.txt', $append);
+        }
 
-     }
+    }
 }
