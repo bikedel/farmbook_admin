@@ -9,6 +9,7 @@ use App\Property;
 use App\Update;
 use Carbon\Carbon;
 use DB;
+use File;
 use Illuminate\Http\Request;
 use Redirect;
 use Session;
@@ -123,6 +124,13 @@ class UpdateController extends Controller
         $lastupdate = "none";
         $now        = \Carbon\Carbon::now('Africa/Johannesburg')->toDateTimeString();
 
+        // setup log file
+
+        $destination_directory = storage_path('updates/tmp');
+        $original_file_name    = $csv_file->getClientOriginalName();
+        $logfilename           = $destination_directory . '/' . $original_file_name . '.log';
+        File::put($logfilename, '');
+
         // get all update records
         $updates = Update::on($database)->orderBy('strKey')->orderBy(DB::raw("STR_TO_DATE(dtmRegDate, '%Y-%m-%d')"))->get();
 
@@ -138,7 +146,9 @@ class UpdateController extends Controller
             // insert and delete older as it is the newest
             if ($p->count() == 0) {
 
-                echo $updatesA[$x]['strKey'] . '   -   ' . $updatesA[$x]['dtmRegDate'] . "  -  New Owner - " . $updatesA[$x]['strOwners'] . "  -  Seller - " . $updatesA[$x]['strSellers'] . "<br>";
+                $echo = $updatesA[$x]['strKey'] . '   -   ' . $updatesA[$x]['dtmRegDate'] . "  -  New Owner - " . $updatesA[$x]['strOwners'] . "  -  Seller - " . $updatesA[$x]['strSellers'];
+
+                File::append($logfilename, $echo . "\r\n");
 
                 $updatesA[$x]['id']           = null;
                 $updatesA[$x]['numStreetNo']  = $updatesA[$x]['strStreetNo'];
@@ -176,7 +186,8 @@ class UpdateController extends Controller
                     }
 
                 } else {
-                    echo "----- " . "Already in database    " . $updatesA[$x]['strKey'] . '<br>';
+                    $echo = "----- " . "Already in database    " . $updatesA[$x]['strKey'];
+                    File::append($logfilename, $echo . "\r\n");
                 }
 
                 // get the properties we will delete for the report
@@ -189,16 +200,28 @@ class UpdateController extends Controller
                 $properties = $delp->toArray();
                 for ($i = 0; $i <= sizeof($properties) - 1; $i++) {
                     $del++;
-                    echo "---" . $properties[$i]['strKey'] . '   -   ' . $properties[$i]['dtmRegDate'] . "  - Old owner - " . $properties[$i]['strOwners'] . "<br>";
+                    $echo = "---" . $properties[$i]['strKey'] . '   -   ' . $properties[$i]['dtmRegDate'] . "  - Old owner - " . $properties[$i]['strOwners'];
+                    File::append($logfilename, $echo . "\r\n");
                 }
 
             }
 
         }
 
-        echo 'Deleted : ' . $del . "<br>";
-        echo 'Added : ' . $add . "<br>";
-        echo 'Total : ' . ($add - $del) . "<br>";
+        $echo = 'Deleted : ' . $del;
+        File::append($logfilename, $echo . "\r\n");
+        $echo = 'Added : ' . $add;
+        File::append($logfilename, $echo . "\r\n");
+        $echo = 'Total : ' . ($add - $del);
+        File::append($logfilename, $echo . "\r\n");
+
+//        File::append($filename,
+
+        //  echo $logfilename;
+
+        $message = 'Update completed.';
+        Session::flash('flash_type', 'alert-success');
+        return Redirect::back()->with('flash_message', $message);
 
     }
 

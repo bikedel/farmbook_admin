@@ -6,8 +6,8 @@
 # https://github.com/sequelpro/sequelpro
 #
 # Host: 127.0.0.1 (MySQL 5.5.42)
-# Database: test1
-# Generation Time: 2016-02-14 02:45:49 +0000
+# Database: junk
+# Generation Time: 2016-03-29 10:45:32 +0000
 # ************************************************************
 
 
@@ -124,6 +124,41 @@ CREATE TABLE `streets` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+
+# Dump of table updates
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `updates`;
+
+CREATE TABLE `updates` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `strSuburb` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `numErf` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `numPortion` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `strStreetNo` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `numStreetNo` int(11) DEFAULT NULL,
+  `strStreetName` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `strSqMeters` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `strComplexNo` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `numComplexNo` int(11) DEFAULT NULL,
+  `strComplexName` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `dtmRegDate` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `strAmount` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `strBondHolder` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `strBondAmount` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `strOwners` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `strIdentity` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `strSellers` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `strTitleDeed` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `strKey` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `properties_strkey_index` (`strKey`),
+  KEY `properties_stridentity_index` (`strIdentity`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
