@@ -29,7 +29,7 @@ class UpdateController extends Controller
 
     // FH Update
     //
-    public function update(Request $request)
+    public function updateFH(Request $request)
     {
 
         //  check that a file has been selected
@@ -65,6 +65,7 @@ class UpdateController extends Controller
         //
         //  disallow as not implemented
         //
+        //
         if (strpos($fileinfo['filename'], 'ST') !== false) {
             $type  = "ST";
             $valid = 0;
@@ -73,7 +74,7 @@ class UpdateController extends Controller
         // if not FH or ST the return error
         //
         if ($valid !== 1) {
-            $message = 'Please provide a valid SAPTG file - ST not implemented yet.';
+            $message = 'This is not a valid FH update file.';
             Session::flash('flash_type', 'alert-danger');
             return Redirect::back()->with('flash_message', $message);
         }
@@ -89,6 +90,7 @@ class UpdateController extends Controller
         $database    = $name;
 
         // check if the database exists
+        //
         $schema = 'information_schema';
         $otf    = new \App\Database\OTF(['database' => $schema]);
         $db     = DB::connection($schema);
@@ -108,14 +110,12 @@ class UpdateController extends Controller
         $csv_updater = new CsvFileUpdater();
 
         // Import our csv file
+        //
         if (!$csv_updater->update($csv_file, $database)) {
             $message = 'Error importing the file during update.';
             Session::flash('flash_type', 'alert-danger');
             return Redirect::back()->with('flash_message', $message);
         }
-
-        //  dd($data, $database, $found);
-        //  dd('stop');
 
         // connect to the database
         //
@@ -123,11 +123,14 @@ class UpdateController extends Controller
         $otf    = new \App\Database\OTF(['database' => $dbname]);
         $db     = DB::connection($dbname);
 
+        // totals
         $del        = 0;
         $add        = 0;
         $tot        = 0;
         $lastupdate = "none";
-        $now        = \Carbon\Carbon::now('Africa/Johannesburg')->toDateTimeString();
+
+        // time
+        $now = \Carbon\Carbon::now('Africa/Johannesburg')->toDateTimeString();
 
         // setup log file - same name as csv with .log ext
         $destination_directory = storage_path('updates/tmp');
@@ -138,18 +141,23 @@ class UpdateController extends Controller
         File::put($logfilename, '');
 
         // get all update records
+        //
         $updates = Update::on($database)->orderBy('strKey')->orderBy(DB::raw("STR_TO_DATE(dtmRegDate, '%Y-%m-%d')"))->get();
 
         // convert to array
+        //
         $updatesA = $updates->toArray();
 
         // process update records
+        //
         for ($x = 0; $x <= sizeof($updatesA) - 1; $x++) {
 
             // check if there are newer transactions in properties
+            //
             $p = Property::on($database)->where('strKey', $updatesA[$x]['strKey'])->where(DB::raw("STR_TO_DATE(dtmRegDate, '%Y-%m-%d')"), '>', Date($updatesA[$x]['dtmRegDate']))->get();
 
             // insert and delete older as it is the newest
+            //
             if ($p->count() == 0) {
 
                 $echo = $updatesA[$x]['strKey'] . '   -   ' . $updatesA[$x]['dtmRegDate'] . "  -  New Owner - " . $updatesA[$x]['strOwners'] . "  -  Seller - " . $updatesA[$x]['strSellers'];
@@ -161,9 +169,11 @@ class UpdateController extends Controller
                 $updatesA[$x]['numComplexNo'] = $updatesA[$x]['strComplexNo'];
 
                 //add updated at to end of the array
+                //
                 $updatesA[$x]['updated_at'] = $now;
 
                 // check the record does not already exist
+                //
                 $check = Property::on($database)->where('strKey', $updatesA[$x]['strKey'])->where('strIdentity', '=', $updatesA[$x]['strIdentity'])->where(DB::raw("STR_TO_DATE(dtmRegDate, '%Y-%m-%d')"), '=', Date($updatesA[$x]['dtmRegDate']))->get();
 
                 if ($check->count() == 0) {
@@ -171,6 +181,7 @@ class UpdateController extends Controller
                     Property::on($database)->insert($updatesA[$x]);
 
                     // add owner record if not existing
+                    //
                     $hascontact = Owner::on($database)->select('id')->where('strIDNumber', '=', $updatesA[$x]['strIdentity']);
                     if ($hascontact->count() == 0) {
                         $owner = Owner::on($database)->insert(array('strIDNumber' => $updatesA[$x]['strIdentity'], 'NAME' => $updatesA[$x]['strOwners'], 'updated_at' => $now));
@@ -179,12 +190,14 @@ class UpdateController extends Controller
 
                     }
                     // add note
+                    //
                     $hasnote = Note::on($database)->select('id')->where('strKey', '=', $updatesA[$x]['strKey'])->get();
                     if ($hasnote->count() == 0) {
                         $note       = Note::on($database)->insert(array('strKey' => $updatesA[$x]['strKey'], 'numErf' => $updatesA[$x]['numErf'], 'memNotes' => "\n" . $now . '  ' . $updatesA[$x]['strOwners'] . '  - New Owner.', 'updated_at' => $now));
                         $lastupdate = $updatesA[$x]['strKey'];
                     } else {
                         // only add note addendum once for the strKey - lastupdate
+                        //
                         if ($lastupdate != $updatesA[$x]['strKey']) {
                             $note       = Note::on($database)->where('strKey', '=', $updatesA[$x]['strKey'])->update(array('memNotes' => DB::raw('concat(memNotes, " \n' . $now . '  ' . $updatesA[$x]['strOwners'] . ' -  New Owner.")'), 'updated_at' => $now));
                             $lastupdate = $updatesA[$x]['strKey'];
@@ -197,12 +210,15 @@ class UpdateController extends Controller
                 }
 
                 // get the properties we will delete for the report
+                //
                 $delp = Property::on($database)->where('strKey', $updatesA[$x]['strKey'])->where(DB::raw("STR_TO_DATE(dtmRegDate, '%Y-%m-%d')"), '<', Date($updatesA[$x]['dtmRegDate']))->get();
 
                 // delete them
+                //
                 Property::on($database)->where('strKey', $updatesA[$x]['strKey'])->where(DB::raw("STR_TO_DATE(dtmRegDate, '%Y-%m-%d')"), '<', Date($updatesA[$x]['dtmRegDate']))->delete();
 
                 // report
+                //
                 $properties = $delp->toArray();
                 for ($i = 0; $i <= sizeof($properties) - 1; $i++) {
                     $del++;
@@ -221,9 +237,154 @@ class UpdateController extends Controller
         $echo = 'Total : ' . ($add - $del);
         File::append($logfilename, $echo . "\r\n");
 
-//        File::append($filename,
+        $message = 'Update completed.';
+        Session::flash('flash_type', 'alert-success');
+        return Redirect::back()->with('flash_message', $message);
 
-        //  echo $logfilename;
+    }
+
+    // ST Update
+    //
+    public function updateST(Request $request)
+    {
+
+        //  check that a file has been selected
+        //
+        if (!$request->hasFile('csv_update')) {
+            $message = 'Please select a CSV file to update with.';
+            Session::flash('flash_type', 'alert-danger');
+            return Redirect::back()->with('flash_message', $message);
+        }
+
+        $csv_file = $request->file('csv_update');
+
+        $filename = $csv_file->getClientOriginalName();
+        $fileinfo = pathinfo($filename);
+
+        // check the file has a .csv extention
+        //
+        if (strtoupper($fileinfo['extension']) !== 'CSV') {
+            $message = 'You did not select a csv file.';
+            Session::flash('flash_type', 'alert-danger');
+            return Redirect::back()->with('flash_message', $message);
+        }
+
+        //  determine if the type is FH or ST
+        //
+        $valid = 0;
+
+        if (strpos($fileinfo['filename'], 'ST') !== false) {
+            $type  = "ST";
+            $valid = 1;
+        }
+        if (strpos($fileinfo['filename'], 'FH') !== false) {
+            $type  = "FH";
+            $valid = 0;
+        }
+
+        // if not FH or ST the return error
+        //
+        if ($valid !== 1) {
+            $message = 'This is not a valid ST update file.';
+            Session::flash('flash_type', 'alert-danger');
+            return Redirect::back()->with('flash_message', $message);
+        }
+
+        // get the databse name from the CSV file
+        //
+        $startpos    = strrpos($fileinfo['filename'], '_') + 1;
+        $endpos      = strrpos($fileinfo['filename'], ' ');
+        $len         = $endpos - $startpos;
+        $name        = substr($fileinfo['filename'], $startpos, $len);
+        $normal_name = $name . ' ' . $type;
+        $name        = str_replace(' ', '_', $name) . '_' . $type . '_' . 'farmbook2';
+        $database    = $name;
+
+        // check if the database exists
+        //
+        $schema = 'information_schema';
+        $otf    = new \App\Database\OTF(['database' => $schema]);
+        $db     = DB::connection($schema);
+        $data   = $db->table('schemata')->select('schema_name')->where('schema_name', 'like', '%farmb%')->orderBy('schema_name')->lists("schema_name", "schema_name");
+        $found  = array_search($database, $data);
+
+        //  the database does not exist
+        //
+        if ($found == false) {
+            $message = 'The database does not exist - ' . $database;
+            Session::flash('flash_type', 'alert-danger');
+            return Redirect::back()->with('flash_message', $message);
+        }
+
+        // create update instance
+        //
+        $csv_updater = new CsvFileUpdater();
+
+        // Import our csv file
+        //
+        if (!$csv_updater->update($csv_file, $database)) {
+            $message = 'Error importing the file during update.';
+            Session::flash('flash_type', 'alert-danger');
+            return Redirect::back()->with('flash_message', $message);
+        }
+
+        // connect to the database
+        //
+        $dbname = $database;
+        $otf    = new \App\Database\OTF(['database' => $dbname]);
+        $db     = DB::connection($dbname);
+
+        // totals
+        $del        = 0;
+        $add        = 0;
+        $tot        = 0;
+        $lastupdate = "none";
+
+        // time
+        $now = \Carbon\Carbon::now('Africa/Johannesburg')->toDateTimeString();
+
+        // setup log file - same name as csv with .log ext
+        $destination_directory = storage_path('updates/tmp');
+        $original_file_name    = $csv_file->getClientOriginalName();
+        $logfilename           = $destination_directory . '/' . $original_file_name;
+        $logfilename           = str_replace('.csv', '.log', $logfilename);
+
+        // File::put($logfilename, '');
+
+        // get all update records
+        //
+        $updates = Update::on($database)->orderBy('strKey')->orderBy(DB::raw("STR_TO_DATE(dtmRegDate, '%Y-%m-%d')"))->get();
+
+        // convert to array
+        //
+        $updatesA = $updates->toArray();
+
+        // process update records
+        //
+        for ($x = 0; $x <= sizeof($updatesA) - 1; $x++) {
+
+            // fetch all property records for the complex
+            $properties = Property::on($database)->orderBy('strKey')->where('strComplexName', $updatesA[$x]['strComplexName'])->get();
+
+            $units     = $this->noOfUnits($updatesA[$x]['strKey']);
+            $arr_units = $this->arrOfUnits($updatesA[$x]['strComplexNo']);
+
+            echo $updatesA[$x]['strOwners'] . "<br>";
+            echo $updatesA[$x]['strKey'] . "<br>";
+            echo ' - ' . $units . ' unit(s) in ' . $updatesA[$x]['strComplexName'] . "<br>";
+
+            for ($u = 0; $u < $units; $u++) {
+                echo " -- Unit" . ($u + 1) . " - " . $arr_units[$u] . " <br>";
+
+                echo $this->findUnit($updatesA[$x]['strComplexName'], $arr_units[$u], $properties);
+
+                // echo " --------------- Checking..." . " <br>";
+
+            }
+            echo "<br>";
+        }
+
+        dd();
 
         $message = 'Update completed.';
         Session::flash('flash_type', 'alert-success');
@@ -232,32 +393,50 @@ class UpdateController extends Controller
     }
 
     /**
-     * Show the application dashboard.
+     *  get number of units in strKey
      *
-     * @return \Illuminate\Http\Response
+     * @return int
      */
-    public function edit($id)
+    public function noOfUnits($strKey)
     {
-
+        $arr = explode('&', $strKey);
+        return (sizeof($arr));
     }
 
     /**
-     * Show the application dashboard.
+     *  get array of units
      *
-     * @return \Illuminate\Http\Response
+     * @return int
      */
-    public function delete($id)
+    public function arrOfUnits($strComplexNo)
     {
-
+        $arr = explode('&', $strComplexNo);
+        return ($arr);
     }
 
     /**
-     * Show the application dashboard.
+     *  see if update exists in properties
      *
-     * @return \Illuminate\Http\Response
+     * @return properties record
      */
-    public function store(Request $request, $id)
+    public function findUnit($strComplexName, $unit, $properties)
     {
+
+        //$unit = ltrim(rtrim($unit));
+
+        for ($p = 0; $p < $properties->count(); $p++) {
+
+            // echo $properties[$p]['strKey'] . "<br>";
+
+            $punits = explode('&', $properties[$p]['strComplexNo']);
+            $found  = in_array($unit, $punit, true);
+            if ($found) {
+                echo "Found<br>";
+            } else {
+
+            }
+
+        }
 
     }
 

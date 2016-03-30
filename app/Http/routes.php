@@ -102,7 +102,8 @@ Route::group(['middleware' => 'web'], function () {
     Route::post('/import', 'CsvImportController@store');
 
     //update
-    Route::post('/update', 'UpdateController@update');
+    Route::post('/updateFH', 'UpdateController@updateFH');
+    Route::post('/updateST', 'UpdateController@updateST');
 
     // create database
     Route::post('/createdatabase', 'CsvImportController@createdatabase');

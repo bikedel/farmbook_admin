@@ -6,23 +6,23 @@ body {
 
 }
 
-table { 
-  width: 100%; 
-  border-collapse: collapse; 
+table {
+  width: 100%;
+  border-collapse: collapse;
 }
 /* Zebra striping */
-tr:nth-of-type(odd) { 
-  background: #eee; 
+tr:nth-of-type(odd) {
+  background: #eee;
 }
-th { 
-  background: #333; 
-  color: white; 
-  font-weight: bold; 
+th {
+  background: #333;
+  color: white;
+  font-weight: bold;
 }
-td, th { 
-  padding: 5px; 
-  border: 1px solid #ccc; 
-  text-align: left; 
+td, th {
+  padding: 5px;
+  border: 1px solid #ccc;
+  text-align: left;
 }
 
 th {
@@ -47,9 +47,9 @@ th {
           <table class="table">
             <tr>
               <th>Action</th>
-              <th>Owners</th> 
+              <th>Owners</th>
               <th>Erf </th>
-              <th>Street </th> 
+              <th>Street </th>
               <th>No</th>
             </tr>
             <div class='hidden'>
@@ -62,12 +62,12 @@ th {
               {{$i++}}
             </div>
 
-            <div class="row">  
+            <div class="row">
               <tr>
                <td>
 
               <!--  {{ link_to_action('PropertyController@edit','view/edit', ['id' => $property->id]) }} -->
-                {!!link_to_action('OwnerController@rolledit', 'View/Edit',  array('id' => $property->strOwners, 'item' => $i) )!!} 
+                {!!link_to_action('OwnerController@rolledit', 'View/Edit',  array('id' => htmlentities($property->strOwners), 'item' => $i) )!!}
               </td>
               <td>
 
@@ -95,7 +95,7 @@ th {
             @endforeach
           </table>
           <br>
-     
+
           {{ link_to(url('/home'), 'Back to Search', ['class' => 'btn btn-default']) }}
         </div>
 
