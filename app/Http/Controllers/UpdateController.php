@@ -226,7 +226,7 @@ class UpdateController extends Controller
                             $otf    = new \App\Database\OTF(['database' => $dbname]);
                             $db     = DB::connection($dbname);
 
-                            $owner = Owner::on($database)->insert(array('strIDNumber' => $updatesA[$x]['strIdentity'], 'NAME' => $updatesA[$x]['strOwners'], 'updated_at' => $now));
+                            $owner = Owner::on($database)->insert(array('strIDNumber' => $updatesA[$x]['strIdentity'], 'NAME' => $updatesA[$x]['strOwners'], 'created_at' => $now));
                         }
 
                     } else {
@@ -237,7 +237,8 @@ class UpdateController extends Controller
                     //
                     $hasnote = Note::on($database)->select('id')->where('strKey', '=', $updatesA[$x]['strKey'])->get();
                     if ($hasnote->count() == 0) {
-                        $note       = Note::on($database)->insert(array('strKey' => $updatesA[$x]['strKey'], 'numErf' => $updatesA[$x]['numErf'], 'memNotes' => "\n" . $now . '  ' . $updatesA[$x]['strOwners'] . '  - New Owner.', 'updated_at' => $now));
+                        //$note       = Note::on($database)->insert(array('strKey' => $updatesA[$x]['strKey'], 'numErf' => $updatesA[$x]['numErf'], 'memNotes' => "\n" . $now . '  ' . $updatesA[$x]['strOwners'] . '  - New Owner.', 'created_at' => $now));
+                        $note       = Note::on($database)->insert(array('strKey' => $updatesA[$x]['strKey'], 'numErf' => $updatesA[$x]['numErf'], 'created_at' => $now));
                         $lastupdate = $updatesA[$x]['strKey'];
                     } else {
                         // only add note addendum once for the strKey - lastupdate
