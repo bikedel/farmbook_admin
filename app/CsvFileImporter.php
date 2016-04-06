@@ -163,18 +163,24 @@ class CsvFileImporter
 
         $query_makeContacts = ('INSERT INTO owners (strIDNumber,NAME) SELECT strIdentity,strOwners FROM properties group by strIdentity');
 
+        $query_makeContactsCreated = ('update owners set created_at = now()');
+
         $query_updateContacts = ('UPDATE owners, farmbook_admin.contacts
-            SET owners.NAME = farmbook_admin.contacts.NAME,
+            SET
+            owners.TITLE = farmbook_admin.contacts.TITLE,
+            owners.INITIALS = farmbook_admin.contacts.INITIALS,
+            owners.NAME = farmbook_admin.contacts.NAME,
             owners.strSurname = farmbook_admin.contacts.strSurname,
             owners.strFirstName = farmbook_admin.contacts.strFirstName,
             owners.strHomePhoneNo = farmbook_admin.contacts.strHomePhoneNo,
             owners.strWorkPhoneNo = farmbook_admin.contacts.strWorkPhoneNo,
             owners.strCellPhoneNo = farmbook_admin.contacts.strCellPhoneNo,
-            owners.EMAIL = farmbook_admin.contacts.EMAIL
+            owners.EMAIL = farmbook_admin.contacts.EMAIL,
+            owners.updated_at = now()
             WHERE owners.strIDNumber = farmbook_admin.contacts.strIDNumber');
 
-        $query_insertContacts = ('INSERT INTO farmbook_admin.contactsnew (strIDNumber,TITLE,INITIALS,NAME,strSurname,strFirstName,strHomePhoneNo,strWorkPhoneNo,strCellPhoneNo,EMAIL)
-            SELECT strIDNumber,TITLE,INITIALS,NAME,strSurname,strFirstName,strHomePhoneNo,strWorkPhoneNo,strCellPhoneNo,EMAIL FROM owners');
+        //  $query_insertContacts = ('INSERT INTO farmbook_admin.contactsnew (strIDNumber,TITLE,INITIALS,NAME,strSurname,strFirstName,strHomePhoneNo,strWorkPhoneNo,strCellPhoneNo,EMAIL)
+        //      SELECT strIDNumber,TITLE,INITIALS,NAME,strSurname,strFirstName,strHomePhoneNo,strWorkPhoneNo,strCellPhoneNo,EMAIL FROM owners');
 
         try {
             //delete
@@ -206,8 +212,9 @@ class CsvFileImporter
             $db->getpdo()->exec($query_comlexNo);
             $db->getpdo()->exec($query_streetNo);
             $db->getpdo()->exec($query_makeContacts);
+            $db->getpdo()->exec($query_makeContactsCreated);
             $db->getpdo()->exec($query_updateContacts);
-            $db->getpdo()->exec($query_insertContacts);
+            //   $db->getpdo()->exec($query_insertContacts);
 
         } catch (Exception $ex) {
 

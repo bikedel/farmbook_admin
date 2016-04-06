@@ -23,7 +23,20 @@
 
 
 		</div>
+
 		<br>
+
+		@linechart('Ages', 'chart3-div')
+		<br>
+		<div id="chart3-div" class='low'>
+
+
+		</div>
+
+		<br>
+
+
+
 		@barchart('Votes', 'poll_div')
 		<div id="poll_div" class='low'>
 

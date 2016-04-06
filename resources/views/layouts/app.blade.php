@@ -36,7 +36,7 @@
         }
 
     .navbar-default {
-        border-color: Transparent; 
+        border-color: Transparent;
 
         margin-bottom: 2cm;
 
@@ -98,7 +98,7 @@
 }
 
 .id {
-    border-color: Transparent; 
+    border-color: Transparent;
     border:none;
 }
 .fa-btn {
@@ -127,7 +127,7 @@
                 </button>
 
                 <!-- Branding Image -->
-                <a class="navbar-brand" href="{{ url('dash') }}"> <span class="glyphicon glyphicon-grain"></span>
+                <a class="navbar-brand" href="{{url('/')}}"> <span class="glyphicon glyphicon-grain"></span>
                     ProteaDB
                 </a>
             </div>
@@ -146,7 +146,7 @@
                  </a>
 
                  <ul class="dropdown-menu" role="menu">
-                    <li><a href="{{ url('/home') }}"><i class="farmbooks glyphicon glyphicon-road"></i>by Street</a></li> 
+                    <li><a href="{{ url('/home') }}"><i class="farmbooks glyphicon glyphicon-road"></i>by Street</a></li>
                     <li><a href="{{ url('/home') }}"> <i class=""> <span class=" users     glyphicon glyphicon-th"> </span></i>by Complex</a></li>
                     <li><a href="{{ url('/home') }}"> <i class=""> <span class=" admin     glyphicon glyphicon-home"> </span></i>by Erf</a></li>
                     <li><a href="{{ url('/home') }}"> <i class=""> <span class=" owner     glyphicon glyphicon-user"> </span></i>by Owner</a></li>
@@ -172,7 +172,7 @@
                 </a>
 
                 <ul class="dropdown-menu" role="menu">
-                    <li><a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i>Logout</a></li> 
+                    <li><a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i>Logout</a></li>
                     @if (Auth::user()->isAdmin())
                     <li><a href="{{ url('/users') }}"> <i class=""> <span class=" users    glyphicon glyphicon-user"> </span></i>Users</a></li>
                     <li><a href="{{ url('/farmbooks') }}"> <i class=""> <span class=" farmbooks    glyphicon glyphicon-grain"> </span></i>Farmbooks</a></li>

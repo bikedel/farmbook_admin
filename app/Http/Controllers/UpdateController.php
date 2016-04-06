@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Contact;
 use App\CsvFileUpdater;
 use App\Note;
 use App\Owner;
@@ -158,6 +159,9 @@ class UpdateController extends Controller
 
             // insert and delete older as it is the newest
             //
+
+            //  dd($p->count(), $p);
+
             if ($p->count() == 0) {
 
                 $echo = $updatesA[$x]['strKey'] . '   -   ' . $updatesA[$x]['dtmRegDate'] . "  -  New Owner - " . $updatesA[$x]['strOwners'] . "  -  Seller - " . $updatesA[$x]['strSellers'];
@@ -184,7 +188,47 @@ class UpdateController extends Controller
                     //
                     $hascontact = Owner::on($database)->select('id')->where('strIDNumber', '=', $updatesA[$x]['strIdentity']);
                     if ($hascontact->count() == 0) {
-                        $owner = Owner::on($database)->insert(array('strIDNumber' => $updatesA[$x]['strIdentity'], 'NAME' => $updatesA[$x]['strOwners'], 'updated_at' => $now));
+
+                        // update details from admin contacts
+                        $admin_contacts = "farmbook_admin";
+                        $otf            = new \App\Database\OTF(['database' => $admin_contacts]);
+                        $db             = DB::connection($admin_contacts);
+
+                        $owner_details = Contact::on($admin_contacts)->select('*')->where('strIDNumber', $updatesA[$x]['strIdentity'])->first();
+
+                        // contact details found in admin contacts
+                        if (sizeof($owner_details) == 1) {
+                            $uid = $owner_details->strIDNumber;
+
+                            // set database back
+                            $dbname = $database;
+                            $otf    = new \App\Database\OTF(['database' => $dbname]);
+                            $db     = DB::connection($dbname);
+
+                            // update contact details
+                            $owner = Owner::on($database)->insert(array(
+                                'strIDNumber' => $owner_details->strIDNumber
+                                , 'NAME' => $owner_details->NAME
+                                , 'TITLE' => $owner_details->TITLE
+                                , 'INITIALS' => $owner_details->INITIALS
+                                , 'strSurname' => $owner_details->strSurname
+                                , 'strFirstName' => $owner_details->strFirstName
+                                , 'strHomePhoneNo' => $owner_details->strHomePhoneNo
+                                , 'strWorkPhoneNo' => $owner_details->strWorkPhoneNo
+                                , 'strCellPhoneNo' => $owner_details->strCellPhoneNo
+                                , 'EMAIL' => $owner_details->EMAIL
+                                , 'created_at' => $now
+                                , 'updated_at' => $now));
+
+                            // update from prop rec
+                        } else {
+                            $dbname = $database;
+                            $otf    = new \App\Database\OTF(['database' => $dbname]);
+                            $db     = DB::connection($dbname);
+
+                            $owner = Owner::on($database)->insert(array('strIDNumber' => $updatesA[$x]['strIdentity'], 'NAME' => $updatesA[$x]['strOwners'], 'updated_at' => $now));
+                        }
+
                     } else {
                         // dont wipe old details
 
@@ -353,32 +397,38 @@ class UpdateController extends Controller
 
         // get all update records
         //
-        $updates = Update::on($database)->orderBy('strKey')->orderBy(DB::raw("STR_TO_DATE(dtmRegDate, '%Y-%m-%d')"))->get();
+        $updates = Update::on($database)->orderBy(DB::raw("STR_TO_DATE(dtmRegDate, '%Y-%m-%d')"))->orderBy('strTitleDeed')->get();
 
         // convert to array
         //
         $updatesA = $updates->toArray();
 
+        echo 'updates to process = <b>' . $updates->count() . "</b><br>";
+
         // process update records
         //
         for ($x = 0; $x <= sizeof($updatesA) - 1; $x++) {
 
-            // fetch all property records for the complex
-            $properties = Property::on($database)->orderBy('strKey')->where('strComplexName', $updatesA[$x]['strComplexName'])->get();
+            // fetch all property records for the complex where the reg date is older than the update
+            $properties = Property::on($database)->orderBy('strKey')->where('strComplexName', $updatesA[$x]['strComplexName'])->where(DB::raw("STR_TO_DATE(dtmRegDate, '%Y-%m-%d')"), '<', Date($updatesA[$x]['dtmRegDate']))->get();
+
+            // check if there is an exact match on strKey
+            $exact = Property::on($database)->where('strKey', $updatesA[$x]['strKey'])->where(DB::raw("STR_TO_DATE(dtmRegDate, '%Y-%m-%d')"), '<', Date($updatesA[$x]['dtmRegDate']))->get();
 
             $units     = $this->noOfUnits($updatesA[$x]['strKey']);
             $arr_units = $this->arrOfUnits($updatesA[$x]['strComplexNo']);
-
-            echo $updatesA[$x]['strOwners'] . "<br>";
-            echo $updatesA[$x]['strKey'] . "<br>";
+            echo ($x + 1) . "---------------------------------------------------------------------------------------" . "<br>";
+            echo 'regDate = <b>' . $updatesA[$x]['dtmRegDate'] . "</b><br>";
+            echo 'strKey  = <b>' . $updatesA[$x]['strKey'] . "</b><br>";
+            echo 'Owner   = ' . $updatesA[$x]['strOwners'] . "  |  " . 'Seller  = ' . $updatesA[$x]['strSellers'] . "<br>";
+            echo "<br>";
             echo ' - ' . $units . ' unit(s) in ' . $updatesA[$x]['strComplexName'] . "<br>";
-
+            echo ' - <b>' . $exact->count() . '</b>  exact match(es)' . "<br>";
+            echo "<br>";
             for ($u = 0; $u < $units; $u++) {
-                echo " -- Unit" . ($u + 1) . " - " . $arr_units[$u] . " <br>";
+                echo " -- Unit" . ($u + 1) . " - <b>" . $arr_units[$u] . "</b> <br>";
 
-                echo $this->findUnit($updatesA[$x]['strComplexName'], $arr_units[$u], $properties);
-
-                // echo " --------------- Checking..." . " <br>";
+                echo $this->findUnit($updatesA[$x]['strComplexName'], $arr_units[$u], $properties, $updatesA[$x]['dtmRegDate'], $updatesA[$x]['strSellers'], $updatesA[$x]['strIdentity']);
 
             }
             echo "<br>";
@@ -417,27 +467,99 @@ class UpdateController extends Controller
     /**
      *  see if update exists in properties
      *
+     * pass complexname , unit , properties array , updated date , sellers
+     *
+     *
      * @return properties record
      */
-    public function findUnit($strComplexName, $unit, $properties)
+    public function findUnit($strComplexName, $unit, $properties, $updateDate, $sellers, $sellerId)
     {
 
-        //$unit = ltrim(rtrim($unit));
-
+        $unit = ltrim(rtrim($unit));
+        $num  = 1;
         for ($p = 0; $p < $properties->count(); $p++) {
 
             // echo $properties[$p]['strKey'] . "<br>";
 
-            $punits = explode('&', $properties[$p]['strComplexNo']);
-            $found  = in_array($unit, $punit, true);
+            $punits = explode(' & ', $properties[$p]['strComplexNo']);
+            $found  = in_array($unit, $punits, true);
             if ($found) {
-                echo "Found<br>";
-            } else {
 
+                //    $isregdateolder = $updateDate ;
+
+                $dateStart = Carbon::createFromFormat('Y-m-d', $updateDate);
+                $dateEnd   = Carbon::createFromFormat('Y-m-d', $properties[$p]['dtmRegDate']);
+
+                $diffInDays = $dateStart->diffInDays($dateEnd, false);
+
+                // regdate is older than update
+                $isdateolder = 0;
+
+                if ($diffInDays < 0) {
+
+                    $checkdate   = "&#10003" . " Reg Date is Older than the update";
+                    $isdateolder = 1;
+                } elseif ($diffInDays == 0) {
+                    $checkdate = "&#10006" . "&#10060" . "Reg Date is the same";
+                } else {
+                    $checkdate = "&#10006" . "&#10060" . "   Reg Date is more recent than the update";
+                }
+
+                echo "----" . $num . "--------- " . $properties[$p]['strOwners'] . "    |    " . $properties[$p]['dtmRegDate'] . " - <b> " . $checkdate . "</b><br>";
+                echo "----" . $num . "--------- " . $properties[$p]['strKey'] . "<br>";
+
+                // remove unit from key
+                $newKey = $this->removeUnit($unit, $properties[$p]['strComplexNo'], $properties[$p]['strComplexName']);
+                if ($newKey == " DELETE ") {
+                    echo "----" . $num . "--------- <b>" . "delete and add" . "</b><br>";
+                } else {
+                    echo "----" . $num . "--------- <b>" . $this->removeUnit($unit, $properties[$p]['strComplexNo'], $properties[$p]['strComplexName']) . " <- new key</b><br>";
+                }
+                // check if owner is seller
+                if ($properties[$p]['strIdentity'] == $sellerId) {
+                    echo "----" . $num . "--------- <b>" . "Seller = Buyer" . "</b><br>";
+                }
+
+                // units in key
+                echo "------- seller owns " . sizeof($punits) . "  unit(s)" . "<br><br>";
+                // $this->removeUnit($unit, $properties[$p]['strComplexNo']);
+
+                $num++;
+            } else {
             }
 
         }
+        if ($num == 1) {
 
+            echo "-------" . "<b>no existing record</b><br>";
+        }
+
+    }
+
+    /**
+     *  remove unit from key
+     *
+     * @return string new key
+     */
+    public function removeUnit($unit, $strKey, $complex)
+    {
+
+        $a = explode(" & ", $strKey);
+
+        if (($key = array_search($unit, $a)) !== false) {
+            unset($a[$key]);
+        }
+
+        $a = implode(" & ", $a);
+
+        if (strlen($a) == 0) {
+            $a = " DELETE ";
+        } else {
+            $a = $complex . ' ' . $a;
+        }
+        // dd($a, sizeof($a));
+
+        return $a;
     }
 
 }

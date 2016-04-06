@@ -2,25 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests;
-use Illuminate\Http\Request;
+use App\Complex;
 use App\Property;
 use App\Street;
-use App\Complex;
-use App\Owner;
-use App\Farmbook;
-use DB;
-use Auth;
-use App\Note;
-use Lava;
-use Carbon\Carbon;
 use App\User;
-use App\Contact;
-use File;
+use Auth;
+use Carbon\Carbon;
+use DB;
+use Lava;
 
 class DashboardController extends Controller
 {
-
 
     /**
      * Create a new controller instance.
@@ -40,154 +32,156 @@ class DashboardController extends Controller
     public function index()
     {
 
-
-
         // set database
         $database = Auth::user()->getDatabase();
 
-       //change database
+        //change database
         $property = new Property;
-        $property->changeConnection(    $database  );
+        $property->changeConnection($database);
 
-        // search on street name
-       // $query = Property::on(   $database)->select('*')->get();
-
-
-
-        $query1 = Property::on(   $database)->select(  [DB::raw('cast(dtmRegDate as date) as dd'),DB::raw('count(dtmRegDate) as sales') ,DB::raw('max(strAmount) as high'),DB::raw('avg(strAmount) as avg')])->groupBy(DB::raw('Year(dd)'))->get();
-
+        $query1 = Property::on($database)->select([DB::raw('cast(dtmRegDate as date) as dd'), DB::raw('count(dtmRegDate) as sales'), DB::raw('max(strAmount) as high'), DB::raw('avg(strAmount) as avg')])->groupBy(DB::raw('Year(dd)'))->get();
 
         $min = $query1->min('dd');
         $max = $query1->max('dd');
 
-
- //$query1->groupBy('Year(dd)');
-        
-
-
-
         $dateStart = Carbon::createFromFormat('Y-m-d', $min);
-        $dateEnd = Carbon::createFromFormat('Y-m-d', $max);
+        $dateEnd   = Carbon::createFromFormat('Y-m-d', $max);
 
         $diffInYears = $dateStart->diffInYears($dateEnd, false);
 
+        $Amin = Property::on($database)->min('strAmount');
+        $Amax = Property::on($database)->max('strAmount');
 
+        $sum = Property::on($database)->sum('strAmount');
+        $avg = Property::on($database)->where('strAmount', '>', 0)->avg('strAmount');
 
+        // dd($min,$max,$Amin,$Amax,$sum,$avg,$dateStart,$dateEnd,$diffInYears);
 
-
-        $Amin = Property::on(   $database)->min('strAmount');
-        $Amax =  Property::on(   $database)->max('strAmount');
-
-        $sum = Property::on(   $database)->sum('strAmount');
-        $avg = Property::on(   $database)->where('strAmount','>',0)->avg('strAmount');
-
-
-
-
-       // dd($min,$max,$Amin,$Amax,$sum,$avg,$dateStart,$dateEnd,$diffInYears);
-
-        $stocksTable = Lava::DataTable();  // Lava::DataTable() if using Laravel
+        $stocksTable = Lava::DataTable(); // Lava::DataTable() if using Laravel
 
         $stocksTable->addStringColumn('Date')
-        ->addNumberColumn('Registered');
-                  //  ->addNumberColumn('Bond');
+            ->addNumberColumn('Registered');
+        //  ->addNumberColumn('Bond');
 
         // Random Data For Example
 
+        foreach ($query1 as &$q) {
+            //  echo  substr($q->dd,0,4).'    -    '. $q->sales;
+            //  echo "<br>";
+            $mdate = intval(substr($q->dd, 0, 4));
 
-        foreach($query1 as &$q)
-        {
-  //  echo  substr($q->dd,0,4).'    -    '. $q->sales;
-  //  echo "<br>";
-         $mdate = intval(substr($q->dd,0,4));
-
-         if ($mdate > 2004){
-           // dd($q->dd);
-            $stocksTable->addRow([
-             $mdate  , $q->sales
-             ]);
+            if ($mdate > 2004) {
+                // dd($q->dd);
+                $stocksTable->addRow([
+                    $mdate, $q->sales,
+                ]);
+            }
         }
-    }
 
-
-        $priceTable = Lava::DataTable();  // Lava::DataTable() if using Laravel
+        // chart - price
+        //-------------------------------------------------------------------
+        $priceTable = Lava::DataTable(); // Lava::DataTable() if using Laravel
 
         $priceTable->addStringColumn('Date')
-        ->addNumberColumn('Avg Price')
+            ->addNumberColumn('Avg Price')
         ;
 
-        foreach($query1 as $key =>$q)
-        {
-  //  echo  substr($q->dd,0,4).'    -    '. $q->sales;
-  //  echo "<br>";
-         $mdate = intval(substr($q->dd,0,4));
+        foreach ($query1 as $key => $q) {
+            //  echo  substr($q->dd,0,4).'    -    '. $q->sales;
+            //  echo "<br>";
+            $mdate = intval(substr($q->dd, 0, 4));
 
-         if ($mdate > 2004){
-            $priceTable->addRow([
-             $mdate , intval($q->avg)
-             ]);
-        }}
+            if ($mdate > 2004) {
+                $priceTable->addRow([
+                    $mdate, intval($q->avg),
+                ]);
+            }}
 
+        $c1 = Street::on($database)->count('id');
 
+        $c2 = Complex::on($database)->count('id');
 
+        $c3 = Property::on($database)->select('id')->groupBy('strKey')->get()->count();
 
-  $c1 = Street::on(   $database)->count('id');
+        $c4 = Property::on($database)->count('id');
 
- $c2 = Complex::on(   $database)->count('id');
+        $votes = Lava::DataTable();
 
-   $c3 = Property::on(   $database)->select('id')->groupBy('strKey')->get()->count();
+        $votes->addStringColumn('Food Poll')
+            ->addNumberColumn('Count')
+            ->addRow(['Streets', $c1])
+            ->addRow(['Complexes', $c2])
+            ->addRow(['Properties', $c3])
+            ->addRow(['Owners', $c4]);
 
-  $c4 = Property::on(   $database)->count('id');
+        // chart -age
+        //-------------------------------------------------------------------
 
+        $queryAge = Property::on($database)->select('strKey', 'strSellers', 'dtmRegDate')->distinct('strIdentity')->OrderBy('dtmRegDate')->GroupBy('dtmRegDate')->get();
 
+        $queryAge = $queryAge->toArray();
 
- $votes  = Lava::DataTable();
+        // dd($queryAge);
+        $ageTable = Lava::DataTable(); // Lava::DataTable() if using Laravel
 
- $votes->addStringColumn('Food Poll')
- ->addNumberColumn('Count')
- ->addRow(['Streets',  $c1])
- ->addRow(['Complexes',  $c2])
- ->addRow(['Properties',  $c3])
- ->addRow(['Owners', $c4])
+        $ageTable->addStringColumn('Date')
+            ->addNumberColumn('Avg Age')
+        ;
 
+        $agedate = array();
+        for ($x = 0; $x <= sizeof($queryAge) - 1; $x++) {
 
- ;
+            $seller = substr($queryAge[$x]['strSellers'], -13);
 
+            if (is_numeric($seller) && strlen(ltrim(rtrim($seller))) == 13) {
 
+                $born = substr($seller, 0, 2);
+                $age  = 116 - $born;
 
+                $mdate = intval(substr($queryAge[$x]['dtmRegDate'], 0, 4));
 
+                //  echo $queryAge[$x]['strKey'] . "   -   " . $mdate . "  -  " . $seller . ' - ' . $age . " <br>";
+                $agegate = array_push($agedate, ['date' => $mdate, 'age' => $age]);
 
-//dd($query1,$min,$max,$diffInYears );
+            }
+        }
 
-//dd();
-//$chart = $lava->LineChart('MyStocks', $stocksTable);
+        $collection = collect($agedate);
 
-//$chart2 = Lava::LineChart('Prices', $priceTable); //if using Laravel
- $chart = Lava::LineChart('Registrations', $stocksTable, [
-    'title' => "Properties registered ",
-    'colors' => ['blue'],
+        $coll = $collection->groupBy('date');
 
-    ]);
+        //dd($coll);
 
+        $ageTable->addRow([$mdate, $age]);
 
+        //  dd($queryAge, $queryAge->count(), $seller);
 
- $chart2 = Lava::LineChart('Prices', $priceTable, [
-    'title' => "Average price ",
-    'colors' => ['green','red'],
-    'vAxis' => ['format' => 'R###,###,###,###'],
-    ]);
+        $agechart = Lava::LineChart('Ages', $ageTable, [
+            'title'  => "Sellers Age ",
+            'colors' => ['Cyan'],
 
+        ]);
 
- $chart2 = Lava::BarChart('Votes', $votes, [
-    'title' => "Totals ",
-    'colors' => ['DeepSkyBlue']
+        $chart = Lava::LineChart('Registrations', $stocksTable, [
+            'title'  => "Properties registered ",
+            'colors' => ['blue'],
 
-    ]);
- //$chart3 = Lava::BarChart('Votes', $votes);
+        ]);
 
+        $chart2 = Lava::LineChart('Prices', $priceTable, [
+            'title'  => "Average price ",
+            'colors' => ['green', 'red'],
+            'vAxis'  => ['format' => 'R###,###,###,###'],
+        ]);
 
+        $chart3 = Lava::BarChart('Votes', $votes, [
+            'title'  => "Totals ",
+            'colors' => ['DeepSkyBlue'],
 
- return view('dashboard',compact('chart','chart2'));
+        ]);
+        //$chart3 = Lava::BarChart('Votes', $votes);
 
-}
+        return view('dashboard');
+
+    }
 }

@@ -2,19 +2,18 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
 use App\Database;
+use Illuminate\Database\Eloquent\Model;
 
 class Contact extends Model
 {
-	protected $connection ;
-	protected $table = 'contactsnew';
+    protected $connection;
 
-	public function changeConnection($conn)
-	{
+    public function changeConnection($conn)
+    {
 
-		$this->connection = new \App\Database\OTF(['database' => $conn]);
-		$this->setConnection($this->connection );
+        $this->connection = new \App\Database\OTF(['database' => $conn]);
+        $this->setConnection($this->connection);
 
-	}
+    }
 }
