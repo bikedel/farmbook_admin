@@ -146,6 +146,8 @@ class CsvFileImporter
              strTitleDeed  )
         SET strKey = " . $key, addslashes($file_path));
 
+        $query_Properties_createdat = ('update properties set created_at = now()');
+
         $query_makeStreets = ('INSERT INTO streets (strStreetName) SELECT strStreetName FROM properties GROUP BY strStreetName');
 
         $query_makeComplex = ('INSERT INTO complexes (strComplexName) SELECT strComplexName FROM properties GROUP BY strComplexName');
@@ -156,6 +158,8 @@ class CsvFileImporter
         $query_streetNo = ('UPDATE IGNORE properties SET numStreetNo = strStreetNo');
 
         $query_makeMems = ('INSERT INTO notes (numErf,strKey) SELECT DISTINCT numErf,strKey FROM properties ');
+
+        $query_Notes_createdat = ('update notes set created_at = now()');
 
         $query_blankid  = ('UPDATE IGNORE properties SET strIdentity = strOwners WHERE strIdentity = ""');
         $query_blankid2 = ('UPDATE IGNORE properties SET strIdentity = REPLACE(strTitleDeed,"/","") WHERE strIdentity = ""');
@@ -193,6 +197,10 @@ class CsvFileImporter
 
             //import owners
             $result = $db->getpdo()->exec($query);
+
+            // update created at dates
+            $db->getpdo()->exec($query_Properties_createdat);
+
             // create street
             $db->getpdo()->exec($query_makeStreets);
             // make complex
@@ -201,6 +209,8 @@ class CsvFileImporter
             // $db->getpdo()->exec( $query_makeErfs);
             // make Mem
             $db->getpdo()->exec($query_makeMems);
+
+            $db->getpdo()->exec($query_Notes_createdat);
 
             // set the id = owner if the id is a blank
             $db->getpdo()->exec($query_blankid);
