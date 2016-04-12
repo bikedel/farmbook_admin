@@ -411,32 +411,50 @@ class UpdateController extends Controller
         for ($x = 0; $x <= sizeof($updatesA) - 1; $x++) {
 
             // fetch all property records for the complex where the reg date is older than the update
-            $properties = Property::on($database)->orderBy('strKey')->where('strComplexName', $updatesA[$x]['strComplexName'])->where(DB::raw("STR_TO_DATE(dtmRegDate, '%Y-%m-%d')"), '<', Date($updatesA[$x]['dtmRegDate']))->get();
+            //  $properties = Property::on($database)->orderBy('strKey')->where('strComplexName', $updatesA[$x]['strComplexName'])->where(DB::raw("STR_TO_DATE(dtmRegDate, '%Y-%m-%d')"), '<', Date($updatesA[$x]['dtmRegDate']))->get();
 
             // check if there is an exact match on strKey
-            $exact = Property::on($database)->where('strKey', $updatesA[$x]['strKey'])->where(DB::raw("STR_TO_DATE(dtmRegDate, '%Y-%m-%d')"), '<', Date($updatesA[$x]['dtmRegDate']))->get();
+            //  $exact = Property::on($database)->where('strKey', $updatesA[$x]['strKey'])->where(DB::raw("STR_TO_DATE(dtmRegDate, '%Y-%m-%d')"), '<', Date($updatesA[$x]['dtmRegDate']))->get();
 
-            $units     = $this->noOfUnits($updatesA[$x]['strKey']);
+            $units     = $this->noOfUnits($updatesA[$x]['strComplexNo']);
             $arr_units = $this->arrOfUnits($updatesA[$x]['strComplexNo']);
-            echo ($x + 1) . "---------------------------------------------------------------------------------------" . "<br>";
-            echo 'regDate = <b>' . $updatesA[$x]['dtmRegDate'] . "</b><br>";
-            echo 'strKey  = <b>' . $updatesA[$x]['strKey'] . "</b><br>";
-            echo 'Owner   = ' . $updatesA[$x]['strOwners'] . "  |  " . 'Seller  = ' . $updatesA[$x]['strSellers'] . "<br>";
-            echo "<br>";
-            echo ' - ' . $units . ' unit(s) in ' . $updatesA[$x]['strComplexName'] . "<br>";
-            echo ' - <b>' . $exact->count() . '</b>  exact match(es)' . "<br>";
-            echo "<br>";
-            for ($u = 0; $u < $units; $u++) {
-                echo " -- Unit" . ($u + 1) . " - <b>" . $arr_units[$u] . "</b> <br>";
+            echo '...........................................................................................................................................' . "<br>";
+            echo $updatesA[$x]['strKey'] . "<br>";
+            echo $units . ' units  -> ' . implode(" ", $arr_units) . "<br>";
 
-                echo $this->findUnit($updatesA[$x]['strComplexName'], $arr_units[$u], $properties, $updatesA[$x]['dtmRegDate'], $updatesA[$x]['strSellers'], $updatesA[$x]['strIdentity']);
+            // check if there is an exact match on strKey with an earlier date
+            $exact = Property::on($database)->where('strKey', $updatesA[$x]['strKey'])->get();
 
+            if ($exact->count() > 0) {
+
+                echo ' - <b>' . $exact->count() . '</b>  key is in properties' . "<br>";
+                Update::on($database)->where('strKey', $updatesA[$x]['strKey'])->update(['deleted' => 1]);
+
+            } else {
+                echo ' - <b>' . $exact->count() . '</b>  key is NOT in properties' . "<br>";
             }
+
+/*
+echo ($x + 1) . "---------------------------------------------------------------------------------------" . "<br>";
+echo 'regDate = <b>' . $updatesA[$x]['dtmRegDate'] . "</b><br>";
+echo 'strKey  = <b>' . $updatesA[$x]['strKey'] . "</b><br>";
+echo 'Owner   = ' . $updatesA[$x]['strOwners'] . "  |  " . 'Seller  = ' . $updatesA[$x]['strSellers'] . "<br>";
+echo "<br>";
+echo ' - ' . $units . ' unit(s) in ' . $updatesA[$x]['strComplexName'] . "<br>";
+echo ' - <b>' . $exact->count() . '</b>  exact match(es)' . "<br>";
+echo "<br>";
+for ($u = 0; $u < $units; $u++) {
+
+echo " -- Unit" . ($u + 1) . " - <b>" . $arr_units[$u] . "</b> <br>";
+
+echo $this->findUnit($updatesA[$x]['strComplexName'], $arr_units[$u], $properties, $updatesA[$x]['dtmRegDate'], $updatesA[$x]['strSellers'], $updatesA[$x]['strIdentity']);
+
+}
+ */
             echo "<br>";
         }
 
         dd();
-
         $message = 'Update completed.';
         Session::flash('flash_type', 'alert-success');
         return Redirect::back()->with('flash_message', $message);
@@ -450,7 +468,13 @@ class UpdateController extends Controller
      */
     public function noOfUnits($strKey)
     {
-        $arr = explode('&', $strKey);
+        if (strpos($strKey, "&") > -1) {
+            $arr = explode(' & ', $strKey);
+        } else {
+
+            $arr = explode(' ', $strKey);
+        }
+
         return (sizeof($arr));
     }
 
@@ -461,7 +485,14 @@ class UpdateController extends Controller
      */
     public function arrOfUnits($strComplexNo)
     {
-        $arr = explode('&', $strComplexNo);
+
+        if (strpos($strComplexNo, "&") > -1) {
+            $arr = explode('&', $strComplexNo);
+        } else {
+            $arr = explode(' ', $strComplexNo);
+
+        }
+
         return ($arr);
     }
 
@@ -482,10 +513,18 @@ class UpdateController extends Controller
 
             // echo $properties[$p]['strKey'] . "<br>";
 
-            $punits = explode(' & ', $properties[$p]['strComplexNo']);
-            $found  = in_array($unit, $punits, true);
-            if ($found) {
+            // if there is no & - then it is a single property and explode by " "
 
+            $punits = $this->arrOfUnits($properties[$p]['strComplexNo']);
+
+            //  dd(strpos($properties[$p]['strComplexNo'], "&"), $properties[$p]['strComplexNo']);
+
+            $found = in_array($unit, $punits, true);
+
+            // dd($unit, $punits, $found);
+
+            if ($found) {
+                $num = $num + 1;
                 //    $isregdateolder = $updateDate ;
 
                 $dateStart = Carbon::createFromFormat('Y-m-d', $updateDate);
@@ -525,14 +564,13 @@ class UpdateController extends Controller
                 echo "------- seller owns " . sizeof($punits) . "  unit(s)" . "<br><br>";
                 // $this->removeUnit($unit, $properties[$p]['strComplexNo']);
 
-                $num++;
             } else {
             }
+            if ($num == 1) {
 
-        }
-        if ($num == 1) {
+                //echo "-------" . $num . "<b>no existing record</b><br>";
+            }
 
-            echo "-------" . "<b>no existing record</b><br>";
         }
 
     }

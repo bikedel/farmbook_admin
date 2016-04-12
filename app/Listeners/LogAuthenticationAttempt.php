@@ -3,6 +3,7 @@
 namespace App\Listeners;
 
 use Illuminate\Auth\Events\Attempting;
+use Request;
 use Storage;
 
 class LogAuthenticationAttempt
@@ -28,10 +29,11 @@ class LogAuthenticationAttempt
 
         //dd($event);
         $email = $event->credentials['email'];
+        $ip    = Request::ip();
 
         //log
         $action = 'Login Authentication';
-        $append = \Carbon\Carbon::now('Africa/Johannesburg')->toDateTimeString() . ',          ' . trim($email) . ',          ' . $action;
+        $append = \Carbon\Carbon::now('Africa/Johannesburg')->toDateTimeString() . ',          ' . trim($email) . ',          ' . $action . ',              IP:   ' . $ip;
         Storage::append('logfile.txt', $append);
 
     }
