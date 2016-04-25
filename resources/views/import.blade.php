@@ -160,7 +160,7 @@ input[ type=text ]{
 					@if ( Session::has('flash_message') )
 
 					<div class="row alert {{ Session::get('flash_type') }} ">
-						<button type="button" class="form-group btn btn-info close" data-dismiss="alert" aria-hidden="true">&times;</button>
+						<button type="button" class="form-group btn btn-info close " data-dismiss="alert" aria-hidden="true">&times;</button>
 						<p>{{ Session::get('flash_message') }}</p>
 					</div>
 
@@ -177,7 +177,7 @@ input[ type=text ]{
 
 					<div class="form-group">
 
-						{!! Form::submit('Update',  array('class'=>'btn btn-success ')) !!}
+						{!! Form::submit('Update',  array('class'=>'btn btn-success ','disabled' => 'disabled')) !!}
 					</div>
 					{!! Form::close() !!}
 				</div>
