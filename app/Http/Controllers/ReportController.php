@@ -110,6 +110,42 @@ class ReportController extends Controller
 
     }
 
+    public function printbycomplexreport($id)
+    {
+        try {
+
+            // set database
+            $database = Auth::user()->getDatabase();
+            $email    = Auth::user()->email;
+
+            //log
+            $action  = 'PRINTING';
+            $comment = 'Report for ' . $database . ' - ' . $id;
+            $append  = \Carbon\Carbon::now('Africa/Johannesburg')->toDateTimeString() . ',          ' . trim($email) . ',          ' . $action . ',' . $comment;
+            Storage::append('logfile.txt', $append);
+
+            //change database
+            $property = new Property;
+            $property->changeConnection($database);
+
+            // search on street name
+            $query      = Property::on($database)->like('strComplexName', $id)->orderby('strComplexName', 'ASC')->orderby('strComplexNo', 'ASC')->get();
+            $properties = Property::on($database)->like('strComplexName', $id)->orderby('strComplexName', 'ASC')->orderby('numComplexNo', 'ASC')->get();
+
+            // get relationship data
+            $properties->load('owner', 'note');
+
+            // get total records as simplepagination does not do this
+            $count  = $query->count();
+            $search = $id;
+
+        } catch (exception $e) {
+            dd($e->getMessage());
+        }
+
+        return view('reportByComplex', compact('properties', 'count', 'search'));
+    }
+
     public function testreport()
     {
         $users = User::all();

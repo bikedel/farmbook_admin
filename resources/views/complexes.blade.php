@@ -6,33 +6,33 @@ body {
 
 }
 
-textarea{ 
-  border-style: none; 
-  border-color: Transparent; 
+textarea{
+  border-style: none;
+  border-color: Transparent;
   padding:0;
-  overflow: auto; 
+  overflow: auto;
   width: 100%;
   -webkit-box-sizing: border-box; /* <=iOS4, <= Android  2.3 */
   -moz-box-sizing: border-box; /* FF1+ */
-  box-sizing: border-box; /* Chrome, IE8, Opera, Safari 5.1*/   
+  box-sizing: border-box; /* Chrome, IE8, Opera, Safari 5.1*/
 }
-table { 
-  width: 100%; 
-  border-collapse: collapse; 
+table {
+  width: 100%;
+  border-collapse: collapse;
 }
 /* Zebra striping */
-tr:nth-of-type(odd) { 
-  background: #eee; 
+tr:nth-of-type(odd) {
+  background: #eee;
 }
-th { 
-  background: #333; 
-  color: white; 
-  font-weight: bold; 
+th {
+  background: #333;
+  color: white;
+  font-weight: bold;
 }
-td, th { 
-  padding: 5px; 
-  border: 1px solid #ccc; 
-  text-align: left; 
+td, th {
+  padding: 5px;
+  border: 1px solid #ccc;
+  text-align: left;
 }
 
 
@@ -56,15 +56,16 @@ th {
                 <div class="panel-body table-responsive">
                   <!--   {{ link_to(url('/complex/'.$search), 'Edit All', ['class' => 'btn btn-default']) }}  -->
                     {{ link_to(url('/home'), 'Back to Search', ['class' => 'btn btn-default']) }}
+                     {{ link_to(url('/print/'.$search), 'Print', ['class' => 'btn btn-info']) }}
                     <p><br></p>
                     <table class="table">
                         <thead>
                           <tr>
                             <th>Action</th>
                             <th>Erf </th>
-                            <th>Complex </th> 
+                            <th>Complex </th>
                             <th>No</th>
-                            <th>Owners</th> 
+                            <th>Owners</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -80,9 +81,9 @@ th {
                             <td data-label="action">
 
                           <!--  {{ link_to_action('PropertyController@edit','view/edit', ['id' => $property->id]) }}     -->
-                            {!!link_to_action('ComplexController@rolledit', 'View/Edit',  array('id' => $property->strComplexName, 'item' => $i) )!!} 
+                            {!!link_to_action('ComplexController@rolledit', 'View/Edit',  array('id' => $property->strComplexName, 'item' => $i) )!!}
                            </td>
-                
+
                         <td data-label="erf">
 
                             {{  $property->numErf }}
@@ -104,15 +105,15 @@ th {
                             {{ $property->strOwners }}
 
                         </td>
- 
-                    </tr> 
-               
+
+                    </tr>
+
                     @endforeach
-                    
+
                 </tbody>
             </table>
                     <br>
-         
+
                     {{ link_to(url('/home'), 'Back to Search', ['class' => 'btn btn-default']) }}
 
         </div>

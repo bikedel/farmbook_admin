@@ -74,8 +74,11 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/property/{id}', 'PropertyController@edit');
     Route::post('/property/{id}', 'PropertyController@update');
 
-    // print
+    // print by street
     Route::get('/print/{id}', 'ReportController@printreport');
+
+    // print by complex
+    Route::get('/print/{id}', 'ReportController@printbycomplexreport');
 
     Route::get('/prog', 'ReportController@testreport');
 
