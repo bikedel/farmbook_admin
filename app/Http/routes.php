@@ -78,7 +78,7 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/print/{id}', 'ReportController@printreport');
 
     // print by complex
-    Route::get('/print/{id}', 'ReportController@printbycomplexreport');
+    Route::get('/printcomplex/{id}', 'ReportController@printbycomplexreport');
 
     Route::get('/prog', 'ReportController@testreport');
 

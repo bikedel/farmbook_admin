@@ -56,7 +56,7 @@ th {
                 <div class="panel-body table-responsive">
                   <!--   {{ link_to(url('/complex/'.$search), 'Edit All', ['class' => 'btn btn-default']) }}  -->
                     {{ link_to(url('/home'), 'Back to Search', ['class' => 'btn btn-default']) }}
-                     {{ link_to(url('/print/'.$search), 'Print', ['class' => 'btn btn-info']) }}
+                     {{ link_to(url('/printcomplex/'.$search), 'Print', ['class' => 'btn btn-info']) }}
                     <p><br></p>
                     <table class="table">
                         <thead>
