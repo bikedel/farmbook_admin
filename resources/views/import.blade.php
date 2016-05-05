@@ -153,7 +153,7 @@ input[ type=text ]{
 	<div class="row">
 		<div class="col-md-10 col-md-offset-1">
 			<div class="panel panel-primary">
-				<div class="panel-heading">Update from SAPTG - ST .... DONT RUN !!
+				<div class="panel-heading">Update from SAPTG - ST
 				</div>
 				<div class="panel-body">
 
@@ -177,7 +177,8 @@ input[ type=text ]{
 
 					<div class="form-group">
 
-						{!! Form::submit('Update',  array('class'=>'btn btn-success ','disabled' => 'disabled')) !!}
+
+						{!! Form::submit('Update',  array('class'=>'btn btn-success ')) !!}
 					</div>
 					{!! Form::close() !!}
 				</div>
