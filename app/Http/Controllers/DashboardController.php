@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Complex;
+use App\Note;
 use App\Property;
 use App\Street;
 use App\User;
@@ -28,7 +29,24 @@ class DashboardController extends Controller
 
     public function todo()
     {
-        dd("follow up - dashboard controller");
+
+        $now = \Carbon\Carbon::now('Africa/Johannesburg')->subWeeks(1)->toDateTimeString();
+        //$now->subWeeks(1);
+        // set database
+        $database = Auth::user()->getDatabase();
+
+        //change database
+        $note = new Note;
+        $note->changeConnection($database);
+
+        $followups = Note::on($database)->select('*')->where('followup', '>=', $now)->get();
+
+        foreach ($followups as $followup) {
+            echo $followup->followup . "<br>";
+            echo $followup->strKey . "<br>";
+            echo $followup->memNotes . "<br><br>";
+        }
+        dd($followups, "follow up - dashboard controller");
     }
 
     /**
