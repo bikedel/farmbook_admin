@@ -39,9 +39,14 @@
 						<ul class="list-group">
 
 							@foreach($logs as $log)
-
-						     	<a href="{{url($links[$i])}}" class="list-group-item">   {{$times[$i]}}  -   {{$log}}</a>
-
+							<div class="row">
+             <div class="col-sm-8">
+						     	<a href="{{url($links[$i])}}" class="list-group-item">   {{$log}}</a>
+ </div>
+ <div class="col-sm-4">
+<a href="{{url($links[$i])}}" class="list-group-item">   {{$times[$i]}} </a>
+   </div>
+   </div>
 						    	<div class='hidden'>
 						          {{$i++}}
 				            	</div>
