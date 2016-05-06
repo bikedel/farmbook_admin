@@ -6,8 +6,8 @@
 # https://github.com/sequelpro/sequelpro
 #
 # Host: 127.0.0.1 (MySQL 5.5.42)
-# Database: junk
-# Generation Time: 2016-03-29 10:45:32 +0000
+# Database: dummy
+# Generation Time: 2016-05-06 13:49:55 +0000
 # ************************************************************
 
 
@@ -45,6 +45,7 @@ CREATE TABLE `notes` (
   `numErf` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `strKey` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `memNotes` text COLLATE utf8_unicode_ci NOT NULL,
+  `followup` date DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),

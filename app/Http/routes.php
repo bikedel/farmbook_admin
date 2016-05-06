@@ -132,6 +132,9 @@ Route::group(['middleware' => 'web'], function () {
     //dashboard
     Route::get('dash', 'DashboardController@index');
 
+    //todo - follow ups
+    Route::get('todo', 'DashboardController@todo');
+
     // rubish
     Route::get('/farmbook', 'FarmbookController@index');
     Route::get('/settings', 'SettingsController@index');

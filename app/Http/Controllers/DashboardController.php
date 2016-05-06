@@ -24,6 +24,13 @@ class DashboardController extends Controller
         $this->middleware('auth');
     }
 
+// todo - search database for upcoming actions
+
+    public function todo()
+    {
+        dd("follow up - dashboard controller");
+    }
+
     /**
      * Show the application dashboard.
      *
