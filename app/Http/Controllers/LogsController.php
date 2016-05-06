@@ -80,15 +80,67 @@ $chart3 = Lava::GaugeChart('Temps', $junkTable, [
     }
 
     /**
-     * Show the form for creating a new resource.
+     *
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function listlogs()
     {
-        //
-    }
 
+        $directory             = storage_path('updates/tmp');
+        $destination_directory = public_path();
+        $files                 = File::allFiles($directory);
+        //dd($directory, $files, "you got here - list update logs");
+
+        $logs  = array();
+        $times = array();
+        $links = array();
+
+        foreach ($files as $file) {
+            if ($file->getExtension() == "log") {
+
+                //echo (string) $file->getPathname(), "<br>";
+                $filename = $file->getFilename();
+                $path     = $file->getrealPath();
+                //$path = $file->getPathname();
+
+                $time = date("F j, Y, g:i a", $file->getCtime());
+
+                //filename
+                array_push($logs, $filename);
+                //time and date of update
+                array_push($times, $time);
+                // link
+                // array_push($links, $filename);
+
+                //   $exists  = Storage::exists($directory . $filename);
+                //  $exists2 = Storage::exists('/storage/updates/tmp/' . $filename);
+
+                //     dd($exists, $exists2, $file, $path);
+                //    Storage::copy($directory . $filename, url($filename));
+
+                $file_path = storage_path() . '/updates/tmp/' . $filename;
+
+                $destination = $destination_directory . '/' . $filename;
+
+                $t = "http://localhost/laravel/farmbook_admin/storgae/updates/tmp/" . $filename;
+
+                if (file_exists($file_path)) {
+                    File::copy($file_path, $destination);
+                    //   $entry->mime = $file->getClientMimeType();
+
+                } else {
+                    // dd("not found");
+
+                }
+
+                array_push($links, $filename);
+
+            }
+        }
+
+        return view('updatelogs', compact('logs', 'times', 'links'));
+    }
     /**
      * Store a newly created resource in storage.
      *

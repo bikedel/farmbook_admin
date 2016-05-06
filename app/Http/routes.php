@@ -118,6 +118,9 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/logs', 'LogsController@index');
     Route::get('/deletelogs', 'LogsController@destroy');
 
+    //update logs
+    Route::get('/listlogs', 'LogsController@listlogs');
+
     // datatables
     Route::controller('datatables', 'DatatablesController', [
         'anyData'  => 'datatables.data',
