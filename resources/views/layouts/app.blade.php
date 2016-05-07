@@ -150,6 +150,7 @@
                     <li><a href="{{ url('/home') }}"> <i class=""> <span class=" users     glyphicon glyphicon-th"> </span></i>by Complex</a></li>
                     <li><a href="{{ url('/home') }}"> <i class=""> <span class=" admin     glyphicon glyphicon-home"> </span></i>by Erf</a></li>
                     <li><a href="{{ url('/home') }}"> <i class=""> <span class=" owner     glyphicon glyphicon-user"> </span></i>by Owner</a></li>
+                    <li><a href="{{ url('/todo') }}"> <i class=""> <span class=" fa     glyphicon glyphicon-phone-alt"> </span></i>Followup Dates</a></li>
                 </ul>
             </li>
 
