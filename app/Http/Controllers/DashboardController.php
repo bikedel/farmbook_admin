@@ -30,6 +30,7 @@ class DashboardController extends Controller
     public function todo()
     {
 
+        // get all note with a follow up date TODAY - 1 WEEK
         $now = \Carbon\Carbon::now('Africa/Johannesburg')->subWeeks(1)->toDateTimeString();
         //$now->subWeeks(1);
         // set database
@@ -39,14 +40,27 @@ class DashboardController extends Controller
         $note = new Note;
         $note->changeConnection($database);
 
-        $followups = Note::on($database)->select('*')->where('followup', '>=', $now)->get();
+        $followups = Note::on($database)->select('*')->where('followup', '>=', $now)->orderBy('followup')->get();
 
+        $owners = array();
+
+        // loop all notes with date > today
         foreach ($followups as $followup) {
-            echo $followup->followup . "<br>";
-            echo $followup->strKey . "<br>";
-            echo $followup->memNotes . "<br><br>";
+
+            for ($x = 0; $x < $followup->properties->count(); $x++) {
+                $detail = ['id' => $followup->properties[$x]->id,
+                    'strKey'        => $followup->properties[$x]->strKey,
+                    'strOwners'     => $followup->properties[$x]->strOwners,
+                    'memNotes'      => $followup->memNotes,
+                    'followup'      => $followup->followup];
+
+                array_push($owners, $detail);
+            }
         }
-        dd($followups, "follow up - dashboard controller");
+        // dd($followups, "follow up - dashboard controller");
+        //dd($owners);
+        return view('followups', compact('followups', 'owners'));
+
     }
 
     /**

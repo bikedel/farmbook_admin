@@ -127,7 +127,7 @@
                 </button>
 
                 <!-- Branding Image -->
-                <a class="navbar-brand" href="{{url('/')}}"> <span class="glyphicon glyphicon-grain"></span>
+                <a class="navbar-brand" href="{{url('/todo')}}"> <span class="glyphicon glyphicon-grain"></span>
                     ProteaDB
                 </a>
             </div>
