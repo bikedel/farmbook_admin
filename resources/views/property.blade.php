@@ -229,7 +229,7 @@ width: 200px;
                 <td ><textarea  rows="6" cols="160" name="newnote"></textarea></td>
               </tr>
               <tr>
-                <td class='tlabel' >Follow up Date</td>
+                <td class='tlabel' >Followup Date</td>
                 <td >
                   {{Form::date('followup',$property->note->followup )}}
                 </tr>
