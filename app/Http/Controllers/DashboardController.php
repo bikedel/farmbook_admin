@@ -99,10 +99,10 @@ class DashboardController extends Controller
 
                 // check it has the farmbook2 ext
 
-                $found = strpos($database, 'farmmbook2');
+                $found = strpos($database, 'farmbook2');
 
                 echo "<br> ------------------------------------------------------------------" . "<br>";
-                if ($found > 0) {
+                if ($found == 0) {
                     echo "** ALERT **  Database has not got correct naming convention - farmbook2" . " <br>";
                 }
                 echo $x . ". " . $farmbooks[$x]->database . " <br>";
