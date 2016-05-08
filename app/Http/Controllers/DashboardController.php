@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Complex;
+use App\Farmbook;
 use App\Note;
 use App\Property;
 use App\Street;
@@ -61,6 +62,17 @@ class DashboardController extends Controller
         //dd($owners);
         return view('followups', compact('followups', 'owners'));
 
+    }
+
+    public function glob()
+    {
+
+        $farmbooks = Farmbook::orderBy('name')->get();
+
+        for ($x = 0; $x < $farmbooks->count(); $x++) {
+            echo $farmbooks[$x]->database . "<br>";
+        }
+        dd("The End");
     }
 
     /**
