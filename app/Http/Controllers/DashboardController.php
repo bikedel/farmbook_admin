@@ -71,7 +71,7 @@ class DashboardController extends Controller
 
         for ($x = 0; $x < $farmbooks->count(); $x++) {
             echo "<br> ------------------------------------------------------------------" . "<br>";
-            echo $farmbooks[$x]->database . "<br>";
+            echo $x . ". " . $farmbooks[$x]->database . "<br>";
             echo " ------------------------------------------------------------------" . "<br>";
             $users = $farmbooks[$x]->users;
             foreach ($users as $user) {
