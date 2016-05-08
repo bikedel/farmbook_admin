@@ -157,7 +157,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         Yajra\Datatables\DatatablesServiceProvider::class,
         Khill\Lavacharts\Laravel\LavachartsServiceProvider::class,
-        Intervention\Image\ImageServiceProvider::class,
+
     ],
 
     /*
@@ -206,7 +206,7 @@ return [
         'Form'       => Collective\Html\FormFacade::class,
         'Html'       => Collective\Html\HtmlFacade::class,
         'Datatables' => Yajra\Datatables\Datatables::class,
-        'Image'      => Intervention\Image\Facades\Image::class,
+
     ],
 
 ];
