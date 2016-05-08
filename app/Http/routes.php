@@ -130,6 +130,10 @@ Route::group(['middleware' => 'web'], function () {
         'getIndex' => 'datatables',
     ]);
 
+    //image upload
+    Route::get('/image', 'ImagesController@index');
+    Route::post('/uploadimage', 'ImagesController@upload');
+
     Route::resource('prop', 'DatatablesController');
 
     //dashboard
