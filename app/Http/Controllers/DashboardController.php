@@ -85,7 +85,11 @@ class DashboardController extends Controller
                 $lastdate = Property::on($database)->select('dtmRegDate')->orderBy('dtmRegDate', 'desc')->first();
 
             } catch (Exception $ex) {
-                echo "PROBLEM with " . $database . " " . $ex->getMessage() . "<br>";
+                echo "<br> ------------------------------------------------------------------" . "<br>";
+                echo $x . ". " . $farmbooks[$x]->database . " <br>";
+                echo " **  PROBLEM **  " . $ex->getMessage() . "<br>";
+                echo " ------------------------------------------------------------------" . "<br>";
+
                 $error = 1;
                 //dd();
             }
@@ -95,7 +99,7 @@ class DashboardController extends Controller
 
                 echo "<br> ------------------------------------------------------------------" . "<br>";
                 echo $x . ". " . $farmbooks[$x]->database . " <br>";
-                echo " ____Last dtmRegDate = " . $lastdate->dtmRegDate . " <br>";
+                echo " - " . $lastdate->dtmRegDate . " <-  Last Registration  " . " <br>";
                 echo " ------------------------------------------------------------------" . "<br>";
                 $users = $farmbooks[$x]->users;
                 foreach ($users as $user) {
