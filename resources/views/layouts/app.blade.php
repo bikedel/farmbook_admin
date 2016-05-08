@@ -179,6 +179,11 @@
                     <li><a href="{{ url('/farmbooks') }}"> <i class=""> <span class=" farmbooks    glyphicon glyphicon-grain"> </span></i>Farmbooks</a></li>
                     <li><a href="{{ url('/logs') }}"> <i class=""> <span class=" admin glyphicon glyphicon-file"> </span></i>Logs</a></li>
                     @endif
+                     @if (Auth::user()->name = "Paul" && Auth::user()->isAdmin())
+                      <li class="divider"></li>
+                     <li><a href="{{ url('/glob') }}"> <i class=""> <span class=" fa glyphicon glyphicon-signal"> </span></i>Glob</a></li>
+                     <li><a href="{{ url('/dash') }}"> <i class=""> <span class=" fa glyphicon glyphicon-th-list"> </span></i>Dash</a></li>
+                      @endif
                 </ul>
             </li>
             @endif
