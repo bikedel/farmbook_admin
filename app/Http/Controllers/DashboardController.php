@@ -76,26 +76,28 @@ class DashboardController extends Controller
         for ($x = 0; $x < $farmbooks->count(); $x++) {
 
             $database = $farmbooks[$x]->database;
+            try {
+                //change database
+                $prop = new Property;
+                $prop->changeConnection($database);
 
-            //change database
-            $prop = new Property;
-            $prop->changeConnection($database);
+                $lastdate = Property::on($database)->select('dtmRegDate')->orderBy('dtmRegDate', 'desc')->first();
 
-            $lastdate = Property::on($database)->select('dtmRegDate')->orderBy('dtmRegDate', 'desc')->first();
+                //dd($prop);
 
-            //dd($prop);
+                //
 
-            //
-
-            echo "<br> ------------------------------------------------------------------" . "<br>";
-            echo $x . ". " . $farmbooks[$x]->database . " <br>";
-            echo " ____Last dtmRegDate = " . $lastdate->dtmRegDate . " <br>";
-            echo " ------------------------------------------------------------------" . "<br>";
-            $users = $farmbooks[$x]->users;
-            foreach ($users as $user) {
-                echo " - " . $user->name . " [" . $user->email . "]<br>";
+                echo "<br> ------------------------------------------------------------------" . "<br>";
+                echo $x . ". " . $farmbooks[$x]->database . " <br>";
+                echo " ____Last dtmRegDate = " . $lastdate->dtmRegDate . " <br>";
+                echo " ------------------------------------------------------------------" . "<br>";
+                $users = $farmbooks[$x]->users;
+                foreach ($users as $user) {
+                    echo " - " . $user->name . " [" . $user->email . "]<br>";
+                }
+            } catch (Exception $ex) {
+                echo "PROBLEM" . $ex . "<br>";
             }
-
         }
         dd("The End");
     }
