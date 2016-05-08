@@ -11,6 +11,7 @@ use App\User;
 use Auth;
 use Carbon\Carbon;
 use DB;
+use Exception;
 use Lava;
 
 class DashboardController extends Controller
@@ -74,7 +75,7 @@ class DashboardController extends Controller
         echo $nousers->count() . " = " . "Users" . "</b><br>";
 
         for ($x = 0; $x < $farmbooks->count(); $x++) {
-
+            $error    = 0;
             $database = $farmbooks[$x]->database;
             try {
                 //change database
@@ -83,9 +84,14 @@ class DashboardController extends Controller
 
                 $lastdate = Property::on($database)->select('dtmRegDate')->orderBy('dtmRegDate', 'desc')->first();
 
-                //dd($prop);
+            } catch (Exception $ex) {
+                echo "PROBLEM with " . $database . " " . $ex->getMessage() . "<br>";
+                $error = 1;
+                //dd();
+            }
+            //dd($prop);
 
-                //
+            if ($error == 0) {
 
                 echo "<br> ------------------------------------------------------------------" . "<br>";
                 echo $x . ". " . $farmbooks[$x]->database . " <br>";
@@ -95,9 +101,8 @@ class DashboardController extends Controller
                 foreach ($users as $user) {
                     echo " - " . $user->name . " [" . $user->email . "]<br>";
                 }
-            } catch (Exception $ex) {
-                echo "PROBLEM" . $ex . "<br>";
             }
+
         }
         dd("The End");
     }
