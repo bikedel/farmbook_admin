@@ -181,8 +181,9 @@
                     @endif
                      @if (Auth::user()->name = "Paul" && Auth::user()->isAdmin())
                       <li class="divider"></li>
-                     <li><a href="{{ url('/glob') }}"> <i class=""> <span class=" fa glyphicon glyphicon-signal"> </span></i>Glob</a></li>
-                     <li><a href="{{ url('/dash') }}"> <i class=""> <span class=" fa glyphicon glyphicon-th-list"> </span></i>Dash</a></li>
+                     <li><a href="{{ url('/glob') }}"> <i class=""> <span class=" fa glyphicon glyphicon-signal"> </span></i>Global Usage</a></li>
+                     <li><a href="{{ url('/dash') }}"> <i class=""> <span class=" fa glyphicon glyphicon-th-list"> </span></i>Dashboard</a></li>
+                     <li><a href="{{ url('/listlogs') }}"> <i class=""> <span class=" fa glyphicon glyphicon-tasks"> </span></i>Update Logs</a></li>
                       @endif
                 </ul>
             </li>
