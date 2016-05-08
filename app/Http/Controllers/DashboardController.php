@@ -68,6 +68,9 @@ class DashboardController extends Controller
     {
 
         $farmbooks = Farmbook::orderBy('name')->get();
+        $nousers   = User::orderBy('name')->get();
+        echo "<b><br>" . $farmbooks->count() . " = " . "Farmbooks" . "<br>";
+        echo $nousers->count() . " = " . "Users" . "</b><br>";
 
         for ($x = 0; $x < $farmbooks->count(); $x++) {
             echo "<br> ------------------------------------------------------------------" . "<br>";
