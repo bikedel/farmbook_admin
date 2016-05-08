@@ -64,6 +64,7 @@ class DashboardController extends Controller
 
     }
 
+    // loop through all database
     public function glob()
     {
 
@@ -73,8 +74,22 @@ class DashboardController extends Controller
         echo $nousers->count() . " = " . "Users" . "</b><br>";
 
         for ($x = 0; $x < $farmbooks->count(); $x++) {
+
+            $database = $farmbooks[$x]->database;
+
+            //change database
+            $prop = new Property;
+            $prop->changeConnection($database);
+
+            $lastdate = Property::on($database)->select('dtmRegDate')->orderBy('dtmRegDate', 'desc')->first();
+
+            //dd($prop);
+
+            //
+
             echo "<br> ------------------------------------------------------------------" . "<br>";
-            echo $x . ". " . $farmbooks[$x]->database . "<br>";
+            echo $x . ". " . $farmbooks[$x]->database . " <br>";
+            echo " ____Last dtmRegDate = " . $lastdate->dtmRegDate . " <br>";
             echo " ------------------------------------------------------------------" . "<br>";
             $users = $farmbooks[$x]->users;
             foreach ($users as $user) {
