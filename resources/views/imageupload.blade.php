@@ -70,6 +70,7 @@ margin-right: 6px;
                   <h2>{!! Session::get('success') !!}</h2>
                 </div>
                 @endif
+
                 <div class="secure">Upload form</div>
                 {!! Form::open(array('url'=>'uploadimage','method'=>'POST', 'files'=>true)) !!}
                 <div class="control-group">
