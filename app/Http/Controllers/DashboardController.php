@@ -70,7 +70,14 @@ class DashboardController extends Controller
         $farmbooks = Farmbook::orderBy('name')->get();
 
         for ($x = 0; $x < $farmbooks->count(); $x++) {
+            echo "<br> ------------------------------------------------------------------" . "<br>";
             echo $farmbooks[$x]->database . "<br>";
+            echo " ------------------------------------------------------------------" . "<br>";
+            $users = $farmbooks[$x]->users;
+            foreach ($users as $user) {
+                echo " - " . $user->name . " [" . $user->email . "]<br>";
+            }
+
         }
         dd("The End");
     }
