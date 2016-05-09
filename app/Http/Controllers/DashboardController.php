@@ -173,7 +173,7 @@ class DashboardController extends Controller
                     //  echo " ------------------------------------------------------------------" . "<br>";
                     // $users = $farmbooks[$x]->users;
                     foreach ($owners as $owner) {
-                        echo " ---  " . $owner->strOwners . " " . $owner->strIdentity . " <br>";
+                        echo " ---  " . $owner->strOwners . " | " . $owner->strIdentity . " | " . $owner->strStreetName . " | " . $owner->strComplexName . " | " . $owner->strKey . " <br>";
                     }
 
                 }
