@@ -11,6 +11,7 @@ use Illuminate\Support\MessageBag;
 use Input;
 use Redirect;
 use Session;
+use Storage;
 
 class UserController extends Controller
 {
@@ -120,6 +121,16 @@ class UserController extends Controller
 
         $currentuser->farmbook = $farmbooks[0];
         $currentuser->save();
+
+        $dbname = Farmbook::select('name')->where('id', $currentuser->farmbook)->first();
+
+        //log
+        $action  = 'Changed Farmbook';
+        $comment = $dbname->name;
+        $email   = $currentuser->email;
+        $append  = \Carbon\Carbon::now('Africa/Johannesburg')->toDateTimeString() . ',          ' . trim($email) . ',          ' . $action . ',' . $comment;
+        Storage::append('logfile.txt', $append);
+
         Session::flash('flash_message', 'Farmbook changed. ' . $now);
         Session::flash('flash_type', 'alert-success');
         return Redirect::back();
