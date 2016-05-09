@@ -119,14 +119,17 @@ class UserController extends Controller
         $id          = Auth::user()->id;
         $currentuser = User::find($id);
 
+        $oldfarmbook = $currentuser->farmbook;
+
         $currentuser->farmbook = $farmbooks[0];
         $currentuser->save();
 
-        $dbname = Farmbook::select('name')->where('id', $currentuser->farmbook)->first();
+        $olddbname = Farmbook::select('name')->where('id', $oldfarmbook)->first();
+        $dbname    = Farmbook::select('name')->where('id', $currentuser->farmbook)->first();
 
         //log
-        $action  = 'Changed Farmbook';
-        $comment = $dbname->name;
+        $action  = 'Changed Farmbook from';
+        $comment = $olddbname->name . " to " . $dbname->name;
         $email   = $currentuser->email;
         $append  = \Carbon\Carbon::now('Africa/Johannesburg')->toDateTimeString() . ',          ' . trim($email) . ',          ' . $action . ',' . $comment;
         Storage::append('logfile.txt', $append);
