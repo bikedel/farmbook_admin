@@ -12,6 +12,7 @@ use Auth;
 use Carbon\Carbon;
 use DB;
 use Exception;
+use Illuminate\Http\Request;
 use Lava;
 
 class DashboardController extends Controller
@@ -111,6 +112,70 @@ class DashboardController extends Controller
                 $users = $farmbooks[$x]->users;
                 foreach ($users as $user) {
                     echo " - " . $user->name . " [" . $user->email . "]<br>";
+                }
+            }
+
+        }
+        dd("The End");
+    }
+
+    public function Search()
+    {
+        return view('globalsearch');
+    }
+
+    // loop through all database
+    public function globSearch(Request $request)
+    {
+
+        $surname = $request->input('surname');
+
+        //  dd("global search - dashboard controller", $surname);
+        $farmbooks = Farmbook::orderBy('name')->get();
+        $nousers   = User::orderBy('name')->get();
+        echo "Search for owners with surname like  [ " . $surname . " ]<br><br>";
+
+        for ($x = 0; $x < $farmbooks->count(); $x++) {
+            $error    = 0;
+            $database = $farmbooks[$x]->database;
+            try {
+                //change database
+                $prop = new Property;
+                $prop->changeConnection($database);
+
+                $lastdate = Property::on($database)->select('dtmRegDate')->orderBy('dtmRegDate', 'desc')->first();
+                $owners   = Property::on($database)->select('*')->where('strOwners', 'like', '%' . $surname . '%')->get();
+            } catch (Exception $ex) {
+                //   echo "<br> ------------------------------------------------------------------" . "<br>";
+                //   echo $x . ". " . $farmbooks[$x]->database . " <br>";
+                //   echo " **  PROBLEM **  " . $ex->getMessage() . "<br>";
+                //   echo " ------------------------------------------------------------------" . "<br>";
+
+                $error = 1;
+                //dd();
+            }
+            //dd($prop);
+
+            if ($error == 0) {
+
+                // check it has the farmbook2 ext
+
+                $found = strpos($database, 'farmbook2');
+
+                //   echo "<br> ------------------------------------------------------------------" . "<br>";
+                //  if ($found == 0) {
+                //      echo "** ALERT **  Database has not got correct naming convention - farmbook2" . " <br>";
+                //  }
+
+                if ($owners->count() > 0) {
+                    echo "<br>" . $x . ". " . $farmbooks[$x]->database . " <br>";
+                    echo "---------------------------------------------" . " <br><br>";
+                    //  echo " ------------------------------------------------------------------" . "<br>";
+                    // $users = $farmbooks[$x]->users;
+                    foreach ($owners as $owner) {
+                        echo " ---  " . $owner->strOwners . " " . $owner->strIdentity . " <br>";
+                    }
+
                 }
             }
 

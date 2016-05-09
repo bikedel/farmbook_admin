@@ -100,8 +100,12 @@ Route::group(['middleware' => 'web'], function () {
     Route::post('/farmbook/{id}', 'FarmbookController@store');
     Route::post('/farmbookdelete/{id}', 'FarmbookController@delete');
 
-    // global actions
+    // global - farmbooks and users
     Route::get('glob', 'DashboardController@glob');
+
+    //global search
+    Route::get('/globalsearch', 'DashboardController@Search');
+    Route::post('/globalsearch', 'DashboardController@globSearch');
 
     //import
     Route::get('/import', 'CsvImportController@index');
