@@ -231,7 +231,7 @@ width: 200px;
               <tr>
                 <td class='tlabel' >Followup Date</td>
                 <td >
-                  {{Form::date('followup',$property->note->followup )}}
+                  {{Form::date('followup',$property->note->followup )}} If no calendar use date format YYYY-MM-DD.
                 </tr>
               </table>
               @endforeach
