@@ -179,7 +179,7 @@
                     <li><a href="{{ url('/farmbooks') }}"> <i class=""> <span class=" farmbooks    glyphicon glyphicon-grain"> </span></i>Farmbooks</a></li>
                     <li><a href="{{ url('/logs') }}"> <i class=""> <span class=" admin glyphicon glyphicon-file"> </span></i>Logs</a></li>
                     @endif
-                     @if (Auth::user()->name = "Paul" && Auth::user()->isAdmin())
+                     @if (Auth::user()->name == "Paul" && Auth::user()->isAdmin())
                       <li class="divider"></li>
                     <li><a href="{{ url('/globalsearch') }}"> <i class=""> <span class=" fa glyphicon glyphicon-user"> </span></i>Global Surname</a></li>
                      <li><a href="{{ url('/glob') }}"> <i class=""> <span class=" fa glyphicon glyphicon-signal"> </span></i>Global Usage</a></li>
