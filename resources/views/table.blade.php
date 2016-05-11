@@ -90,7 +90,7 @@ table.dataTable thead .sorting_desc:after {
   <div class="row">
 
     <div class="panel panel-primary">
-      <div class="panel-heading">All Properties</div>
+      <div class="panel-heading">All Properties </div>
 
       <div class="panel-body">
 
@@ -220,7 +220,7 @@ $(function() {
   searching: true,
   processing: true,
   bProcessing:true,
-  serverSide: false,
+  serverSide: true,
   select: true,
   scrollX: '100%',
   responsive: true,
