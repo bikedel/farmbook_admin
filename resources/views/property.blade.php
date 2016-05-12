@@ -100,6 +100,9 @@ width: 200px;
     <div class="col-md-10 col-md-offset-1">
       <div>
         {{ link_to(url('/home'), 'Back to Search', ['class' => 'btn btn-default']) }}
+        {{ link_to(url('/todo'), 'Back to Follow Ups', ['class' => 'btn btn-default']) }}
+
+
         @if (isset($page) && $page > 0)
         {{ link_to(url($url), 'Selected', ['class' => 'btn btn-default']) }}
         @endif
@@ -238,6 +241,7 @@ width: 200px;
               <div class='backsearch'>
                 <br>
                 {{ link_to(url('/home'), 'Back to Search', ['class' => ' btn btn-default']) }}
+                {{ link_to(url('/todo'), 'Back to Follow Ups', ['class' => 'btn btn-default']) }}
               </div>
               <div class=' update'>
                 <br>
