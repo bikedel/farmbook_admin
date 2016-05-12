@@ -141,6 +141,14 @@ class UpdateController extends Controller
 
         File::put($logfilename, '');
 
+        // check latest regDate in properties and delete old updates
+        $propDate = Property::on($database)->orderBy('dtmRegDate', 'desc')->first();
+
+        Update::on($database)->where('dtmRegDate', '<=', $propDate['dtmRegDate'])->delete();
+
+        $echo = "last dtmRegDate in properties = " . $propDate['dtmRegDate'];
+        File::append($logfilename, $echo . "\r\n");
+
         // get all update records
         //
         $updates = Update::on($database)->orderBy('strKey')->orderBy(DB::raw("STR_TO_DATE(dtmRegDate, '%Y-%m-%d')"))->get();
