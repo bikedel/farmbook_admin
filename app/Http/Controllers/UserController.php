@@ -58,7 +58,7 @@ class UserController extends Controller
         $user_farmbooks = array_pluck($user_farmbooks, 'id');
 
         // get all farmbooks
-        $farmbooks = Farmbook::lists('name', 'id');
+        $farmbooks = Farmbook::orderBy('name')->lists('name', 'id');
 
 //dd($users ,$user_farmbooks,$farmbooks );
         return view('edituser', compact('users', 'farmbooks', 'user_farmbooks'));
@@ -93,7 +93,7 @@ class UserController extends Controller
      */
     public function listFarmbooks()
     {
-        $id = Auth::user()->farmbooks()->get();
+        $id = Auth::user()->farmbooks()->orderBy('name')->get();
         // dd($id);
 
         $default = Auth::user()->farmbook;
