@@ -10,25 +10,25 @@ body {
 
   color:#000000;
   font-weight: 900;
-  border-style: none; 
-  border-color: Transparent; 
+  border-style: none;
+  border-color: Transparent;
   background-color: #f2f2f2
 
 }
-textarea{ 
-  border-style: none; 
-  border-color: Transparent; 
+textarea{
+  border-style: none;
+  border-color: Transparent;
   padding:0;
-  overflow: auto; 
+  overflow: auto;
   width: 100%;
   -webkit-box-sizing: border-box; /* <=iOS4, <= Android  2.3 */
   -moz-box-sizing: border-box; /* FF1+ */
-  box-sizing: border-box; /* Chrome, IE8, Opera, Safari 5.1*/   
+  box-sizing: border-box; /* Chrome, IE8, Opera, Safari 5.1*/
 }
 
-input[ type=text ]{ 
-  border-style: none; 
-  border-color: Transparent; 
+input[ type=text ]{
+  border-style: none;
+  border-color: Transparent;
   padding:5;
 
   width: 100%;
@@ -54,7 +54,7 @@ input[ type=text ]{
 }
 
 .id {
-  border-color: Transparent; 
+  border-color: Transparent;
   border:none;
 }
 .fa-btn {
@@ -89,9 +89,9 @@ input[ type=text ]{
         @endif
         <div class="panel-body">
 
-       
 
-     
+
+
 
 
           <div class='property'>
@@ -111,17 +111,17 @@ input[ type=text ]{
                 <td class='tlabel' width="120">Database </td>
                 <td > <input type="text" name="database" value="{{ $farm->database  }}" ></td>
               </tr>
+
+
               <tr>
-                <td class='tlabel' width="120">Type </td>
-                <td>{!! Form::select('type',[0,1,2,3], $farm->type, ['class'=> 'form-control col-md-6', 'id'=>'type']) !!}</td>
-             
+                <td class='tlabel' width="120">Deed Suburbs </td>
+                <td>{!! Form::select('suburbs[]',$suburbs, $suburb_farmbooks, ['class'=> 'form-control col-md-6', 'multiple'=>'multiple','id'=>'suburbs']) !!}</td>
+
               </tr>
-
-
 
             </table>
 
-          
+
 
             <div class=' update'>
               <br>
@@ -129,8 +129,8 @@ input[ type=text ]{
 
 
 
-              {{Form::submit('Update', array('class' => 'btn btn-danger update')) }} 
-              {{ Form::close() }}   
+              {{Form::submit('Update', array('class' => 'btn btn-danger update')) }}
+              {{ Form::close() }}
 
   @endforeach
 
@@ -145,8 +145,8 @@ input[ type=text ]{
 
 
   {{ Form::open(array('method' =>'GET','url'=>'/farmbooks/')) }}
-      {{Form::submit('Back', array('class' => 'btn btn-default back')) }} 
-      {{ Form::close() }}  
+      {{Form::submit('Back', array('class' => 'btn btn-default back')) }}
+      {{ Form::close() }}
 
     </div>
   </div>
@@ -162,8 +162,10 @@ input[ type=text ]{
 
 $(document).on("ready page:load", function() {
   setTimeout(function() { $(".alert").fadeOut(); }, 4000);
-
+       $('#suburbs').select2();
 });
+
+
 
 
 

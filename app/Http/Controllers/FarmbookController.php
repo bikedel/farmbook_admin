@@ -2,17 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests;
-use Illuminate\Http\Request;
-use App\Property;
-use App\Street;
-use App\Complex;
-use App\Owner;
-use Carbon;
 use App\Farmbook;
-use Session;
-use Redirect;
+use App\Suburb;
+use Carbon;
 use DB;
+use Illuminate\Http\Request;
+use Redirect;
+use Session;
 
 class FarmbookController extends Controller
 {
@@ -26,21 +22,20 @@ class FarmbookController extends Controller
         $this->middleware('auth');
     }
 
-   /**
+    /**
      * Show the application dashboard.
      *
      * @return \Illuminate\Http\Response
      */
-   public function index()
-   {
+    public function index()
+    {
 
-       // dd("user controller");
+        // dd("user controller");
 
-      $farmbooks =  Farmbook::orderBy('name')->get();
+        $farmbooks = Farmbook::orderBy('name')->get();
 
-
-      return view('farmbooks',compact('farmbooks'));
-  }
+        return view('farmbooks', compact('farmbooks'));
+    }
 
     /**
      * Show the application dashboard.
@@ -50,17 +45,20 @@ class FarmbookController extends Controller
     public function edit($id)
     {
 
-       // dd("user controller EDIT ",$id);
+        // dd("user controller EDIT ",$id);
 
-       $farmbooks =  Farmbook::where('id','=',$id)->get();
+        $farmbooks = Farmbook::where('id', '=', $id)->get();
+        $suburbs   = Suburb::lists('name', 'id');
 
+        // fetch suburbs associated with farmbook
+        $suburb_farmbooks = $farmbooks->first()->suburbs()->get();
 
+        $suburb_farmbooks = array_pluck($suburb_farmbooks, 'id');
 
-
-//dd($users ,$user_farmbooks,$farmbooks );
-       return view('editfarmbook',compact('farmbooks'));
-   }
-
+        // dd($suburb_farmbooks);
+        //dd($users ,$user_farmbooks,$farmbooks );
+        return view('editfarmbook', compact('farmbooks', 'suburbs', 'suburb_farmbooks'));
+    }
 
     /**
      * Show the application dashboard.
@@ -70,90 +68,79 @@ class FarmbookController extends Controller
     public function delete($id)
     {
 
-       // dd("user controller EDIT ",$id);
+        // dd("user controller EDIT ",$id);
 
+        $farmbooks = Farmbook::find($id);
 
-        $farmbooks =  Farmbook::find($id);
-
-
-   //  dd($farmbooks->database,$id);
+        //  dd($farmbooks->database,$id);
         $database = $farmbooks->database;
 
         $farmbooks->delete();
 
-
-
         $dbname = 'tmp';
 
-         // connect to tmp database
+        // connect to tmp database
         $otf = new \App\Database\OTF(['database' => $dbname]);
-        $db = DB::connection($dbname);
+        $db  = DB::connection($dbname);
 
-        $sql = "DROP DATABASE ".$database;
+        $sql = "DROP DATABASE " . $database;
 
-
-  //set created to false
+        //set created to false
         $created = false;
 
         try {
-    // delete database 
-          $db->getpdo()->exec(  $sql);
-          $created = true ;
+            // delete database
+            $db->getpdo()->exec($sql);
+            $created = true;
 
+        } catch (Exception $ex) {
 
-      } catch (Exception $ex) {
+            // dd( $ex->getMessage());
+            // error creating database
+            $message = $ex->getMessage();
+            Session::flash('flash_message', 'Error deleting ' . $message);
+            Session::flash('flash_type', 'alert-warning');
+            return Redirect::back();
+        }
 
-    // dd( $ex->getMessage());
-    // error creating database
-          $message =  $ex->getMessage();
-          Session::flash('flash_message', 'Error deleting '.$message);
-          Session::flash('flash_type', 'alert-warning');
-          return Redirect::back();
-      }
+        $now = Carbon\Carbon::now('Africa/Cairo')->toDateTimeString();
 
-
-
-
-
-
-      $now = Carbon\Carbon::now('Africa/Cairo')->toDateTimeString();
-
-
-      Session::flash('flash_message', 'Farmbook deleted '  . ' at '.$now);
-      Session::flash('flash_type', 'alert-success');
-      return Redirect::back();
-  }
-
-
+        Session::flash('flash_message', 'Farmbook deleted ' . ' at ' . $now);
+        Session::flash('flash_type', 'alert-success');
+        return Redirect::back();
+    }
 
     /**
      * Show the application dashboard.
      *
      * @return \Illuminate\Http\Response
      */
-    public function store( Request $request,$id)
+    public function store(Request $request, $id)
     {
 
+        // current timestamp
+        $now = Carbon\Carbon::now('Africa/Cairo')->toDateTimeString();
 
-     // current timestamp
-     $now = Carbon\Carbon::now('Africa/Cairo')->toDateTimeString();
+        // get inpute
+        $id       = $request->input('id');
+        $name     = $request->input('name');
+        $database = $request->input('database');
+        $suburbs  = $request->input('suburbs');
 
-     // get inpute
-     $id = $request->input('id');
-     $name = $request->input('name');
-     $database = $request->input('database');
-     $type = $request->input('type');
+        //dd($suburbs);
+        //$type     = $request->input('type');
 
+        Farmbook::where('id', $id)->update(array('name' => $name, 'database' => $database, 'updated_at' => $now));
 
-     Farmbook::where('id', $id)->update(array('name' => $name,'database' => $database, 'type' => $type, 'updated_at' => $now));
+        $farmbook = Farmbook::where('id', '=', $id)->first();
+        // store the deed suburbs
 
+        $farmbook->suburbs()->sync($suburbs);
 
-
-      //  dd("user controller Store ",$id,,$farmbooks);
-     Session::flash('flash_message', 'Updated '  .  $name  . ' at '.$now);
-     Session::flash('flash_type', 'alert-success');
-     return Redirect::back();
- }
-
+        //  dd("user controller Store ",$id,,$farmbooks);
+        Session::flash('flash_message', 'Updated ' . $name . ' at ' . $now);
+        Session::flash('flash_type', 'alert-success');
+        return Redirect::back();
+    }
 
 }

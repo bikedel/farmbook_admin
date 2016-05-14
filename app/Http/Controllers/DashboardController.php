@@ -84,7 +84,7 @@ class DashboardController extends Controller
                 $prop->changeConnection($database);
 
                 $lastdate = Property::on($database)->select('dtmRegDate')->orderBy('dtmRegDate', 'desc')->first();
-
+                // $hasnotes = Property::on($database)->select('dtmRegDate')->orderBy('dtmRegDate', 'desc')->first();
             } catch (Exception $ex) {
                 echo "<br> ------------------------------------------------------------------" . "<br>";
                 echo $x . ". " . $farmbooks[$x]->database . " <br>";
