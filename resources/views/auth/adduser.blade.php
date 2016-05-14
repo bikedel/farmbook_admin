@@ -42,7 +42,7 @@
                             <label class="col-md-4 control-label">Role</label>
 
                             <div class="col-md-6">
-                               
+
                                 {!! Form::select('admin', ['User','Admin'], [0], ['class' => 'form-control']) !!}
                                 @if ($errors->has('admin'))
                                     <span class="help-block">
@@ -56,7 +56,7 @@
                             <label class="col-md-4 control-label">Farmbooks</label>
 
                             <div class="col-md-6">
-                               
+
                                 {!! Form::select('farmbooks[]', $farmbooks,[0], ['multiple'=>'multiple','class'=> 'form-control col-md-6', 'id'=>'farmbooks']) !!}
                                 @if ($errors->has('farmbooks'))
                                     <span class="help-block">
@@ -70,7 +70,7 @@
 
                         <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
 
-                           
+
 
                             <label class="col-md-4 control-label">Password</label>
 
@@ -120,7 +120,9 @@
 
 
 $(document).ready(function(){
-    $('[data-toggle="tooltip"]').tooltip();   
+    $('[data-toggle="tooltip"]').tooltip();
+
+     $('#farmbooks').select2();
 });
 
 
@@ -168,7 +170,7 @@ $(document).ready(function(){
                         color = "orange";
                         break;
                     case 3:
- 
+
                     case 4:
                         strength = "Strong";
                         color = "green";
@@ -183,7 +185,3 @@ $(document).ready(function(){
             });
         });
     </script>
-
-
-
-

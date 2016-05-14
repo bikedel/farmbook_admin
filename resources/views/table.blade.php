@@ -85,7 +85,7 @@ table.dataTable thead .sorting_desc:after {
 
 
 </style>
-
+<script src="//code.jquery.com/jquery.js"></script>
 <div class="container">
   <div class="row">
 

@@ -10,25 +10,25 @@ body {
 
   color:#000000;
   font-weight: 900;
-  border-style: none; 
-  border-color: Transparent; 
+  border-style: none;
+  border-color: Transparent;
   background-color: #f2f2f2
 
 }
-textarea{ 
-  border-style: none; 
-  border-color: Transparent; 
+textarea{
+  border-style: none;
+  border-color: Transparent;
   padding:0;
-  overflow: auto; 
+  overflow: auto;
   width: 100%;
   -webkit-box-sizing: border-box; /* <=iOS4, <= Android  2.3 */
   -moz-box-sizing: border-box; /* FF1+ */
-  box-sizing: border-box; /* Chrome, IE8, Opera, Safari 5.1*/   
+  box-sizing: border-box; /* Chrome, IE8, Opera, Safari 5.1*/
 }
 
-input[ type=text ]{ 
-  border-style: none; 
-  border-color: Transparent; 
+input[ type=text ]{
+  border-style: none;
+  border-color: Transparent;
   padding:5;
 
   width: 100%;
@@ -54,7 +54,7 @@ input[ type=text ]{
 }
 
 .id {
-  border-color: Transparent; 
+  border-color: Transparent;
   border:none;
 }
 .fa-btn {
@@ -122,13 +122,12 @@ input[ type=text ]{
 
               <tr>
                 <td class='tlabel' width="100">Farmbooks</td>
-                <td> {!! Form::select('getfarmbook[]', $farmbooks,$user_farmbooks, ['multiple'=>'multiple','class'=> 'form-control col-md-6', 'id'=>'farmbooks']) !!}</td>
+                <td> {!! Form::select('getfarmbook[]', $farmbooks,$user_farmbooks, ['multiple'=>'multiple','class'=> 'sel2 form-control col-md-6', 'id'=>'getfarmbook']) !!}</td>
               </tr>
               <tr>
                 <td class='tlabel' width="100"></td>
                 <td> {!! Form::select('default', $farmbooks,$user_farmbooks, ['class'=> 'form-control col-md-6 hidden', 'id'=>'default', 'readonly' => 'true', 'hidden' => 'true']) !!}</td>
               </tr>
-
 
 
             </table>
@@ -141,8 +140,8 @@ input[ type=text ]{
 
 
 
-              {{Form::submit('Update', array('class' => 'btn btn-danger update')) }} 
-              {{ Form::close() }}   
+              {{Form::submit('Update', array('class' => 'btn btn-danger update')) }}
+              {{ Form::close() }}
 
               @endforeach
 
@@ -157,8 +156,8 @@ input[ type=text ]{
 
 
       {{ Form::open(array('method' =>'GET','url'=>'/users/')) }}
-      {{Form::submit('Back', array('class' => 'btn btn-default back')) }} 
-      {{ Form::close() }}  
+      {{Form::submit('Back', array('class' => 'btn btn-default back')) }}
+      {{ Form::close() }}
 
     </div>
   </div>
@@ -167,15 +166,26 @@ input[ type=text ]{
 
 
 
-  <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+  <script src="//code.jquery.com/jquery.js"></script>
+
   <script >
 
 
 
-  $(document).on("ready page:load", function() {
+   $( document ).ready(function() {
+
+
+
+
     setTimeout(function() { $(".alert").fadeOut(); }, 4000);
 
+
+        $('#getfarmbook').select2();
+
+
   });
+
+
 
 
 
