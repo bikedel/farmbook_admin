@@ -109,6 +109,7 @@ table td {
 						<td width='100px'> {{ substr($property->strIdentity ,0,6)}} </td>
 						<td width='300px'> {{ $property->strOwners }} </td>
 				</tr>
+				@if  (!is_null($property->owner ))
 				<tr>
 				    <th width='100px'> </th>
 					<td width='100px'> {{ $property->owner->strHomePhoneNo }} </td>
@@ -116,11 +117,13 @@ table td {
 					<td width='100px'> {{ $property->owner->strCellPhoneNo }} </td>
 					<td colspan="3"> {{ $property->owner->EMAIL }} </td>
 				</tr>
+				@endif
+				@if  (!is_null($property->note ))
 				<tr>
 				    <th width='50px'> </th>
 					<td colspan="6"> {{ $property->note->memNotes }} </td>
 				</tr>
-
+                @endif
 			</tbody>
 		</table>
        </div>
