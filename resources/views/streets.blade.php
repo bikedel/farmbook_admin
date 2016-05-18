@@ -6,23 +6,23 @@ body {
 
 }
 
-table { 
-  width: 100%; 
-  border-collapse: collapse; 
+table {
+  width: 100%;
+  border-collapse: collapse;
 }
 /* Zebra striping */
-tr:nth-of-type(odd) { 
-  background: #eee; 
+tr:nth-of-type(odd) {
+  background: #eee;
 }
-th { 
-  background: #333; 
-  color: white; 
-  font-weight: bold; 
+th {
+  background: #333;
+  color: white;
+  font-weight: bold;
 }
-td, th { 
-  padding: 5px; 
-  border: 1px solid #ccc; 
-  text-align: left; 
+td, th {
+  padding: 5px;
+  border: 1px solid #ccc;
+  text-align: left;
 }
 
 th {
@@ -44,16 +44,17 @@ th {
                  <!--   {{ link_to(url('/street/'.$search), 'Edit All', ['class' => 'btn btn-default']) }} -->
                       {{ link_to(url('/home'), 'Back to Search', ['class' => 'btn btn-default']) }}
                       {{ link_to(url('/print/'.$search), 'Print', ['class' => 'btn btn-info']) }}
+                         {{ link_to(url('/printNew/'.$search), 'PrintNew', ['class' => 'btn btn-info']) }}
                     <p><br></p>
                     <table class="table">
                       <tr>
                         <th>Action</th>
                         <th>Erf </th>
-                        <th>Street </th> 
+                        <th>Street </th>
                         <th>No</th>
-                        <th>Owners</th> 
+                        <th>Owners</th>
 
-      
+
                     </tr>
                              <div class='hidden'>
               {{$i=0}}
@@ -62,13 +63,13 @@ th {
            <div class='hidden'>
               {{$i++}}
             </div>
-                    <div class="row">  
+                    <div class="row">
                       <tr>
                        <td>
 
                       <!--  {{ link_to_action('PropertyController@edit','view/edit', ['id' => $property->id]) }}  -->
-                          {!!link_to_action('StreetController@rolledit', 'View/Edit',  array('id' => $property->strStreetName, 'item' => $i) )!!} 
-                       
+                          {!!link_to_action('StreetController@rolledit', 'View/Edit',  array('id' => $property->strStreetName, 'item' => $i) )!!}
+
                     </td>
                     <td>
 
@@ -102,7 +103,7 @@ th {
 
     </div>
 
- 
+
 
 
 </div>

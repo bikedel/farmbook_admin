@@ -76,9 +76,16 @@ Route::group(['middleware' => 'web'], function () {
 
     // print by street
     Route::get('/print/{id}', 'ReportController@printreport');
+    // prine by complex - only new ones with 'wrote' in notes
+    Route::get('/printNew/{id}', 'ReportController@printreportNew');
 
     // print by complex
     Route::get('/printcomplex/{id}', 'ReportController@printbycomplexreport');
+    // prine by complex - only new ones with 'wrote' in notes
+    Route::get('/printcomplexNew/{id}', 'ReportController@printbycomplexreportNew');
+
+    // print all new notes
+    Route::get('/printupdates', 'ReportController@printupdates');
 
     Route::get('/prog', 'ReportController@testreport');
 

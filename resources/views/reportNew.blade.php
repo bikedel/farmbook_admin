@@ -99,6 +99,8 @@ table td {
 		</table>
 
 		@foreach($properties as $property)
+
+		@if($property->note->updated_at )
 		 <div class="report-entry">
 		<table class="table table-bordered print-friendly" style="table-layout: fixed; width: 700px">
 			<tbody>
@@ -117,7 +119,7 @@ table td {
 					<td width='100px'> {{ $property->owner->strCellPhoneNo }} </td>
 					<td colspan="3"> {{ $property->owner->EMAIL }} </td>
 				</tr>
-				@endif
+				 @endif
 				@if  ($property->note)
 				<tr>
 				    <th width='50px'> </th>
@@ -127,6 +129,7 @@ table td {
 			</tbody>
 		</table>
        </div>
+       @endif
 		@endforeach
 
 

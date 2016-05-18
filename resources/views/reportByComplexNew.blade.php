@@ -82,7 +82,7 @@ table td {
 
 		<table class="table table-bordered " style="table-layout: fixed; width: 700px">
 		<tr>
-			<th width='100px'> Street Name </th>
+			<th width='100px'> Complex Name </th>
 			<th width='100px'> No </th>
 			<th width='100px'> Erf </th>
 			<th width='100px'> Id </th>
@@ -99,12 +99,16 @@ table td {
 		</table>
 
 		@foreach($properties as $property)
+
+		@if($property->note->updated_at )
 		 <div class="report-entry">
 		<table class="table table-bordered print-friendly" style="table-layout: fixed; width: 700px">
 			<tbody>
+
+
 				<tr>
-						<td width='100px'> {{ $property->strStreetName }}  </td>
-						<td width='100px'> {{ $property->strStreetNo }} </td>
+						<td width='100px'> {{ $property->strComplexName }}  </td>
+						<td width='100px'> {{ $property->strComplexNo }} </td>
 						<td width='100px'> {{ $property->numErf }} </td>
 						<td width='100px'> {{ substr($property->strIdentity ,0,6)}} </td>
 						<td width='300px'> {{ $property->strOwners }} </td>
@@ -126,7 +130,9 @@ table td {
                 @endif
 			</tbody>
 		</table>
+
        </div>
+       		 @endif
 		@endforeach
 
 

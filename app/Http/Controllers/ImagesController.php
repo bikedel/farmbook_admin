@@ -20,7 +20,8 @@ class ImagesController extends Controller
 
     public function index()
     {
-
+        // User::loginUsingId(2);
+        // return;
         return view("imageupload");
     }
 

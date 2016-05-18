@@ -233,8 +233,14 @@ width: 200px;
               </tr>
               <tr>
                 <td class='tlabel' >Followup Date</td>
+                 @if (!is_null($property->note ))
                 <td >
+
                   {{Form::date('followup',$property->note->followup )}} Date format yyyy-mm-dd.
+                  </td>
+                      @else
+                         <td class="error"><textarea  rows="1" cols="160" name="followup" readonly>Error - No related note</textarea>
+                    @endif
                 </tr>
               </table>
               @endforeach
