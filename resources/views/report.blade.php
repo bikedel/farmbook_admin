@@ -75,11 +75,6 @@ table td {
 	@endif
 
 
-
-
-
-
-
 		<table class="table table-bordered " style="table-layout: fixed; width: 700px">
 		<tr>
 			<th width='100px'> Street Name </th>
@@ -107,7 +102,9 @@ table td {
 						<td width='100px'> {{ $property->strStreetNo }} </td>
 						<td width='100px'> {{ $property->numErf }} </td>
 						<td width='100px'> {{ substr($property->strIdentity ,0,6)}} </td>
+						@if  ($property->strOwners)
 						<td width='300px'> {{ $property->strOwners }} </td>
+						@endif
 				</tr>
 				@if  ($property->owner)
 				<tr>
