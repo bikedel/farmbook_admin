@@ -102,11 +102,10 @@ table td {
 						<td width='100px'> {{ $property->strStreetNo }} </td>
 						<td width='100px'> {{ $property->numErf }} </td>
 						<td width='100px'> {{ substr($property->strIdentity ,0,6)}} </td>
-						@if  ($property->strOwners)
 						<td width='300px'> {{ $property->strOwners }} </td>
-						@endif
+
 				</tr>
-				@if  ($property->owner)
+				@if  (!is_null($property->owner ))
 				<tr>
 				    <th width='100px'> </th>
 					<td width='100px'> {{ $property->owner->strHomePhoneNo }} </td>
