@@ -281,11 +281,17 @@ class ReportController extends Controller
         $database = Auth::user()->getDatabase();
         $email    = Auth::user()->email;
 
+        //log
+        $action  = 'PRINTING';
+        $comment = 'Report for ' . $database . ' - ' . 'Followups';
+        $append  = \Carbon\Carbon::now('Africa/Johannesburg')->toDateTimeString() . ',          ' . trim($email) . ',          ' . $action . ',' . $comment;
+        Storage::append('logfile.txt', $append);
+
         //change database
         $note = new Note;
         $note->changeConnection($database);
 
-        $followups = Note::on($database)->select('*')->where('followup', '>=', $now)->orderBy('followup')->get();
+        $followups = Note::on($database)->select('*')->where('followup', '>=', $now)->orderBy('FOLLOW-UPS')->get();
 
         //   $followups->load('properties');
 
