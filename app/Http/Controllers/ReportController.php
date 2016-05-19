@@ -283,7 +283,7 @@ class ReportController extends Controller
 
         //log
         $action  = 'PRINTING';
-        $comment = 'Report for ' . $database . ' - ' . 'Followups';
+        $comment = 'Report for ' . $database . ' - ' . 'FOLLOW-UPS';
         $append  = \Carbon\Carbon::now('Africa/Johannesburg')->toDateTimeString() . ',          ' . trim($email) . ',          ' . $action . ',' . $comment;
         Storage::append('logfile.txt', $append);
 
@@ -291,7 +291,7 @@ class ReportController extends Controller
         $note = new Note;
         $note->changeConnection($database);
 
-        $followups = Note::on($database)->select('*')->where('followup', '>=', $now)->orderBy('FOLLOW-UPS')->get();
+        $followups = Note::on($database)->select('*')->where('followup', '>=', $now)->orderBy('followup')->get();
 
         //   $followups->load('properties');
 
