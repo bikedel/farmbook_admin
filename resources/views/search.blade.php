@@ -23,13 +23,14 @@
 
                 <div class="panel-body">
 
-                    <div class='main_search_form'> 
+                    <div class='main_search_form'>
 
                         {{ Form::open(array('method' =>'POST','url'=>'/street')) }}
 
                         <div class="col-sm-4">
                             {!! Form::select('selected', $streets, null, ['class' => 'form-control']) !!}
                         </div>
+
                         <div class="col-sm-2">
                             {{Form::submit('Go', array('class' => 'btn btn-success')) }}
                         </div>
@@ -49,7 +50,7 @@
 
                 <div class="panel-body">
 
-                    <div class='main_search_form'> 
+                    <div class='main_search_form'>
 
                         {{ Form::open(array('method' =>'POST','url'=>'/complex')) }}
 
@@ -69,13 +70,13 @@
         </div>
         <!--  col-md-10 -->
 
-  
+
             <div class="panel panel-primary">
                 <div class="panel-heading "> <i class=""> <span class=" admin     glyphicon glyphicon-home"> </span></i>Canvass by Erf</div>
 
                 <div class="panel-body">
 
-                    <div class='main_search_form'> 
+                    <div class='main_search_form'>
 
                         {{ Form::open(array('method' =>'POST','url'=>'/erf')) }}
 
@@ -101,7 +102,7 @@
 
                 <div class="panel-body">
 
-                    <div class='main_search_form'> 
+                    <div class='main_search_form'>
 
                         {{ Form::open(array('method' =>'POST','url'=>'/owner')) }}
 
@@ -142,4 +143,3 @@ $(document).on("ready page:load", function() {
 
 
 </script>
-

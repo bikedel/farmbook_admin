@@ -35,7 +35,9 @@ class StreetController extends Controller
         // get inputs
         $Input  = $request->input('input');
         $Select = $request->input('selected');
+        //$updatesonly = $request->input('updates');
 
+        //dd($updatesonly);
         //dd(   $streetInput,$streetSelect);
         // check if input or select
         // if input ignore select

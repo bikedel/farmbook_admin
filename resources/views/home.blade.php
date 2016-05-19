@@ -23,7 +23,7 @@
 
                 <div class="panel-body">
 
-                    <div class='main_search_form'> 
+                    <div class='main_search_form'>
 
                         {{ Form::open(array('method' =>'POST','url'=>'/street')) }}
                         <div class="col-sm-4">
@@ -35,10 +35,12 @@
                         <div class="col-sm-4">
                             {!! Form::select('selected', $streets, null, ['class' => 'form-control']) !!}
                         </div>
+
+
                         <div class="col-sm-2">
                             {{Form::submit('Go', array('class' => 'btn btn-success')) }}
                         </div>
-                       
+
                         <!--  </form> -->
 
                    </div>
@@ -54,7 +56,7 @@
 
                 <div class="panel-body">
 
-                    <div class='main_search_form2'> 
+                    <div class='main_search_form2'>
 
                         {{ Form::open(array('method' =>'POST','url'=>'/complex')) }}
                         <div class="col-sm-4">
@@ -85,7 +87,7 @@
 
                 <div class="panel-body">
 
-                    <div class='main_search_form3'> 
+                    <div class='main_search_form3'>
 
                         {{ Form::open(array('method' =>'POST','url'=>'/street')) }}
                         <div class="col-sm-4">
@@ -134,4 +136,3 @@ $(document).on("ready page:load", function() {
 
 
 </script>
-
