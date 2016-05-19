@@ -32,6 +32,7 @@ opacity:.8;
       <div class="panel panel-primary">
         <div class="panel-heading">Followup Dates [{{sizeof($owners)}}]  </div>
         <div class="panel-body table-responsive">
+          {{ link_to(url('/printfollowups/'), 'Print', ['class' => 'btn btn-info']) }}
           <p><br></p>
           <table class="table">
             <tr>

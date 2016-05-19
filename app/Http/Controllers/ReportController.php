@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Note;
 use App\Property;
 use App\Street;
 use App\User;
@@ -268,6 +269,53 @@ class ReportController extends Controller
         }
 
         dd("print updates - reportcontroller", $properties);
+    }
+
+    public function printfollowups()
+    {
+
+        // get all note with a follow up date TODAY - 1 WEEK
+        $now = \Carbon\Carbon::now('Africa/Johannesburg')->subWeeks(1)->toDateTimeString();
+
+        // set database
+        $database = Auth::user()->getDatabase();
+        $email    = Auth::user()->email;
+
+        //change database
+        $note = new Note;
+        $note->changeConnection($database);
+
+        $followups = Note::on($database)->select('*')->where('followup', '>=', $now)->orderBy('followup')->get();
+
+        //   $followups->load('properties');
+
+        // dd($followups);
+        if (strpos($database, 'FH')) {
+            $type = 'FH';
+        } else {
+            $type = 'ST';
+        }
+
+        $owners     = array();
+        $properties = array();
+
+        // loop all notes with date > today
+        foreach ($followups as $followup) {
+
+            for ($x = 0; $x < $followup->properties->count(); $x++) {
+                $detail = ['id' => $followup->properties[$x]->id,
+                    'strKey'        => $followup->properties[$x]->strKey,
+                    'strOwners'     => $followup->properties[$x]->strOwners,
+                    'memNotes'      => $followup->memNotes,
+                    'followup'      => $followup->followup];
+                array_push($properties, $followup->properties[$x]);
+                //array_push($owners, $detail);
+            }
+        }
+        $count = sizeof($properties);
+        // dd("print followups - reportcontroller", $properties, $count);
+
+        return view('reportByFollowups', compact('properties', 'count', 'type'));
     }
 
     public function testreport()

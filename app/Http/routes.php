@@ -89,6 +89,9 @@ Route::group(['middleware' => 'web'], function () {
 
     Route::get('/prog', 'ReportController@testreport');
 
+    // print follow ups
+    Route::get('/printfollowups', 'ReportController@printfollowups');
+
     // set user database dynamically
     Route::get('/userfarmbooks', 'UserController@listFarmbooks');
     Route::post('/setuserfarmbook', 'UserController@setFarmbook');
