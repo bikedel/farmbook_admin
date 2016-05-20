@@ -207,9 +207,9 @@ class DashboardController extends Controller
                 //change database
                 $own = new Owner;
                 $own->changeConnection($database);
-
-                $owners = Owner::on($database)->select('*')->where('strHomePhoneNo', '')->orWhere('strWorkPhoneNo', '')->orWhere('strCellPhoneNo', '')->orWhere('EMAIL', '')->get();
-
+                // fetch records with missing info for te numbers and email
+                //  $owners = Owner::on($database)->select('*')->where('strHomePhoneNo', '')->orWhere('strWorkPhoneNo', '')->orWhere('strCellPhoneNo', '')->orWhere('EMAIL', '')->get();
+                $owners = Owner::on($database)->select('*')->get();
                 //dd($owners);
             } catch (Exception $ex) {
                 //   echo "<br> ------------------------------------------------------------------" . "<br>";
