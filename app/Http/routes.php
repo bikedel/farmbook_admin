@@ -117,6 +117,9 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/globalsearch', 'DashboardController@Search');
     Route::post('/globalsearch', 'DashboardController@globSearch');
 
+    // global - replenish contacts - owners if null - plug gaps
+    Route::get('globContacts', 'DashboardController@globContacts');
+
     //import
     Route::get('/import', 'CsvImportController@index');
     Route::post('/import', 'CsvImportController@store');

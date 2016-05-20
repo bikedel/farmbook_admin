@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Complex;
+use App\Contact;
 use App\Farmbook;
 use App\Note;
+use App\Owner;
 use App\Property;
 use App\Street;
 use App\User;
@@ -124,6 +126,7 @@ class DashboardController extends Controller
         return view('globalsearch');
     }
 
+    // global surname search
     // loop through all database
     public function globSearch(Request $request)
     {
@@ -180,6 +183,85 @@ class DashboardController extends Controller
             }
 
         }
+        dd("The End");
+    }
+
+// global contacts replenish
+    // in farmbooks look for missing phone numbers
+    // plug if in admin contacts
+    public function globContacts(Request $request)
+    {
+
+        $start = \Carbon\Carbon::now('Africa/Johannesburg');
+
+        echo $start . '<br>';
+        // get all farmbook databases
+        $farmbooks = Farmbook::orderBy('name')->get();
+
+        // loop through databases
+        for ($x = 0; $x < $farmbooks->count(); $x++) {
+            $error    = 0;
+            $database = $farmbooks[$x]->database;
+
+            try {
+                //change database
+                $own = new Owner;
+                $own->changeConnection($database);
+
+                $owners = Owner::on($database)->select('*')->where('strHomePhoneNo', '')->orWhere('strWorkPhoneNo', '')->orWhere('strCellPhoneNo', '')->orWhere('EMAIL', '')->get();
+
+                //dd($owners);
+            } catch (Exception $ex) {
+                //   echo "<br> ------------------------------------------------------------------" . "<br>";
+                //   echo $x . ". " . $farmbooks[$x]->database . " <br>";
+                //   echo " **  PROBLEM **  " . $ex->getMessage() . "<br>";
+                //   echo " ------------------------------------------------------------------" . "<br>";
+
+                $error = 1;
+                //dd();
+            }
+            //dd($prop);
+
+            if ($error == 0) {
+
+                // check it has the farmbook2 ext
+                $found = strpos($database, 'farmbook2');
+
+                //   echo "<br> ------------------------------------------------------------------" . "<br>";
+                //  if ($found == 0) {
+                //      echo "** ALERT **  Database has not got correct naming convention - farmbook2" . " <br>";
+                //  }
+                echo "<br> ------------------------------------------------------------------" . "<br>";
+                echo "Farmbook : " . $database . "<br>";
+                echo 'Owners : ' . $owners->count() . "<br>";
+                if ($owners->count() > 0) {
+
+                    //  echo " ------------------------------------------------------------------" . "<br>";
+                    // $users = $farmbooks[$x]->users;
+                    $new = 0;
+                    foreach ($owners as $owner) {
+                        //[0] echo " - " . $owner->NAME . " | " . $owner->strHomePhoneNo . " | " . $owner->strWorkPhoneNo . " | " . $owner->strCellPhoneNo . " | " . $owner->EMAIL . " | " . " <br>";
+                        $found = Contact::select('*')->where('strIDNumber', $owner->strIDNumber)->get();
+                        if ($found->count() > 0) {
+                            $new++;
+                            //dd($found);
+                            //  echo $new . '  Match found' . '<br>';
+                            //   echo " - " . $owner->NAME . " | " . $owner->strHomePhoneNo . " | " . $owner->strWorkPhoneNo . " | " . $owner->strCellPhoneNo . " | " . $owner->EMAIL . " | " . " <br>";
+                            //   echo " - " . $found[0]->NAME . " | " . $found[0]->strHomePhoneNo . " | " . $found[0]->strWorkPhoneNo . " | " . $found[0]->strCellPhoneNo . " | " . $found[0]->EMAIL . " | " . " <br>";
+                        }
+                    }
+                    echo '  Matches : ' . $new . '<br>';
+                    //dd("end of first data");
+                }
+            }
+
+        }
+
+        $end = \Carbon\Carbon::now('Africa/Johannesburg');
+
+        echo '<br><br>' . $end . '<br><br>';
+        echo 'Time : ' . $end->diffForHumans($start);
+
         dd("The End");
     }
 
