@@ -194,7 +194,7 @@ class DashboardController extends Controller
 
         $start = \Carbon\Carbon::now('Africa/Johannesburg');
 
-        echo $start . '<br>';
+        echo 'Start : ' . $start . '<br>';
         // get all farmbook databases
         $farmbooks = Farmbook::orderBy('name')->get();
 
@@ -232,7 +232,7 @@ class DashboardController extends Controller
                 //      echo "** ALERT **  Database has not got correct naming convention - farmbook2" . " <br>";
                 //  }
                 echo "<br> ------------------------------------------------------------------" . "<br>";
-                echo "Farmbook : " . $database . "<br>";
+                echo $x . ". Farmbook : " . $database . "<br>";
                 echo 'Owners : ' . $owners->count() . "<br>";
                 if ($owners->count() > 0) {
 
@@ -259,7 +259,7 @@ class DashboardController extends Controller
 
         $end = \Carbon\Carbon::now('Africa/Johannesburg');
 
-        echo '<br><br>' . $end . '<br><br>';
+        echo '<br><br>End : ' . $end . '<br><br>';
         echo 'Time : ' . $end->diffForHumans($start);
 
         dd("The End");
