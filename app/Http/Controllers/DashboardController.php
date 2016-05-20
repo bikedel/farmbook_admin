@@ -208,8 +208,9 @@ class DashboardController extends Controller
                 $own = new Owner;
                 $own->changeConnection($database);
                 // fetch records with missing info for te numbers and email
-                //  $owners = Owner::on($database)->select('*')->where('strHomePhoneNo', '')->orWhere('strWorkPhoneNo', '')->orWhere('strCellPhoneNo', '')->orWhere('EMAIL', '')->get();
-                $owners = Owner::on($database)->select('*')->get();
+                $owners       = Owner::on($database)->select('*')->where('strHomePhoneNo', '')->orWhere('strWorkPhoneNo', '')->orWhere('strCellPhoneNo', '')->orWhere('EMAIL', '')->get();
+                $noinfoowners = Owner::on($database)->select('*')->where('strHomePhoneNo', '')->Where('strWorkPhoneNo', '')->Where('strCellPhoneNo', '')->Where('EMAIL', '')->get();
+                $allowners    = Owner::on($database)->select('*')->get();
                 //dd($owners);
             } catch (Exception $ex) {
                 //   echo "<br> ------------------------------------------------------------------" . "<br>";
@@ -233,7 +234,10 @@ class DashboardController extends Controller
                 //  }
                 echo "<br> ------------------------------------------------------------------" . "<br>";
                 echo $x . ". Farmbook : " . $database . "<br>";
-                echo 'Owners : ' . $owners->count() . "<br>";
+                echo 'All Owners : ' . $allowners->count() . "<br>";
+                echo 'Missing some info : ' . $owners->count() . "<br>";
+                echo 'Missing all info : ' . $noinfoowners->count() . "<br>";
+
                 if ($owners->count() > 0) {
 
                     //  echo " ------------------------------------------------------------------" . "<br>";
