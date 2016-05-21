@@ -242,32 +242,40 @@ class DashboardController extends Controller
 
                     //  echo " ------------------------------------------------------------------" . "<br>";
                     // $users = $farmbooks[$x]->users;
-                    $new       = 0;
-                    $canupdate = 0;
+                    $new          = 0;
+                    $canupdate    = 0;
+                    $can          = 0;
+                    $canupdateRow = 0;
                     foreach ($owners as $owner) {
                         //[0] echo " - " . $owner->NAME . " | " . $owner->strHomePhoneNo . " | " . $owner->strWorkPhoneNo . " | " . $owner->strCellPhoneNo . " | " . $owner->EMAIL . " | " . " <br>";
                         $found = Contact::select('*')->where('strIDNumber', $owner->strIDNumber)->get();
                         if ($found->count() > 0) {
                             $new++;
+                            $can = 0;
                             if ($owner->strHomePhoneNo == "" && $found[0]->strHomePhoneNo != "") {
                                 $canupdate++;
+                                $can++;
                             }
                             if ($owner->strWorkPhoneNo == "" && $found[0]->strWorkPhoneNo != "") {
                                 $canupdate++;
-
+                                $can++;
                             }
                             if ($owner->strCellPhoneNo == "" && $found[0]->strCellPhoneNo != "") {
                                 $canupdate++;
-
+                                $can++;
                             }
                             if ($owner->EMAIL == "" && $found[0]->EMAIL != "") {
                                 $canupdate++;
-
+                                $can++;
+                            }
+                            if ($can > 0) {
+                                $canupdateRow++;
                             }
                         }
                     }
                     echo '  Matches : ' . $new . '<br>';
                     echo '  Can update fields : ' . $canupdate . '<br>';
+                    echo '  Can update Owner : ' . $canupdateRow . '<br>';
                     //dd("end of first data");
                 }
             }
