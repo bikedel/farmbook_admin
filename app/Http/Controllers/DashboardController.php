@@ -242,19 +242,32 @@ class DashboardController extends Controller
 
                     //  echo " ------------------------------------------------------------------" . "<br>";
                     // $users = $farmbooks[$x]->users;
-                    $new = 0;
+                    $new       = 0;
+                    $canupdate = 0;
                     foreach ($owners as $owner) {
                         //[0] echo " - " . $owner->NAME . " | " . $owner->strHomePhoneNo . " | " . $owner->strWorkPhoneNo . " | " . $owner->strCellPhoneNo . " | " . $owner->EMAIL . " | " . " <br>";
                         $found = Contact::select('*')->where('strIDNumber', $owner->strIDNumber)->get();
                         if ($found->count() > 0) {
                             $new++;
-                            //dd($found);
-                            //  echo $new . '  Match found' . '<br>';
-                            //   echo " - " . $owner->NAME . " | " . $owner->strHomePhoneNo . " | " . $owner->strWorkPhoneNo . " | " . $owner->strCellPhoneNo . " | " . $owner->EMAIL . " | " . " <br>";
-                            //   echo " - " . $found[0]->NAME . " | " . $found[0]->strHomePhoneNo . " | " . $found[0]->strWorkPhoneNo . " | " . $found[0]->strCellPhoneNo . " | " . $found[0]->EMAIL . " | " . " <br>";
+                            if ($owner->strHomePhoneNo == "" && $found[0]->strHomePhoneNo != "") {
+                                $canupdate++;
+                            }
+                            if ($owner->strWorkPhoneNo == "" && $found[0]->strWorkPhoneNo != "") {
+                                $canupdate++;
+
+                            }
+                            if ($owner->strCellPhoneNo == "" && $found[0]->strCellPhoneNo != "") {
+                                $canupdate++;
+
+                            }
+                            if ($owner->EMAIL == "" && $found[0]->EMAIL != "") {
+                                $canupdate++;
+
+                            }
                         }
                     }
                     echo '  Matches : ' . $new . '<br>';
+                    echo '  Can update fields : ' . $canupdate . '<br>';
                     //dd("end of first data");
                 }
             }
