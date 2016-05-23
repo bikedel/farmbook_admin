@@ -233,8 +233,8 @@ class DashboardController extends Controller
                 //      echo "** ALERT **  Database has not got correct naming convention - farmbook2" . " <br>";
                 //  }
                 echo "<br> ------------------------------------------------------------------" . "<br>";
-                echo $x . ". Farmbook : " . $database . "<br>";
-                echo 'All Owners : ' . $allowners->count() . "<br>";
+                echo $x . ". Farmbook : " . $database . "<br><br>";
+                echo 'Local Owners : ' . $allowners->count() . "<br>";
                 echo 'Missing some info : ' . $owners->count() . "<br>";
                 echo 'Missing all info : ' . $noinfoowners->count() . "<br>";
 
@@ -246,6 +246,12 @@ class DashboardController extends Controller
                     $canupdate    = 0;
                     $can          = 0;
                     $canupdateRow = 0;
+
+                    $strHomePhoneNo = 0;
+                    $strWorkPhoneNo = 0;
+                    $strCellPhoneNo = 0;
+                    $EMAIL          = 0;
+
                     foreach ($owners as $owner) {
                         //[0] echo " - " . $owner->NAME . " | " . $owner->strHomePhoneNo . " | " . $owner->strWorkPhoneNo . " | " . $owner->strCellPhoneNo . " | " . $owner->EMAIL . " | " . " <br>";
                         $found = Contact::select('*')->where('strIDNumber', $owner->strIDNumber)->get();
@@ -255,27 +261,43 @@ class DashboardController extends Controller
                             if ($owner->strHomePhoneNo == "" && $found[0]->strHomePhoneNo != "") {
                                 $canupdate++;
                                 $can++;
+                                $strHomePhoneNo++;
+                                $owner->strHomePhoneNo = $found[0]->strHomePhoneNo;
                             }
                             if ($owner->strWorkPhoneNo == "" && $found[0]->strWorkPhoneNo != "") {
                                 $canupdate++;
                                 $can++;
+                                $strWorkPhoneNo++;
+                                $owner->strWorkPhoneNo = $found[0]->strWorkPhoneNo;
                             }
                             if ($owner->strCellPhoneNo == "" && $found[0]->strCellPhoneNo != "") {
                                 $canupdate++;
                                 $can++;
+                                $strCellPhoneNo++;
+                                $owner->strCellPhoneNo = $found[0]->strCellPhoneNo;
                             }
                             if ($owner->EMAIL == "" && $found[0]->EMAIL != "") {
                                 $canupdate++;
                                 $can++;
+                                $EMAIL++;
+                                $owner->EMAIL = $found[0]->EMAIL;
                             }
                             if ($can > 0) {
                                 $canupdateRow++;
+                                $owner->update();
                             }
                         }
                     }
-                    echo '  Matches : ' . $new . '<br>';
+                    echo '  Found in admin contacts : ' . $new . '<br><br>';
+
                     echo '  Can update fields : ' . $canupdate . '<br>';
-                    echo '  Can update Owner : ' . $canupdateRow . '<br>';
+                    echo '  Can update record : ' . $canupdateRow . '<br><br>';
+
+                    echo 'strHomePhoneNo updates : ' . $strHomePhoneNo . '<br>';
+                    echo 'strWorkPhoneNo updates : ' . $strWorkPhoneNo . '<br>';
+                    echo 'strCellPhoneNo updates : ' . $strCellPhoneNo . '<br>';
+                    echo 'EMAIL          updates : ' . $EMAIL . '<br><br>';
+
                     //dd("end of first data");
                 }
             }
