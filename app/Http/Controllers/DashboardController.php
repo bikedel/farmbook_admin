@@ -16,6 +16,7 @@ use DB;
 use Exception;
 use Illuminate\Http\Request;
 use Lava;
+use Storage;
 
 class DashboardController extends Controller
 {
@@ -197,6 +198,14 @@ class DashboardController extends Controller
         echo 'Start : ' . $start . '<br>';
         // get all farmbook databases
         $farmbooks = Farmbook::orderBy('name')->get();
+
+        $email = Auth::user()->email;
+
+        //log
+        $action  = 'GLOBAL UPDATE';
+        $comment = 'Contacts';
+        $append  = \Carbon\Carbon::now('Africa/Johannesburg')->toDateTimeString() . ',          ' . trim($email) . ',          ' . $action . ',' . $comment;
+        Storage::append('logfile.txt', $append);
 
         // loop through databases
         for ($x = 0; $x < $farmbooks->count(); $x++) {
