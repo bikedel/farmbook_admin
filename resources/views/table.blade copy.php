@@ -103,6 +103,10 @@ table.dataTable thead .sorting_desc:after {
             <tr>
              <th>Owners</th>
              <th>Identity</th>
+             <th>Home Phone</th>
+             <th>Home Work</th>
+             <th>Home Cell</th>
+             <th lass='ellis'>Email</th>
              <th>Suburb</th>
              <th>Erf</th>
              <th>Port</th>
@@ -121,7 +125,7 @@ table.dataTable thead .sorting_desc:after {
              <th>TitleDeed</th>
              <th>Key</th>
              <th>Updated_at</th>
-
+             <th>Notes</th>
 
            </tr>
          </thead>
@@ -237,6 +241,10 @@ $(function() {
   columns: [
   { data: 'strOwners', name: 'strOwners' },
   { data: 'strIdentity', name: 'strIdentity' },
+  { data: 'owner.strHomePhoneNo', name: 'Home Phone' , width: '110px'},
+  { data: 'owner.strWorkPhoneNo', name: 'Work Phone' , width: '110px'},
+  { data: 'owner.strCellPhoneNo', name: 'Cell Phone' , width: '110px'},
+  { data: 'owner.EMAIL', name: 'Email' , width: '200px'},
   { data: 'strSuburb', name: 'strSuburb' },
   { data: 'numErf', name: 'numErf' },
   { data: 'numPortion', name: 'numPortion' , width: '90px'},
@@ -253,7 +261,7 @@ $(function() {
   { data: 'strTitleDeed', name: 'strTitleDeed' } ,
   { data: 'strKey', name: 'strKey' },
   { data: 'updated_at', name: 'updated_at' , width: '120px'},
-
+  { data: 'note.memNotes', name: 'Notes' },
 
   ]
 });
