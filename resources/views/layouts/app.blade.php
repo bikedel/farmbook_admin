@@ -148,7 +148,7 @@
                  <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                      Canvass <span class="caret"></span>
-                 </a>
+             </a>
 
                  <ul class="dropdown-menu" role="menu">
                     <li><a href="{{ url('/home') }}"><i class="farmbooks glyphicon glyphicon-road"></i>by Street</a></li>

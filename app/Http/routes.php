@@ -147,6 +147,9 @@ Route::group(['middleware' => 'web'], function () {
         'getIndex' => 'datatables',
     ]);
 
+    // test datatables json
+    Route::get('/dataTab', 'DatatablesController@anyData');
+
     //image upload
     Route::get('/image', 'ImagesController@index');
     Route::post('/uploadimage', 'ImagesController@upload');

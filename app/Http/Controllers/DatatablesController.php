@@ -50,6 +50,15 @@ class DatatablesController extends Controller
 
         $d = Property::on($database)->with('note', 'owner')->select('*');
 
+        //$d = Property::on($database)
+        //    ->leftjoin('owners', 'owners.strIDNumber', '=', 'properties.strIdentity')
+        //    ->leftjoin('notes', 'notes.strKey', '=', 'properties.strKey')
+        //    ->select('*')
+        //    ->get();
+        //dd($d);
+
+        //  dd(Datatables::of($d)->make(true));
+
         //$d->load('owner', 'note');
 
         return Datatables::of($d)->make(true);

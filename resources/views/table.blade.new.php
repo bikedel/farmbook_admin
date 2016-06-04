@@ -103,7 +103,6 @@ table.dataTable thead .sorting_desc:after {
             <tr>
              <th>Owners</th>
              <th>Identity</th>
-
              <th>Suburb</th>
              <th>Erf</th>
              <th>Port</th>
@@ -238,7 +237,6 @@ $(function() {
   columns: [
   { data: 'strOwners', name: 'strOwners' },
   { data: 'strIdentity', name: 'strIdentity' },
-
   { data: 'strSuburb', name: 'strSuburb' },
   { data: 'numErf', name: 'numErf' },
   { data: 'numPortion', name: 'numPortion' , width: '90px'},
@@ -255,7 +253,6 @@ $(function() {
   { data: 'strTitleDeed', name: 'strTitleDeed' } ,
   { data: 'strKey', name: 'strKey' },
   { data: 'updated_at', name: 'updated_at' , width: '120px'},
-
 
 
   ]
