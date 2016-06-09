@@ -170,14 +170,13 @@ class UpdateController extends Controller
 
             // insert and delete older as it is the newest
             //
-
-            //  dd($p->count(), $p);
-
             if ($p->count() == 0) {
 
                 $echo = $updatesA[$x]['strKey'] . '   -   ' . $updatesA[$x]['dtmRegDate'] . "  -  New Owner - " . $updatesA[$x]['strOwners'] . "  -  Seller - " . $updatesA[$x]['strSellers'];
 
                 File::append($logfilename, $echo . "\r\n");
+
+                // set the numeric fields for the update
 
                 $updatesA[$x]['id']           = null;
                 $updatesA[$x]['numStreetNo']  = $updatesA[$x]['strStreetNo'];
