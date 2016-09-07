@@ -159,7 +159,7 @@ Route::group(['middleware' => 'web'], function () {
     //dashboard
     Route::get('dash', 'DashboardController@index');
 
-    //todo - follow ups
+    //follow ups
     Route::get('todo', 'DashboardController@todo');
 
     // rubish
